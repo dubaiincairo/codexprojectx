@@ -1823,7 +1823,7 @@
   }
 </style>
 </head>
-<body>
+<body class="dark">
 
 <div class="app">
 
@@ -3235,9 +3235,9 @@
     iconMoon.style.display = isDark ? 'none' : 'block';
   }
 
-  // Load saved theme
+  // Load saved theme — dark is the default
   const savedTheme = localStorage.getItem('feasibility-theme');
-  if (savedTheme === 'dark') applyTheme(true);
+  applyTheme(savedTheme !== 'light');
 
   themeToggle.addEventListener('click', () => {
     const isDark = !document.body.classList.contains('dark');
