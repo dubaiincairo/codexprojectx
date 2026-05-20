@@ -1,0 +1,3521 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>دراسة جدوى — تأسيس بيت خبرة تقني في المملكة العربية السعودية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* ========== DESIGN TOKENS — Stripe/Linear Inspired ========== */
+  :root {
+    /* Surfaces */
+    --bg: #FAFBFC;
+    --surface: #FFFFFF;
+    --surface-soft: #F6F8FB;
+    --surface-hover: #F2F4F7;
+
+    /* Ink */
+    --ink-900: #0A0E27;
+    --ink-800: #1A1F36;
+    --ink-700: #3C4257;
+    --ink-600: #545A75;
+    --ink-500: #6B7290;
+    --ink-400: #8B92AB;
+    --ink-300: #B4BACD;
+    --ink-200: #D5DAE6;
+    --ink-100: #E6E9F0;
+    --ink-50:  #F1F3F7;
+
+    /* Brand — vibrant indigo/violet */
+    --brand-50:  #EEF0FF;
+    --brand-100: #DCE0FF;
+    --brand-200: #B8C0FF;
+    --brand-400: #7B83F0;
+    --brand-500: #635BFF;
+    --brand-600: #4F46E5;
+    --brand-700: #3F37CC;
+    --brand-soft: rgba(99, 91, 255, 0.08);
+
+    /* Accents */
+    --emerald-500: #10B981;
+    --emerald-50:  #ECFDF5;
+    --amber-500:   #F59E0B;
+    --amber-50:    #FFFBEB;
+    --rose-500:    #EF4444;
+    --rose-50:     #FEF2F2;
+    --sky-500:     #0EA5E9;
+    --sky-50:      #F0F9FF;
+
+    /* Shadows */
+    --shadow-xs: 0 1px 2px rgba(10, 14, 39, 0.04);
+    --shadow-sm: 0 1px 3px rgba(10, 14, 39, 0.06), 0 1px 2px rgba(10, 14, 39, 0.04);
+    --shadow-md: 0 4px 12px rgba(10, 14, 39, 0.08), 0 2px 4px rgba(10, 14, 39, 0.04);
+    --shadow-lg: 0 12px 32px rgba(10, 14, 39, 0.10), 0 4px 12px rgba(10, 14, 39, 0.06);
+    --shadow-brand: 0 4px 16px rgba(99, 91, 255, 0.20);
+
+    /* Radii */
+    --r-sm: 6px;
+    --r-md: 10px;
+    --r-lg: 14px;
+    --r-xl: 20px;
+    --r-full: 999px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    direction: rtl;
+    text-align: right;
+    color: var(--ink-900);
+    background: var(--bg);
+    font-size: 14.5px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  /* ========== DARK MODE ========== */
+  body.dark {
+    --bg: #0A0E27;
+    --surface: #131730;
+    --surface-soft: #1A1F36;
+    --surface-hover: #232846;
+
+    --ink-900: #F1F3F7;
+    --ink-800: #E6E9F0;
+    --ink-700: #C5CBD8;
+    --ink-600: #A8AEC2;
+    --ink-500: #8B92AB;
+    --ink-400: #6B7290;
+    --ink-300: #545A75;
+    --ink-200: #3C4257;
+    --ink-100: #2A2F47;
+    --ink-50:  #1A1F36;
+  }
+
+  body.dark .topbar {
+    background: rgba(19, 23, 48, 0.85);
+  }
+
+  body.dark .kpi-value,
+  body.dark .section-title,
+  body.dark h2.h-title,
+  body.dark h3.h-sub,
+  body.dark strong,
+  body.dark td strong,
+  body.dark .card-title,
+  body.dark .studio-name,
+  body.dark .timeline-content h4,
+  body.dark .persona-title,
+  body.dark .brand-title {
+    color: var(--ink-900);
+  }
+
+  body.dark p,
+  body.dark li,
+  body.dark td {
+    color: var(--ink-700);
+  }
+
+  body.dark thead { background: var(--surface-soft); }
+  body.dark th { color: var(--ink-700); border-bottom: 1px solid var(--ink-200); }
+  body.dark tbody tr:hover { background: var(--surface-soft); }
+  body.dark td, body.dark tbody tr:last-child td { border-bottom: 1px solid var(--ink-100); }
+  body.dark tbody tr:last-child td { border-bottom: none; }
+  body.dark tbody tr:nth-child(even) { background: transparent; }
+
+  /* Pull quote in dark */
+  body.dark .pull-quote {
+    background: var(--surface-soft);
+    color: var(--ink-800);
+    border-color: var(--ink-100);
+  }
+  body.dark .pull-quote strong { color: var(--ink-900); }
+
+  /* Highlight box in dark */
+  body.dark .highlight {
+    background: linear-gradient(135deg, rgba(99, 91, 255, 0.16) 0%, rgba(99, 91, 255, 0.06) 100%);
+    border-color: rgba(99, 91, 255, 0.3);
+  }
+  body.dark .highlight p { color: var(--ink-800); }
+  body.dark .highlight strong { color: var(--brand-200); }
+
+  /* Regular callout in dark */
+  body.dark .callout {
+    background: linear-gradient(135deg, rgba(99, 91, 255, 0.14) 0%, rgba(99, 91, 255, 0.04) 100%);
+    border-color: rgba(99, 91, 255, 0.3);
+  }
+  body.dark .callout .callout-label { color: var(--brand-200); }
+  body.dark .callout p { color: var(--ink-800); }
+  body.dark .callout strong { color: var(--ink-900); }
+
+  /* Dark variant callout — keep dark with brighter accent */
+  body.dark .callout.dark {
+    background: linear-gradient(135deg, #1F2547 0%, #0F1330 100%);
+    border-color: var(--ink-200);
+  }
+  body.dark .callout.dark .callout-label { color: var(--brand-200); }
+  body.dark .callout.dark p { color: rgba(255, 255, 255, 0.92); }
+  body.dark .callout.dark strong { color: #FFFFFF; }
+
+  /* Amber callout in dark */
+  body.dark .callout.amber {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.16) 0%, rgba(245, 158, 11, 0.04) 100%);
+    border-color: rgba(245, 158, 11, 0.4);
+  }
+  body.dark .callout.amber .callout-label { color: #FBBF24; }
+  body.dark .callout.amber p { color: var(--ink-800); }
+  body.dark .callout.amber strong { color: #FBBF24; }
+
+  /* Equation in dark */
+  body.dark .equation-text { color: rgba(255, 255, 255, 0.92); }
+  body.dark .equation-text strong { color: #FFFFFF; }
+  body.dark .equation { background: linear-gradient(135deg, #1F2547 0%, #0F1330 100%); }
+
+  /* Studio cards in dark */
+  body.dark .studio { background: var(--surface); border-color: var(--ink-100); }
+  body.dark .studio-desc { color: var(--ink-700); }
+
+  /* Card in dark */
+  body.dark .card { background: var(--surface); border-color: var(--ink-100); }
+  body.dark .card-title::before { box-shadow: 0 0 0 4px rgba(99, 91, 255, 0.2); }
+
+  /* KPI in dark */
+  body.dark .kpi { background: var(--surface); border-color: var(--ink-100); }
+  body.dark .kpi-label { color: var(--ink-500); }
+  body.dark .kpi-unit { color: var(--ink-500); }
+
+  /* Persona in dark */
+  body.dark .persona { background: var(--surface); border-color: var(--ink-100); }
+  body.dark .persona-header { border-color: var(--ink-100); }
+  body.dark .persona-tag { background: var(--surface-soft); color: var(--ink-700); }
+  body.dark .persona-trait { color: var(--ink-500); }
+  body.dark .persona-msg {
+    background: rgba(99, 91, 255, 0.12);
+    color: var(--ink-800);
+  }
+  body.dark .persona-msg strong { color: var(--brand-200); }
+
+  /* Tables in dark */
+  body.dark .table-wrap { background: var(--surface); border-color: var(--ink-100); }
+  body.dark tr.totals { background: rgba(99, 91, 255, 0.12); }
+  body.dark tr.totals td { color: var(--ink-900); }
+
+  /* Section header border in dark */
+  body.dark .section-lead { color: var(--ink-600); }
+
+  /* Top bar elements in dark */
+  body.dark .badge { background: var(--surface-soft); color: var(--ink-700); border-color: var(--ink-100); }
+  body.dark .badge.brand { background: rgba(99, 91, 255, 0.15); color: var(--brand-200); border-color: rgba(99, 91, 255, 0.3); }
+  body.dark .badge.confidential { background: rgba(239, 68, 68, 0.15); color: #FCA5A5; border-color: rgba(239, 68, 68, 0.3); }
+  body.dark .topbar-divider { background: var(--ink-100); }
+
+  /* Breadcrumb in dark */
+  body.dark .breadcrumb { color: var(--ink-500); }
+  body.dark .breadcrumb .current { color: var(--ink-900); }
+  body.dark .breadcrumb .sep { color: var(--ink-300); }
+
+  /* Sidebar nav in dark */
+  body.dark .sidebar { background: var(--surface); border-color: var(--ink-100); }
+  body.dark .brand-subtitle { color: var(--ink-500); }
+  body.dark .nav-item { color: var(--ink-600); }
+  body.dark .nav-item:hover { background: var(--surface-hover); color: var(--ink-900); }
+  body.dark .nav-item.active { background: rgba(99, 91, 255, 0.15); color: var(--brand-200); }
+  body.dark .nav-item.active .nav-num { color: var(--brand-400); }
+  body.dark .nav-num { color: var(--ink-400); }
+  body.dark .nav-label { color: var(--ink-400); }
+  body.dark .sidebar-footer { color: var(--ink-500); border-color: var(--ink-100); }
+  body.dark .sidebar-footer strong { color: var(--ink-700); }
+
+  /* Section eyebrow in dark */
+  body.dark .section-num-pill { background: rgba(99, 91, 255, 0.15); color: var(--brand-200); border-color: rgba(99, 91, 255, 0.3); }
+  body.dark .section-eyebrow-text { color: var(--ink-500); }
+  body.dark .section-header { border-color: transparent; }
+  body.dark h4.h-mini { color: var(--ink-700); }
+
+  /* Progress banner in dark */
+  body.dark .progress-banner {
+    background: linear-gradient(135deg, var(--surface) 0%, rgba(99, 91, 255, 0.12) 100%);
+    border-color: rgba(99, 91, 255, 0.3);
+  }
+  body.dark .progress-banner-text { color: var(--ink-700); }
+  body.dark .progress-banner-text strong { color: var(--brand-200); }
+
+  /* ========== TOP CONTROLS (Theme & Admin) ========== */
+  .top-controls {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .ctrl-btn {
+    background: var(--surface);
+    border: 1px solid var(--ink-100);
+    width: 34px;
+    height: 34px;
+    border-radius: var(--r-md);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    color: var(--ink-700);
+    padding: 0;
+  }
+
+  .ctrl-btn:hover {
+    border-color: var(--brand-500);
+    color: var(--brand-600);
+    background: var(--brand-50);
+  }
+
+  .ctrl-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  body.dark .ctrl-btn {
+    background: var(--surface);
+    border-color: var(--ink-100);
+    color: var(--ink-700);
+  }
+
+  body.dark .ctrl-btn:hover {
+    background: var(--surface-hover);
+    color: var(--brand-400);
+    border-color: var(--brand-500);
+  }
+
+  /* Topbar meta wrapper to keep badges + controls on one row */
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .topbar-divider {
+    width: 1px;
+    height: 22px;
+    background: var(--ink-100);
+  }
+
+  /* ========== ADMIN PANEL ========== */
+  .admin-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 14, 39, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 200;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .admin-overlay.open {
+    display: flex;
+    opacity: 1;
+    animation: fadeOverlay 0.3s ease;
+  }
+
+  @keyframes fadeOverlay {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .admin-panel {
+    background: var(--surface);
+    width: 100%;
+    max-width: 1100px;
+    margin: 24px auto;
+    height: calc(100vh - 48px);
+    border-radius: var(--r-xl);
+    box-shadow: var(--shadow-lg);
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    overflow: hidden;
+    border: 1px solid var(--ink-100);
+  }
+
+  .admin-aside {
+    background: var(--surface-soft);
+    padding: 20px 16px;
+    overflow-y: auto;
+    border-left: 1px solid var(--ink-100);
+  }
+
+  .admin-aside::-webkit-scrollbar { width: 4px; }
+  .admin-aside::-webkit-scrollbar-thumb { background: var(--ink-200); border-radius: 2px; }
+
+  .admin-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--ink-100);
+  }
+
+  .admin-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .admin-title-text {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink-900);
+  }
+
+  .admin-title-sub {
+    font-size: 11px;
+    color: var(--ink-500);
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.5px;
+  }
+
+  .admin-close {
+    width: 32px;
+    height: 32px;
+    background: transparent;
+    border: 1px solid var(--ink-100);
+    border-radius: var(--r-md);
+    color: var(--ink-600);
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+  }
+
+  .admin-close:hover {
+    border-color: var(--rose-500);
+    color: var(--rose-500);
+  }
+
+  .admin-search {
+    background: var(--surface);
+    border: 1px solid var(--ink-100);
+    border-radius: var(--r-md);
+    padding: 9px 14px;
+    width: 100%;
+    font-size: 13px;
+    color: var(--ink-900);
+    font-family: inherit;
+    margin-bottom: 14px;
+  }
+
+  .admin-search:focus { outline: 2px solid var(--brand-200); border-color: var(--brand-500); }
+
+  .admin-section-group {
+    margin-bottom: 14px;
+  }
+
+  .admin-group-label {
+    font-size: 10.5px;
+    letter-spacing: 1.5px;
+    color: var(--ink-400);
+    text-transform: uppercase;
+    font-weight: 700;
+    margin: 12px 8px 8px;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .admin-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    color: var(--ink-700);
+    font-size: 13px;
+    cursor: pointer;
+    border-radius: var(--r-md);
+    margin-bottom: 2px;
+    font-weight: 500;
+    transition: all 0.15s;
+  }
+
+  .admin-nav-item:hover {
+    background: var(--surface);
+    color: var(--ink-900);
+  }
+
+  .admin-nav-item.active {
+    background: var(--brand-50);
+    color: var(--brand-600);
+    font-weight: 600;
+  }
+
+  body.dark .admin-nav-item.active {
+    background: rgba(99, 91, 255, 0.15);
+  }
+
+  .admin-nav-num {
+    font-size: 10.5px;
+    color: var(--ink-400);
+    min-width: 22px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+  }
+
+  .admin-nav-item.active .admin-nav-num { color: var(--brand-500); }
+
+  .admin-main {
+    overflow-y: auto;
+    padding: 24px 28px;
+  }
+
+  .admin-main::-webkit-scrollbar { width: 6px; }
+  .admin-main::-webkit-scrollbar-thumb { background: var(--ink-200); border-radius: 3px; }
+
+  .admin-breadcrumb {
+    font-size: 12px;
+    color: var(--ink-500);
+    margin-bottom: 8px;
+    font-family: 'Inter', 'IBM Plex Sans Arabic', sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .admin-breadcrumb .current { color: var(--ink-900); font-weight: 600; }
+
+  .admin-h1 {
+    font-size: 22px;
+    color: var(--ink-900);
+    font-weight: 700;
+    margin-bottom: 4px;
+    letter-spacing: -0.3px;
+  }
+
+  .admin-lead {
+    font-size: 13px;
+    color: var(--ink-500);
+    margin-bottom: 24px;
+  }
+
+  .admin-field-group {
+    background: var(--surface-soft);
+    border: 1px solid var(--ink-100);
+    border-radius: var(--r-lg);
+    padding: 18px 20px;
+    margin-bottom: 14px;
+  }
+
+  .admin-field-group-title {
+    font-size: 13px;
+    color: var(--ink-900);
+    font-weight: 700;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .admin-field-group-title::before {
+    content: "";
+    width: 4px;
+    height: 14px;
+    background: var(--brand-500);
+    border-radius: var(--r-full);
+  }
+
+  .admin-field {
+    margin-bottom: 12px;
+  }
+
+  .admin-field:last-child { margin-bottom: 0; }
+
+  .admin-label {
+    font-size: 11.5px;
+    color: var(--ink-600);
+    font-weight: 600;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  .admin-hint {
+    font-size: 11px;
+    color: var(--ink-400);
+    margin-top: 4px;
+    font-style: italic;
+  }
+
+  .admin-input,
+  .admin-textarea {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--ink-100);
+    border-radius: var(--r-md);
+    padding: 9px 12px;
+    font-size: 13px;
+    color: var(--ink-900);
+    font-family: inherit;
+    transition: border-color 0.15s;
+    line-height: 1.7;
+  }
+
+  .admin-input:focus,
+  .admin-textarea:focus {
+    outline: 2px solid var(--brand-200);
+    border-color: var(--brand-500);
+  }
+
+  .admin-textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+
+  .admin-textarea.large { min-height: 160px; }
+
+  .admin-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .admin-row.three { grid-template-columns: 1fr 1fr 1fr; }
+
+  .admin-status {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--ink-900);
+    color: white;
+    padding: 10px 20px;
+    border-radius: var(--r-md);
+    font-size: 13px;
+    font-weight: 500;
+    box-shadow: var(--shadow-lg);
+    z-index: 300;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+
+  .admin-status.show {
+    opacity: 1;
+  }
+
+  .admin-status.success { background: var(--emerald-500); }
+
+  .admin-actions {
+    margin-top: 24px;
+    padding-top: 18px;
+    border-top: 1px solid var(--ink-100);
+    display: flex;
+    gap: 10px;
+    justify-content: flex-start;
+  }
+
+  .admin-btn {
+    background: var(--brand-500);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--r-md);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .admin-btn:hover {
+    background: var(--brand-600);
+    box-shadow: var(--shadow-brand);
+  }
+
+  .admin-btn.secondary {
+    background: var(--surface);
+    color: var(--ink-700);
+    border: 1px solid var(--ink-200);
+  }
+
+  .admin-btn.secondary:hover {
+    background: var(--surface-hover);
+    color: var(--ink-900);
+    box-shadow: none;
+  }
+
+  .admin-empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--ink-500);
+  }
+
+  .admin-empty-icon {
+    font-size: 40px;
+    margin-bottom: 12px;
+    opacity: 0.5;
+  }
+
+  .admin-empty-title {
+    font-size: 14px;
+    color: var(--ink-700);
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+
+  .admin-empty-text {
+    font-size: 12.5px;
+    color: var(--ink-500);
+  }
+
+  @media (max-width: 768px) {
+    .admin-panel {
+      grid-template-columns: 1fr;
+      margin: 0;
+      height: 100vh;
+      border-radius: 0;
+    }
+    .admin-aside { display: none; }
+  }
+
+  /* ========== APP LAYOUT ========== */
+  .app {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    min-height: 100vh;
+  }
+
+  /* ========== SIDEBAR ========== */
+  .sidebar {
+    background: var(--surface);
+    border-left: 1px solid var(--ink-100);
+    padding: 28px 18px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-track { background: transparent; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--ink-200); border-radius: 2px; }
+
+  .brand {
+    padding: 0 8px 24px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--ink-100);
+  }
+
+  .brand-mark {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+
+  .brand-square {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, #635BFF 0%, #4F46E5 100%);
+    border-radius: var(--r-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    font-family: 'Inter', sans-serif;
+    box-shadow: var(--shadow-brand);
+  }
+
+  .brand-name {
+    font-size: 10.5px;
+    letter-spacing: 2px;
+    color: var(--brand-500);
+    text-transform: uppercase;
+    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .brand-title {
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.4;
+    color: var(--ink-900);
+    margin-bottom: 4px;
+  }
+
+  .brand-subtitle {
+    font-size: 12px;
+    color: var(--ink-500);
+    line-height: 1.5;
+  }
+
+  .nav-label {
+    font-size: 10.5px;
+    letter-spacing: 1.5px;
+    color: var(--ink-400);
+    text-transform: uppercase;
+    font-weight: 600;
+    margin: 22px 12px 10px;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .nav {
+    list-style: none;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 9px 12px;
+    color: var(--ink-600);
+    text-decoration: none;
+    font-size: 13.5px;
+    cursor: pointer;
+    transition: all 0.15s;
+    margin-bottom: 2px;
+    border-radius: var(--r-md);
+    font-weight: 500;
+  }
+
+  .nav-item:hover {
+    background: var(--surface-hover);
+    color: var(--ink-900);
+  }
+
+  .nav-item.active {
+    background: var(--brand-50);
+    color: var(--brand-600);
+    font-weight: 600;
+  }
+
+  .nav-num {
+    font-size: 10.5px;
+    color: var(--ink-400);
+    min-width: 22px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.3px;
+  }
+
+  .nav-item.active .nav-num {
+    color: var(--brand-500);
+  }
+
+  .sidebar-footer {
+    margin-top: 32px;
+    padding: 18px 12px 0;
+    border-top: 1px solid var(--ink-100);
+    font-size: 11.5px;
+    color: var(--ink-500);
+    line-height: 1.7;
+  }
+
+  .sidebar-footer strong {
+    color: var(--ink-800);
+    display: block;
+    font-weight: 600;
+    margin-top: 4px;
+  }
+
+  /* ========== MAIN CONTENT ========== */
+  .main {
+    background: var(--bg);
+    min-height: 100vh;
+  }
+
+  .topbar {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--ink-100);
+    padding: 14px 44px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    transition: background 0.3s, border-color 0.3s;
+    gap: 16px;
+  }
+
+  .topbar-meta {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .breadcrumb {
+    font-size: 12.5px;
+    color: var(--ink-500);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .breadcrumb .sep {
+    color: var(--ink-300);
+  }
+
+  .breadcrumb .current {
+    color: var(--ink-900);
+    font-weight: 600;
+  }
+
+  .topbar-meta {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 26px;
+    line-height: 1;
+    background: var(--surface-soft);
+    color: var(--ink-700);
+    padding: 0 12px;
+    border-radius: var(--r-full);
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    border: 1px solid var(--ink-100);
+    box-sizing: border-box;
+    white-space: nowrap;
+  }
+
+  .badge.confidential {
+    background: var(--rose-50);
+    color: var(--rose-500);
+    border-color: rgba(239, 68, 68, 0.2);
+  }
+
+  .badge.brand {
+    background: var(--brand-50);
+    color: var(--brand-600);
+    border-color: var(--brand-100);
+  }
+
+
+  /* ===== Safety: validation indicators & undo ===== */
+  .table-validator {
+    margin-top: 10px;
+    padding: 10px 12px;
+    border-radius: var(--r-md);
+    background: var(--surface-soft);
+    border: 1px solid var(--ink-100);
+    font-size: 12.5px;
+    line-height: 1.7;
+  }
+  .table-validator.ok {
+    background: rgba(34, 197, 94, 0.08);
+    border-color: rgba(34, 197, 94, 0.25);
+    color: #15803D;
+  }
+  .table-validator.err {
+    background: rgba(239, 68, 68, 0.08);
+    border-color: rgba(239, 68, 68, 0.3);
+    color: #B91C1C;
+  }
+  body.dark .table-validator.ok { color: #4ADE80; }
+  body.dark .table-validator.err { color: #FCA5A5; }
+  .table-validator-title {
+    font-weight: 700;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .table-validator-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding: 2px 0;
+  }
+  .table-validator-row .row-num {
+    display: inline-block;
+    min-width: 22px;
+    text-align: center;
+    font-weight: 700;
+    background: var(--surface);
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-size: 11px;
+    border: 1px solid var(--ink-100);
+  }
+
+  .admin-textarea.has-error {
+    border-color: rgba(239, 68, 68, 0.5);
+    background: rgba(239, 68, 68, 0.03);
+  }
+
+  .admin-btn:disabled {
+    background: var(--ink-200);
+    color: var(--ink-500);
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+  .admin-btn:disabled:hover {
+    background: var(--ink-200);
+    box-shadow: none;
+  }
+
+  .admin-btn.undo {
+    background: #FEF3C7;
+    color: #92400E;
+    border: 1px solid #FCD34D;
+  }
+  .admin-btn.undo:hover {
+    background: #FDE68A;
+    box-shadow: none;
+  }
+  body.dark .admin-btn.undo {
+    background: rgba(252, 211, 77, 0.15);
+    color: #FCD34D;
+    border-color: rgba(252, 211, 77, 0.4);
+  }
+  body.dark .admin-btn.undo:hover {
+    background: rgba(252, 211, 77, 0.25);
+  }
+
+  .safety-tip {
+    margin-top: 10px;
+    padding: 10px 12px;
+    border-radius: var(--r-md);
+    background: rgba(99, 91, 255, 0.06);
+    border-right: 3px solid var(--brand-400);
+    font-size: 12.5px;
+    color: var(--ink-700);
+    line-height: 1.7;
+  }
+  body.dark .safety-tip {
+    background: rgba(99, 91, 255, 0.1);
+    color: var(--ink-700);
+  }
+
+  /* ========== SECTIONS ========== */
+  .section {
+    padding: 44px 52px;
+    max-width: 1200px;
+    display: none;
+  }
+
+  .section.active {
+    display: block;
+    animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ========== SECTION HEADER ========== */
+  .section-header {
+    margin-bottom: 36px;
+  }
+
+  .section-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .section-num-pill {
+    background: var(--brand-50);
+    color: var(--brand-600);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: var(--r-full);
+    letter-spacing: 1px;
+    font-family: 'Inter', sans-serif;
+    border: 1px solid var(--brand-100);
+  }
+
+  .section-eyebrow-text {
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    color: var(--ink-400);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .section-title {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--ink-900);
+    line-height: 1.25;
+    letter-spacing: -0.6px;
+    margin-bottom: 14px;
+  }
+
+  .section-lead {
+    font-size: 16px;
+    color: var(--ink-600);
+    line-height: 1.75;
+    max-width: 820px;
+  }
+
+  /* ========== HEADINGS ========== */
+  h2.h-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink-900);
+    margin: 40px 0 18px;
+    line-height: 1.4;
+    letter-spacing: -0.3px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  h2.h-title::before {
+    content: "";
+    width: 4px;
+    height: 22px;
+    background: linear-gradient(180deg, var(--brand-500) 0%, var(--brand-700) 100%);
+    border-radius: var(--r-full);
+  }
+
+  h3.h-sub {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink-800);
+    margin: 28px 0 10px;
+    letter-spacing: -0.2px;
+  }
+
+  h4.h-mini {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--ink-700);
+    margin: 18px 0 8px;
+  }
+
+  p {
+    margin-bottom: 14px;
+    color: var(--ink-700);
+    line-height: 1.85;
+  }
+
+  strong { color: var(--ink-900); font-weight: 700; }
+  em { color: var(--ink-500); font-style: normal; font-size: 0.95em; }
+
+  ul, ol {
+    margin: 14px 24px 18px 0;
+  }
+
+  li {
+    margin-bottom: 8px;
+    color: var(--ink-700);
+    line-height: 1.8;
+    padding-right: 4px;
+  }
+
+  li::marker { color: var(--brand-500); font-weight: 700; }
+
+  /* ========== KPI CARDS ========== */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 14px;
+    margin: 22px 0 32px;
+  }
+
+  .kpi {
+    background: var(--surface);
+    border: 1px solid var(--ink-100);
+    border-radius: var(--r-lg);
+    padding: 22px 20px;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .kpi::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--brand-500), var(--brand-400));
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+
+  .kpi:hover {
+    border-color: var(--brand-200);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  .kpi:hover::before { opacity: 1; }
+
+  .kpi-label {
+    font-size: 11.5px;
+    color: var(--ink-500);
+    letter-spacing: 0.3px;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .kpi-value {
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--ink-900);
+    line-height: 1.1;
+    margin-bottom: 6px;
+    letter-spacing: -1px;
+    font-family: 'Inter', 'IBM Plex Sans Arabic', sans-serif;
+  }
+
+  .kpi-unit {
+    font-size: 12.5px;
+    color: var(--ink-500);
+    font-weight: 500;
+  }
+
+  .kpi-trend {
+    font-size: 11.5px;
+    color: var(--emerald-500);
+    margin-top: 8px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--emerald-50);
+    padding: 3px 10px;
+    border-radius: var(--r-full);
+  }
+
+  /* ========== CARDS ========== */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--ink-100);
+    border-radius: var(--r-lg);
+    padding: 22px 24px;
+    margin: 16px 0;
+    transition: border-color 0.2s;
+  }
+
+  .card:hover { border-color: var(--ink-200); }
+
+  .card-title {
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--ink-900);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card-title::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--brand-500);
+    box-shadow: 0 0 0 4px var(--brand-soft);
+  }
+
+  /* ========== TABLES ========== */
+  .table-wrap {
+    background: var(--surface);
+    border: 1px solid var(--ink-100);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    margin: 18px 0;
+  }
+
+  .table-wrap.scroll {
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
+
+  thead {
+    background: var(--surface-soft);
+  }
+
+  th {
+    padding: 13px 16px;
+    text-align: right;
+    color: var(--ink-700);
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.4px;
+    border-bottom: 1px solid var(--ink-100);
+    text-transform: uppercase;
+    font-family: 'Inter', sans-serif;
+  }
+
+  td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--ink-100);
+    color: var(--ink-700);
+    vertical-align: top;
+    line-height: 1.7;
+  }
+
+  tbody tr:last-child td { border-bottom: none; }
+
+  tbody tr:hover { background: var(--surface-soft); transition: background 0.15s; }
+
+  td strong { color: var(--ink-900); }
+
+  /* ========== CALLOUTS ========== */
+  .callout {
+    background: linear-gradient(135deg, var(--brand-50) 0%, rgba(99, 91, 255, 0.04) 100%);
+    border: 1px solid var(--brand-100);
+    border-radius: var(--r-lg);
+    padding: 20px 22px;
+    margin: 18px 0;
+    position: relative;
+  }
+
+  .callout-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--brand-600);
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .callout-label::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    background: var(--brand-500);
+    border-radius: 50%;
+  }
+
+  .callout p {
+    margin-bottom: 8px;
+    color: var(--ink-700);
+    font-size: 14px;
+  }
+
+  .callout p:last-child { margin-bottom: 0; }
+
+  .callout.dark {
+    background: linear-gradient(135deg, var(--ink-900) 0%, var(--ink-800) 100%);
+    border: 1px solid var(--ink-800);
+    color: white;
+  }
+
+  .callout.dark .callout-label { color: var(--brand-200); }
+  .callout.dark .callout-label::before { background: var(--brand-400); }
+  .callout.dark p { color: rgba(255, 255, 255, 0.85); }
+  .callout.dark strong { color: white; }
+
+  .callout.amber {
+    background: linear-gradient(135deg, var(--amber-50) 0%, rgba(245, 158, 11, 0.04) 100%);
+    border-color: rgba(245, 158, 11, 0.2);
+  }
+
+  .callout.amber .callout-label { color: #B45309; }
+  .callout.amber .callout-label::before { background: var(--amber-500); }
+
+  /* ========== STUDIO GRID ========== */
+  .studios {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin: 22px 0;
+  }
+
+  .studio {
+    background: var(--surface);
+    border: 1px solid var(--ink-100);
+    border-radius: var(--r-lg);
+    padding: 22px;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .studio::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle at top right, var(--brand-soft) 0%, transparent 70%);
+  }
+
+  .studio:hover {
+    border-color: var(--brand-200);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  .studio-num {
+    display: inline-block;
+    font-size: 10.5px;
+    color: var(--brand-600);
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    font-family: 'Inter', sans-serif;
+    margin-bottom: 12px;
+    background: var(--brand-50);
+    padding: 3px 10px;
+    border-radius: var(--r-full);
+  }
+
+  .studio-name {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink-900);
+    margin-bottom: 4px;
+    letter-spacing: -0.2px;
+  }
+
+  .studio-en {
+    font-size: 12px;
+    color: var(--ink-500);
+    margin-bottom: 12px;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.3px;
+  }
+
+  .studio-desc {
+    font-size: 13.5px;
+    color: var(--ink-600);
+    line-height: 1.75;
+  }
+
+  /* ========== EQUATION ========== */
+  .equation {
+    background: linear-gradient(135deg, #1A1F36 0%, #0A0E27 100%);
+    color: white;
+    padding: 32px;
+    margin: 26px 0;
+    border-radius: var(--r-xl);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .equation::before {
+    content: "";
+    position: absolute;
+    top: -50px;
+    left: -50px;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(99, 91, 255, 0.25) 0%, transparent 70%);
+  }
+
+  .equation-block {
+    margin-bottom: 22px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+  }
+
+  .equation-block:last-of-type {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+
+  .equation-label {
+    font-size: 11px;
+    color: var(--brand-200);
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .equation-text {
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.88);
+    line-height: 1.85;
+  }
+
+  .equation-result {
+    background: linear-gradient(135deg, var(--brand-500) 0%, var(--brand-700) 100%);
+    color: white;
+    padding: 24px;
+    margin-top: 22px;
+    border-radius: var(--r-lg);
+    box-shadow: var(--shadow-brand);
+    position: relative;
+  }
+
+  .equation-result .equation-label { color: white; opacity: 0.9; }
+  .equation-result .equation-text { color: white; }
+  .equation-result .equation-text strong { color: white; font-weight: 700; }
+
+  /* ========== PULL QUOTE ========== */
+  .pull-quote {
+    background: var(--surface);
+    border: 1px solid var(--ink-100);
+    border-radius: var(--r-lg);
+    padding: 22px 26px;
+    margin: 22px 0;
+    font-size: 16px;
+    line-height: 1.85;
+    color: var(--ink-800);
+    font-weight: 500;
+    position: relative;
+    border-right: 4px solid var(--brand-500);
+  }
+
+  .pull-quote strong { color: var(--ink-900); }
+
+  /* ========== HIGHLIGHT BOX ========== */
+  .highlight {
+    background: linear-gradient(135deg, var(--brand-50) 0%, rgba(99, 91, 255, 0.05) 100%);
+    border: 1px solid var(--brand-100);
+    border-radius: var(--r-lg);
+    padding: 18px 22px;
+    margin: 18px 0;
+  }
+
+  .highlight p {
+    color: var(--ink-700);
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+
+  .highlight strong { color: var(--brand-700); }
+
+  /* ========== TWO COLUMN ========== */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 20px 0;
+  }
+
+  /* ========== PROGRESS BANNER ========== */
+  @media (max-width: 1024px) {
+    .app { grid-template-columns: 1fr; }
+    .sidebar { position: relative; height: auto; }
+    .section { padding: 32px 24px; }
+    .studios, .two-col { grid-template-columns: 1fr; }
+    .topbar { padding: 12px 24px; }
+  }
+
+  @media (max-width: 640px) {
+    .section-title { font-size: 26px; }
+    .kpi-value { font-size: 24px; }
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    table { font-size: 12.5px; }
+    th, td { padding: 10px 12px; }
+  }
+
+  /* ========== PRINT ========== */
+  @media print {
+    .sidebar, .topbar { display: none; }
+    .app { display: block; }
+    .section { display: block !important; padding: 24px; page-break-after: always; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ========== SIDEBAR ========== -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">
+        <div class="brand-square">DC</div>
+        <div>
+          <div class="brand-name">Feasibility</div>
+        </div>
+      </div>
+      <div class="brand-title">دراسة جدوى — بيت خبرة تقني</div>
+      <div class="brand-subtitle">المملكة العربية السعودية · 2026</div>
+    </div>
+
+    <div class="nav-label">المحاور</div>
+    <nav class="nav">
+      <a class="nav-item active" data-section="overview"><span class="nav-num">00</span>نظرة عامة</a>
+      <a class="nav-item" data-section="preface"><span class="nav-num">01</span>مذكرة الشريك المؤسس</a>
+      <a class="nav-item" data-section="summary"><span class="nav-num">02</span>الملخص التنفيذي</a>
+      <a class="nav-item" data-section="concept"><span class="nav-num">03</span>المفهوم التجاري</a>
+      <a class="nav-item" data-section="market"><span class="nav-num">04</span>تحليل السوق</a>
+      <a class="nav-item" data-section="competition"><span class="nav-num">05</span>المشهد التنافسي</a>
+      <a class="nav-item" data-section="customers"><span class="nav-num">06</span>العملاء المستهدفون</a>
+      <a class="nav-item" data-section="legal"><span class="nav-num">07</span>الإطار القانوني</a>
+      <a class="nav-item" data-section="operations"><span class="nav-num">08</span>خطة التشغيل</a>
+      <a class="nav-item" data-section="hr"><span class="nav-num">09</span>الموارد البشرية</a>
+      <a class="nav-item" data-section="sales"><span class="nav-num">10</span>المبيعات والتسويق</a>
+      <a class="nav-item" data-section="financials"><span class="nav-num">11</span>التوقعات المالية</a>
+      <a class="nav-item" data-section="risks"><span class="nav-num">12</span>تحليل المخاطر</a>
+      <a class="nav-item" data-section="conclusion"><span class="nav-num">13</span>الخاتمة</a>
+    </nav>
+
+    <div class="sidebar-footer">
+      مُعدّ بواسطة
+      <strong>م. عبدالله الفولي</strong>
+      نيابةً عن شبكة شركاء<br>
+      شركة دبي في القاهرة المحدودة
+    </div>
+  </aside>
+
+  <!-- ========== MAIN ========== -->
+  <main class="main">
+
+    <!-- TOP BAR -->
+    <div class="topbar">
+      <div class="breadcrumb">
+        <span>دراسة جدوى</span>
+        <span class="sep">/</span>
+        <span class="current" id="current-section">نظرة عامة</span>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-meta">
+          <span class="badge brand">مايو 2026</span>
+          <span class="badge confidential">سرّية</span>
+        </div>
+        <div class="topbar-divider"></div>
+        <div class="top-controls">
+          <button class="ctrl-btn" id="themeToggle" title="تبديل الوضع الداكن">
+            <svg id="iconSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+            <svg id="iconMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </button>
+          <button class="ctrl-btn" id="adminToggle" title="لوحة التحرير">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 20h9"></path>
+              <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== SECTION: OVERVIEW ========== -->
+    <section class="section active" id="overview">
+      <div class="section-header">
+        <div class="section-eyebrow">
+          <span class="section-num-pill">OVERVIEW · 00</span>
+          <span class="section-eyebrow-text">Executive Brief</span>
+        </div>
+        <h1 class="section-title">تأسيس بيت خبرة تقني في المملكة العربية السعودية</h1>
+        <p class="section-lead">
+          كيان سعودي المقر يجمع بين الرؤية التسويقية والعمق التقني وتوظيف الذكاء الاصطناعي في خدمة المؤسسات، مبني على الخبرة المتراكمة لشركة دبي في القاهرة المحدودة خلال خمس سنوات في خدمات التسويق الإلكتروني والحلول الرقمية للأعمال.
+        </p>
+      </div>
+
+      <!-- KPIs -->
+      <div class="kpi-grid">
+        <div class="kpi">
+          <div class="kpi-label">رأس المال</div>
+          <div class="kpi-value">250K</div>
+          <div class="kpi-unit">ريال سعودي</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">نقطة التعادل</div>
+          <div class="kpi-value">12</div>
+          <div class="kpi-unit">شهرًا من التشغيل</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">إيراد السنة الثالثة</div>
+          <div class="kpi-value">4.8M</div>
+          <div class="kpi-unit">ريال سعودي</div>
+          <div class="kpi-trend">↗ نمو 700%</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">صافي الربح — السنة 3</div>
+          <div class="kpi-value">1.16M</div>
+          <div class="kpi-unit">ريال (هامش 24%)</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">الفريق المبدئي</div>
+          <div class="kpi-value">3</div>
+          <div class="kpi-unit">موظفين أساسيين</div>
+        </div>
+      </div>
+
+      <h2 class="h-title">طبيعة الكيان</h2>
+      <div class="callout dark">
+        <div class="callout-label">توضيح هام</div>
+        <p>الكيان الجديد المقترح هو شركة <strong>سعودية المقر والجنسية</strong>، تُقدَّم في السوق كـ بيت خبرة في استشارات تطوير الأعمال على المنصات الرقمية، والدراسات التسويقية، وخبرات الإبداع، وخدمات التحول الرقمي، وكيفية توظيف أدوات الذكاء الاصطناعي في خدمة المؤسسات.</p>
+        <p>لا يوجد أي ارتباط تشغيلي أو تعاقدي بمحفظة عملاء الشركة الأم؛ تستثمر الشركة الجديدة فقط <strong>رأس المال المعرفي والخبرة المتراكمة خلال أكثر من خمس سنوات</strong>، مع تطبيق رؤية محدّثة تتجاوز التحديات السابقة.</p>
+      </div>
+
+      <h2 class="h-title">التوصية</h2>
+      <div class="highlight">
+        <p>المضي قدمًا في التأسيس على مرحلتين — <strong>إطلاق هادئ (6 أشهر)</strong> ثم تشغيل كامل، مع تقييم الأداء ربعيًا بدايةً من <strong>1 يناير 2027</strong>.</p>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="card-title">الأسواق المستهدفة</div>
+          <p style="font-size: 13.5px; margin: 0;">التصنيع والمقاولات (أولوية ١) · الضيافة والفنادق (أولوية ٢) · الرعاية الصحية والتعليم (أولوية ٣)</p>
+        </div>
+        <div class="card">
+          <div class="card-title">الشريحة المستهدفة</div>
+          <p style="font-size: 13.5px; margin: 0;">شركات متوسطة سعودية (50 – 500 موظف) بقيمة عقد سنوية 80 – 200 ألف ريال</p>
+        </div>
+      </div>
+
+      <div class="progress-banner">
+        <div class="progress-banner-icon">5</div>
+        <div class="progress-banner-text">
+          <strong>المرحلة الأولى — معاينة:</strong> يتم عرض 5 محاور فقط في هذه النسخة (نظرة عامة، المذكرة التمهيدية، الملخص التنفيذي، المفهوم التجاري، تحليل السوق). الـ 8 محاور المتبقية ستُضاف بعد الموافقة على التصميم.
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== SECTION: PREFACE ========== -->
+    <section class="section" id="preface">
+      <div class="section-header">
+        <div class="section-eyebrow">
+          <span class="section-num-pill">FOUNDING MEMO · 01</span>
+          <span class="section-eyebrow-text">Partner Letter</span>
+        </div>
+        <h1 class="section-title">مذكرة الشريك المؤسس التقني</h1>
+        <p class="section-lead">
+          بقلم م. عبدالله الفولي، نيابةً عن شبكة الشركاء المسجّلة لدى شركة دبي في القاهرة المحدودة. توضيح ما يملكه الشريك التقني وفريقه، وما يحتاجه من شريك مستثمر، ولماذا اختير السوق السعودي، وما هو الهدف النهائي.
+        </p>
+      </div>
+
+      <h2 class="h-title">أولًا — ما أملكه (أنا وفريقي)</h2>
+      <p>أمتلك مزيجًا من <strong>المعرفة التقنية والتسويقية</strong> أعتبره — بصراحة ودون مبالغة — نادرًا أن يجتمع في شخص واحد داخل سوق الخدمات الرقمية. لسنوات طويلة كان هذا المزيج يميل إلى الجانب النظري أكثر منه إلى التطبيقي. لكن خلال السنوات الخمس الماضية، أثبت هذا المزيج جدارته على أرض الواقع، تحديدًا في ثلاث نقاط:</p>
+      <ul>
+        <li><strong>حقّق نتائج ملموسة وواقعية بنسبة 100%</strong> — لا وعودًا، ولا شرائح عرض، ولا حديثًا نظريًا.</li>
+        <li><strong>غيّر مسار شركات عديدة</strong> من فئات متباينة: شركات رائدة في قطاعاتها، وشركات محلية صغيرة ومتوسطة.</li>
+        <li><strong>تحوّل من فكرة استشارية</strong> إلى منهجية تنفيذية موثّقة قابلة للتكرار والقياس.</li>
+      </ul>
+      <p>أمتلك إلى جانب الخبرة الشخصية <strong>فريقًا تقنيًا متماسكًا</strong> مسجَّلًا كشبكة شركاء لدى شركة دبي في القاهرة المحدودة. تعاملنا معًا أكثر من خمس سنوات، نجحنا معًا، وبنينا آليات تعاون ومعرفة تقنية مشتركة بأدوات العمل، مع قدرة على <strong>اكتساب مهارات الأدوات التكنولوجية الجديدة بسرعة فائقة</strong> كلما تطلّب السوق ذلك.</p>
+      <p>يعمل هذا الفريق بنموذج تعاوني مرن يتماشى مع متطلبات الاقتصاد الرقمي الحديث، لا بنظام الدوام الكامل التقليدي. وهذه إحدى نقاط قوّتنا الجوهرية: فنحن لسنا مقيّدين بقدرات موظف بعينه في تخصص بعينه، بل نملك مجموعة متعددة من الكفاءات القابلة للتفعيل حسب طبيعة كل مشروع.</p>
+
+      <h2 class="h-title">ثانيًا — التحدي الذي أواجهه في السوق المصري</h2>
+      <p>على الرغم من الفريق التقني الممتاز الذي أقوده، لا أزال أواجه ثلاثة تحديات هيكلية تجعل النمو الحقيقي صعبًا داخل السوق المصري:</p>
+
+      <h3 class="h-sub">التحدي الأول — إغراق سوق مقدّمي الخدمات</h3>
+      <p>السوق المصري شهد تضخّمًا هائلًا في عدد مقدّمي الخدمات الرقمية، بسبب الكثافة السكانية الشبابية مقارنة بحجم الطلب الحقيقي. حدث <strong>إغراق سوقي</strong> يصعب فيه أن يتميّز مقدم الخدمة الجاد، لأن الحقيقة الواضحة تضيع وسط <strong>المئات من العروض المزيّفة والمدّعية</strong> التي تُقدَّم بأسعار غير اقتصادية.</p>
+
+      <h3 class="h-sub">التحدي الثاني — ضعف القدرة الشرائية</h3>
+      <p>مع الأوضاع الاقتصادية الحالية، أصبح حجم العمل المتاح كبيرًا جدًا، <strong>لكنه غير مجزٍ ماليًا</strong>. الفجوة بين الجهد المطلوب والعائد الفعلي تتسع باستمرار، مما يجعل الاستدامة المالية لشركة متخصصة جادة صعبة، حتى مع جودة عالية في التسليم.</p>
+
+      <h3 class="h-sub">التحدي الثالث — استحالة التوسع الكمي</h3>
+      <p>تقديم الخدمات التقنية والاستشارية بمستوى عميق يصعب معه التوسع الكمي. القدرة الاستيعابية الواقعية للشركة المتوسطة هي 3 إلى 4 مشروعات شهريًا فقط، وهذه المشروعات تقع في معادلة قاسية:</p>
+      <ul>
+        <li><strong>إذا كانت مشروعات صغيرة:</strong> مجزية بصعوبة وتستهلك الوقت.</li>
+        <li><strong>إذا كانت مشروعات كبيرة:</strong> مجزية، لكنها تستهلك القدرة الكاملة للفريق.</li>
+        <li><strong>المشروعات المتوسطة المثالية:</strong> لا نستطيع التوسع الكمي فيها لأن كل مشروع يحتاج عمقًا حقيقيًا.</li>
+      </ul>
+      <p>حتى لو افترضنا أن <strong>5% فقط</strong> من شركات الخدمات قادرة على التوسع الكمي الناجح، فأنا أعترف بصراحة أنني <strong>لم أنجح في أن أكون منها</strong>. السبب ليس تقنيًا، بل إداريًا — أنا قوي تقنيًا، لكن إدارة فريق بشري كبير ليست من نقاط قوتي. التجربة العملية المتكررة أثبتت أن إدارة فريق يتجاوز <strong>10 أشخاص</strong> تصبح مرهقة جدًا، لكني أعمل حاليًا بقوة وعزيمة على تطوير هذه المهارة الإدارية.</p>
+
+      <h2 class="h-title">ثالثًا — ما أضعه فعلًا على طاولة الشراكة</h2>
+      <p>بصرف النظر عن التحديات السابقة، فإن ما أضعه على طاولة الشراكة ليس وعودًا، بل أصولًا حقيقية قابلة للقياس:</p>
+      <ul>
+        <li><strong>12 ساعة عمل يوميًا</strong> — التزام شخصي كامل.</li>
+        <li><strong>مجهود وتفرّغ شخصي</strong> لمشروع الكيان الجديد دون انشغالات موازية.</li>
+        <li><strong>تعليم أكاديمي رفيع المستوى</strong> يدعم الجانبين التقني والإداري.</li>
+        <li><strong>فريق ناضج</strong> تعاملنا معًا أكثر من 5 سنوات وأثبتنا قدرتنا على العمل المشترك.</li>
+        <li><strong>آليات تعاون ومعرفة تقنية مشتركة</strong> داخل الإطار التقني — موثقة وقابلة للتكرار.</li>
+        <li><strong>قدرة فائقة على تعلُّم أدوات الذكاء الاصطناعي الجديدة</strong> بسرعة تتفوق على المتوسط السوقي.</li>
+      </ul>
+
+      <h2 class="h-title">رابعًا — لماذا الخليج؟ ولماذا السعودية تحديدًا؟</h2>
+      <p>كل ما سبق دفعني إلى استنتاج واحد: الخليج هو المقصد، والسعودية تحديدًا هي الوجهة. الأسباب موضوعية ومدروسة، وليست عاطفية:</p>
+      <ul>
+        <li><strong>السوق السعودي يكافئ الجودة التقنية الحقيقية</strong>، لا الأسعار المنخفضة المُغرقة.</li>
+        <li><strong>طلب فعلي هيكلي مدفوع برؤية 2030</strong> ومتطلبات الامتثال (مثل هيئة الزكاة والضريبة والجمارك — ZATCA) — يجعل خدماتنا مطلوبة دائمًا لا موسميًا.</li>
+        <li><strong>القدرة الشرائية للشركات المتوسطة</strong> تتناسب مع قيمة المشروع الحقيقية.</li>
+        <li><strong>غياب المنافسين</strong> الذين يجمعون بين الرؤية التسويقية والعمق التقني وتوظيف الذكاء الاصطناعي في كيان واحد.</li>
+      </ul>
+
+      <h2 class="h-title">خامسًا — الهدف النهائي: شركة ناشئة مليارية</h2>
+      <div class="pull-quote">
+        الهدف الرئيسي من تواجدي في السوق السعودي هو أن أكون <strong>مستثمرًا أجنبيًا يقود شركة ناشئة مليارية</strong> (Billion-Riyal Startup). هذه هي الرؤية الجوهرية، ويجب أن تكون واضحة لدى الشريك منذ اللحظة الأولى.
+      </div>
+      <p>أي مسار آخر — بما في ذلك بيت الخبرة الذي تتحدث عنه هذه الدراسة — سيكون <strong>مسارًا مؤقتًا واستراتيجيًا في سبيل تحقيق هذا الحلم القريب</strong>. بيت الخبرة هو <strong>المنصة التشغيلية والمالية والمعرفية</strong> التي ستوصلنا إلى الشركة الناشئة المليارية، وليس الغاية في حد ذاته.</p>
+
+      <p>هذا التوضيح ضروري حتى تكون توقعات الشريكين متوافقة على ثلاث مستويات:</p>
+      <ul>
+        <li><strong>مستوى الطموح:</strong> نحن لا نبني شركة خدمات تقليدية لتدر دخلًا شهريًا فحسب — نحن نبني الخطوة الأولى نحو كيان مليارى.</li>
+        <li><strong>مستوى الاستثمار:</strong> قرارات إعادة الاستثمار، التوظيف، التوسع الجغرافي، والشراكات ستُتخذ بمنطق شركة ناشئة (Startup) يتطلع للنمو المتسارع.</li>
+        <li><strong>مستوى الخروج (Exit Strategy):</strong> بيت الخبرة سيُحوَّل في الوقت المناسب إلى منتج رقمي قابل للتوسع — سواء كان منتجًا مُنتَجًا (Productized Service) أو خدمة برمجية كاملة (SaaS) — يفتح طريق جولات الاستثمار، الاستحواذ، أو الاكتتاب.</li>
+      </ul>
+
+      <div class="callout">
+        <div class="callout-label">ملاحظة جوهرية تستوجب الشفافية الكاملة</div>
+        <p>لا أنا شخصيًا مؤهَّل حاليًا لإدارة شركة مليارية، ولا الشريك — في الغالب — يملك هذه الأهلية بمفرده. وهذا اعتراف نختار قوله بصراحة، لأن إنكاره سيكون أوّل خطوة نحو الفشل.</p>
+        <p>السبيل الوحيد المنطقي إذًا هو أن نعمل معًا بمنطق التمكين ودور التنسيق: نُتيح المجال، ونُهيّئ الشركة للفكر الحديث، عبر احتضان المتخصصين والموهوبين والمحترفين في كل مجال، وتمكينهم من ممارسة فكرهم التخصصي دون وصاية منّا عليه.</p>
+        <p>فلو كنّا — أنا والشريك — نملك التوليفة الكاملة بأنفسنا، لكنّا قد أنجزناها فعلًا. اعترافنا بأننا لا نملكها هو شرط ضروري لبنائها بأيدي مَن يملكونها.</p>
+      </div>
+
+      <h2 class="h-title">سادسًا — ما أحتاجه من الشريك المستثمر</h2>
+      <p>ما أحتاجه واضح ومحدد. لست بحاجة إلى دعم تقني — لديّ هذا بالفعل. ما أحتاجه هو شريك يكمّل المعادلة على أربعة محاور:</p>
+
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th style="width: 30%;">المحور</th><th>ما المطلوب تحديدًا</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>١ — البنية التحتية للشركة</strong></td>
+            <td>مقر فعلي محترم يليق بالعملاء المستهدفين (شركات متوسطة وكبيرة في الرياض)، وحضور قانوني وتجاري سعودي قابل للتعاقد مع الجهات الحكومية وشبه الحكومية.</td>
+          </tr>
+          <tr>
+            <td><strong>٢ — رأس المال البشري التشغيلي</strong></td>
+            <td>رواتب الفريق الأساسي خلال فترة التأسيس (6 أشهر تمهيدية + 6 أشهر تشغيل أولي)، بما يمكّن الشركة من استقطاب وإبقاء كفاءات سعودية تقنية ضمن متطلبات السعودة.</td>
+          </tr>
+          <tr>
+            <td><strong>٣ — الميزانية التسويقية للإطلاق</strong></td>
+            <td>ميزانية تسويق مدروسة (LinkedIn Ads، محتوى تقني عربي، حضور في الفعاليات المتخصصة مثل LEAP) تكفي لتوليد أول قائمة من العملاء المحتملين (Leads) النوعية.</td>
+          </tr>
+          <tr>
+            <td><strong>٤ — رجل أعمال يحتضن الخبرة التقنية</strong></td>
+            <td>شريك تجاري — رجل أعمال — يفهم قيمة الخبرة التقنية ويوفر لها المناخ المؤسسي والمتطلبات المالية اللازمة لتنمو وتؤتي ثمارها. شريك يكمّل المعادلة، لا يتنافس معي عليها.</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h2 class="h-title">سابعًا — المعادلة باختصار</h2>
+      <div class="equation">
+        <div class="equation-block">
+          <div class="equation-label">ما أُحضِره</div>
+          <div class="equation-text">الخبرة التقنية النادرة + الفريق التنفيذي + الوقت الكامل (12 ساعة يوميًا) + المنهجية المُجرَّبة + التعليم الأكاديمي الرفيع + شبكة شركاء جاهزة.</div>
+        </div>
+        <div class="equation-block">
+          <div class="equation-label">ما يُحضره الشريك المستثمر</div>
+          <div class="equation-text">البنية التحتية + رأس المال التشغيلي + الحضور السوقي السعودي + الميزانية التسويقية + العلاقات المحلية.</div>
+        </div>
+        <div class="equation-result">
+          <div class="equation-label">الناتج</div>
+          <div class="equation-text">كيان سعودي المقر، يجمع لأول مرة بين <strong>الرؤية التسويقية + العمق التقني + توظيف الذكاء الاصطناعي</strong>، في فجوة سوقية حقيقية تنتظر مَن يملؤها. ومنه ننطلق نحو <strong>الشركة الناشئة المليارية</strong> — الهدف الأكبر والأوضح.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== SECTION: SUMMARY ========== -->
+    <section class="section" id="summary">
+      <div class="section-header">
+        <div class="section-eyebrow">
+          <span class="section-num-pill">EXECUTIVE SUMMARY · 02</span>
+          <span class="section-eyebrow-text">Strategic Overview</span>
+        </div>
+        <h1 class="section-title">الملخص التنفيذي</h1>
+        <p class="section-lead">
+          نظرة شاملة على التموضع الاستراتيجي، المبرر الاقتصادي، والمعطيات المحورية للكيان المقترح.
+        </p>
+      </div>
+
+      <h2 class="h-title">التموضع الاستراتيجي</h2>
+      <p>الكيان المقترح يُقدَّم في السوق السعودي كشركة سعودية المقر — بيت خبرة في الاستشارات والدراسات التسويقية وخبرات الإبداع وخدمات التحول الرقمي وتوظيف الذكاء الاصطناعي في خدمة المؤسسات.</p>
+
+      <p>يجمع الكيان بين كفاءات نادرًا ما تجتمع في السوق:</p>
+      <ul>
+        <li><strong>الرؤية التسويقية</strong> وخبرات تطوير إدارة الأعمال.</li>
+        <li><strong>المعرفة التقنية بأدوات تخطيط موارد المؤسسات (ERPs)</strong> — مثل أودو (Odoo) وما شابهها.</li>
+        <li><strong>المعرفة والإلمام بأدوات الذكاء الاصطناعي الحديثة</strong> وكيفية توظيفها ودمجها في خدمة العمليات التشغيلية والتسويقية للشركات.</li>
+      </ul>
+
+      <p>السوق السعودي مزدحم بالوكالات الإعلانية، لكنه يفتقر إلى بيوت خبرة تخدم شريحة <strong>«التحول الرقمي المؤسسي في إطار خطة تطوير تجارية تستهدف زيادة المبيعات وتقليل الإنفاق بتوظيف الذكاء الاصطناعي»</strong> — وهذه هي الفجوة المستهدفة.</p>
+
+      <h2 class="h-title">المبرر الاقتصادي</h2>
+      <p>المملكة تمر بأقوى موجة تحول رقمي في تاريخها، مدفوعة برؤية 2030، ومبادرات <strong>وزارة الاتصالات وتقنية المعلومات (MCIT)</strong>، و<strong>الهيئة السعودية للبيانات والذكاء الاصطناعي (SDAIA)</strong>، و<strong>هيئة الزكاة والضريبة والجمارك (ZATCA)</strong>. هذه الموجة تخلق طلبًا مستمرًا على <strong>خدمات رقمنة متخصصة مصحوبة برؤية تجارية</strong>.</p>
+
+      <p>هذا يضع الشركة الجديدة محط <strong>رغبتين متلاقيتين</strong>: رغبة الامتثال من الحكومة وأصحاب المؤسسات من جهة، ورغبة التطوير وتوفير النفقات من العملاء من جهة أخرى.</p>
+
+      <h2 class="h-title">المعطيات المحورية</h2>
+
+      <div class="table-wrap scroll">
+      <table>
+        <thead>
+          <tr><th style="width: 28%;">المؤشر</th><th>القيمة</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>الاحتياج النقدي (السنة الأولى)</strong></td>
+            <td>250,000 ريال سعودي</td>
+          </tr>
+          <tr>
+            <td><strong>الفريق المبدئي</strong></td>
+            <td>
+              <strong>ثلاثة موظفين أساسيين:</strong>
+              <br>١ — <strong>المدير التنفيذي:</strong> مسؤول عن الإشراف العام على عمليات التسويق والتشغيل والتطوير.
+              <br>٢ — <strong>مدير الحسابات الأول (Account Manager):</strong> يبدأ بالبيع ثم يدير الحسابات. يجب أن يكون تقنيًا، لأننا نبيع بناءً على تقديم الدعم التقني والمشورة والمعرفة، لا بشكل تجاري.
+              <br>٣ — <strong>المنسق (Coordinator):</strong> التنسيق، متابعة جداول الأعمال، أخذ المواعيد، جمع البيانات، الرد على رسائل السوشيال ميديا.
+              <br><br><strong>بقية الفريق:</strong> يتم التعاقد على أساس مشروعي (Project-Based) لكل تاسك أو مشروع. الميزة: تقليل التكاليف. العيب: غياب الولاء (الولاء الأصلي لشركتهم الأم).
+              <br><br>يتم بعد 6 أشهر تعيين <strong>استراتيجي ومنفذ قائم على الذكاء الاصطناعي (AI-Based Strategist & Implementor)</strong> يقوم بتنفيذ الخدمات التقنية عبر مهارة هندسة الموجِّهات (Prompt Engineering) وأدوات الذكاء الاصطناعي.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>نقطة التعادل المتوقعة</strong></td>
+            <td>
+              <strong>بدء التشغيل:</strong> 1 يونيو — فترة تمهيدية 6 أشهر.
+              <br>توزيع الـ 250,000 ريال على 9 أشهر = <strong>27,777 ريال شهريًا</strong>.
+              <br><br><strong>التوزيع الشهري:</strong>
+              <br>• الإيجار: 5,000 ريال
+              <br>• الرواتب: 15,000 ريال
+              <br>• الإعلانات والتسويق: ~7,777 ريال
+              <br><br>يتم استقطاب مشروعات خارجية من الشهر الخامس، ومعالجة التدفق النقدي من الشهر الخامس إلى التاسع، ليتم الاعتماد على دخل الشركة والاستغناء عن إسهام الشريك الممول بعد الشهر التاسع.
+              <br><br><strong>راتب المدير التنفيذي:</strong> 20,000 ريال (المتوسط المستحق في السوق المحلي). يسهم بـ 15,000 ريال لصالح استثمار الشركة، ويأخذ 5,000 ريال كاش فقط — مبلغ رمزي يوفر الاحتياجات الرئيسية للمعيشة في الرياض.
+              <br><br><strong>الحصص:</strong> 50% المدير التنفيذي — 50% الشريك الراعي بعقد عرفي منفصل. توزيع الأرباح بعد انتهاء كل مشروع على حدة.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>أفق الاستثمار</strong></td>
+            <td><strong>12 شهرًا</strong> — مدة العقد العرفي المبدئي. بعد ذلك يتم الانتقال إلى الوضع القانوني الجديد: تأسيس كيان جديد بشراكة قانونية موثقة 100%، تجمع بين الشريك الراعي والشريك التنفيذي كمستثمر أجنبي، بنفس النسب المتفق عليها، أو طبقاً للمستجدات حينها.</td>
+          </tr>
+          <tr>
+            <td><strong>الموقع</strong></td>
+            <td>
+              <strong>مقر التشغيل اليومي:</strong> الرياض — مركز الملك عبدالله المالي (كافد – KAFD). مساحة عمل مشتركة مناسبة لأجواء التسويق الإلكتروني والعالم الرقمي، تفتح أبوابًا ممتازة على خبرات السوق والعلاقات.
+              <br><br><strong>المقر الإداري الثابت:</strong> مكتب فيناس للشقق المخدومة — الرياض. مقر مخصص للاجتماعات الرسمية واستقبال كبار العملاء والخبراء.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="callout">
+        <div class="callout-label">ملاحظة هامة حول الحساب البنكي</div>
+        <p>يتم فتح حساب بنكي مستقل ومخصص لهذه الشراكة فقط، على أن تكون جميع المعاملات المالية المتعلقة بها منفصلة تمامًا عن باقي أنشطة شركة الممول. لا يجوز استخدام السيولة لأي أغراض شخصية أو تجارية أخرى، أو لتغطية أي التزامات أو عجز خارج نطاق هذه الشراكة. ويقتصر استخدامها حصريًا على تحقيق أهداف المشروع وتمويل أنشطته التشغيلية والتنفيذية.</p>
+      </div>
+    </section>
+
+    <!-- ========== SECTION: CONCEPT ========== -->
+    <section class="section" id="concept">
+      <div class="section-header">
+        <div class="section-eyebrow">
+          <span class="section-num-pill">BUSINESS CONCEPT · 03</span>
+          <span class="section-eyebrow-text">Studios & Services</span>
+        </div>
+        <h1 class="section-title">المفهوم التجاري ومحفظة الخدمات</h1>
+        <p class="section-lead">
+          هيكل الستوديوهات الأربعة، نماذج التسعير، ومبدأ التموضع الذي يميز الكيان عن المنافسين.
+        </p>
+      </div>
+
+      <h2 class="h-title">هيكل الستوديوهات الأربعة</h2>
+      <p>تعمل الستوديوهات الأربعة في تناغم كامل بالتنسيق بينها. مصطلح «ستوديو» (Studio) أو «مُختبر» (Lab) يُستخدم كبديل واعٍ عن "الأقسام المتخصصة" للشركة الذي يستدعي النمط التقليدي للشركات المرتبط بالمصلحة التجارية البحتة، وتحقيق الأرباح من العميل بنمطية التعامل المعروفة. هذا التموضع ينقلنا إلى صورة <strong>الخبراء التقنيين الذين يعملون في ستوديوهات</strong> — وليست أقسامًا إدارية.</p>
+
+      <div class="studios">
+        <div class="studio">
+          <div class="studio-num">STUDIO 01</div>
+          <div class="studio-name">العلامة التجارية واستراتيجية التطوير</div>
+          <div class="studio-en">Brand & Strategy</div>
+          <div class="studio-desc">الهوية البصرية، خطة تطوير الأعمال، استراتيجية السوق، المحتوى، الحملات الرقمية.</div>
+        </div>
+        <div class="studio">
+          <div class="studio-num">STUDIO 02</div>
+          <div class="studio-name">الأنظمة المؤسسية</div>
+          <div class="studio-en">ERP Systems</div>
+          <div class="studio-desc">الواجهات الإلكترونية الداخلية لتنظيم الأعمال والمطبخ التشغيلي وضبط البيانات: نظام أودو (Odoo)، وتكاملات واجهات برمجة التطبيقات (API)، وحلول مخصصة، وتهيئة وتشغيل منصة إيزي (eZee).</div>
+        </div>
+        <div class="studio">
+          <div class="studio-num">STUDIO 03</div>
+          <div class="studio-name">التجارة الرقمية</div>
+          <div class="studio-en">eCommerce Technology</div>
+          <div class="studio-desc">الواجهات الإلكترونية الخارجية في مواجهة العملاء: المتاجر الإلكترونية، بوابات الدفع المحلية، تحسين معدلات التحويل.</div>
+        </div>
+        <div class="studio">
+          <div class="studio-num">STUDIO 04</div>
+          <div class="studio-name">الإبداع</div>
+          <div class="studio-en">Creative Production</div>
+          <div class="studio-desc">إنشاء المحتوى، التصوير، التصميم البصري، الفيديو، والمحتوى الإبداعي المتنوع.</div>
+        </div>
+      </div>
+
+      <h2 class="h-title">نموذج تسعير الخدمات</h2>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th style="width: 28%;">النموذج</th><th>الوصف</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>مشاريع تطبيق</strong><br><em>One-Time</em></td><td>رسوم ثابتة لتطبيق الأنظمة وفقًا لنطاق محدد مسبقًا.</td></tr>
+          <tr><td><strong>صيانة وإدارة</strong><br><em>Retainer</em></td><td>رسوم شهرية ثابتة للدعم الفني وإدارة الأنظمة.</td></tr>
+          <tr><td><strong>تطوير مستمر</strong><br><em>Time & Materials (T&M)</em></td><td>فوترة بالساعة للتخصيصات والتطويرات الجديدة.</td></tr>
+          <tr><td><strong>استشارات وحوكمة</strong><br><em>Advisory</em></td><td>برنامج استشاري وإشراف وتدريب (بدون تنفيذ). يتم إصدار عرض سعر مخصص لكل حالة أو مشروع — مثل "خطة التحول الرقمي".</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h2 class="h-title">مبدأ التموضع</h2>
+      <div class="pull-quote">
+        الكيان <strong>لا يتنافس</strong> في سوق الإعلانات والسوشيال ميديا المزدحم، بل يستهدف <strong>مشاريع التحول الرقمي المؤسسي</strong> — شريحة لا تخدمها الوكالات الإعلانية ولا شركات تخطيط موارد المؤسسات (ERP) الكبيرة بشكل مرضٍ.
+      </div>
+    </section>
+
+    <!-- ========== SECTION: MARKET ========== -->
+    <section class="section" id="market">
+      <div class="section-header">
+        <div class="section-eyebrow">
+          <span class="section-num-pill">MARKET ANALYSIS · 04</span>
+          <span class="section-eyebrow-text">Saudi Market Deep-Dive</span>
+        </div>
+        <h1 class="section-title">تحليل السوق السعودي</h1>
+        <p class="section-lead">
+          محركات الطلب الهيكلية، أولوية القطاعات المستهدفة، شخصية العميل، والتركيز الجغرافي.
+        </p>
+      </div>
+
+      <h2 class="h-title">محركات الطلب الهيكلية</h2>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th style="width: 26%;">المحرك</th><th>الأثر</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>رؤية 2030</strong></td><td>تحول واسع نحو الرقمنة في القطاعين الحكومي والخاص.</td></tr>
+          <tr><td><strong>المشاريع العملاقة</strong></td><td>نيوم، البحر الأحمر، القدية، الدرعية. لن نتعامل معها مباشرة، لكنها تولّد طلبًا جانبيًا ومشروعات منبثقة كثيرة تخدمها.</td></tr>
+          <tr><td><strong>اشتراطات هيئة الزكاة والضريبة والجمارك (ZATCA)</strong></td><td>المرحلة الثانية تشمل تدريجيًا جميع الشركات ← طلب تنفيذي واسع ومستمر.</td></tr>
+          <tr><td><strong>السعودة (نطاقات)</strong></td><td>دفع الشركات نحو الأتمتة لتعويض ندرة بعض الكفاءات.</td></tr>
+          <tr><td><strong>توطين المقرات (RHQ)</strong></td><td>الشركات العالمية تؤسس عمليات سعودية ← طلب على شركاء التنفيذ المحليين.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h2 class="h-title">أولوية القطاعات</h2>
+
+      <h3 class="h-sub">الأولوية الأولى — التصنيع والمقاولات</h3>
+      <p>أنظمة تخطيط موارد المؤسسات (ERP) لإدارة المشاريع والمخزون والامتثال.</p>
+      <p>وجود <strong>مدير تنفيذي مهندس ميكاترونكس</strong> يخلق ميزة تنافسية عالية الجودة، مقنعة ومؤثرة جدًا من واقع التجربة.</p>
+      <p>سبب آخر للأولوية: قطاع التصنيع مدعوم برؤية الدولة، مع منح وامتيازات مالية وخدمية، وقروض كثيرة لهذا القطاع — بشرط التحول الرقمي.</p>
+
+      <h3 class="h-sub">الأولوية الثانية — الضيافة والفنادق</h3>
+      <p>الطلب الأقوى والأكثر استدامة بسبب مشاريع السياحة العملاقة.</p>
+
+      <h3 class="h-sub">الأولوية الثالثة — الرعاية الصحية والتعليم</h3>
+      <p>إنفاق حكومي وخاص متزايد يخلق طلبًا جانبيًا قويًا.</p>
+
+      <h2 class="h-title">العميل المستهدف بوضوح</h2>
+      <div class="callout dark">
+        <div class="callout-label">الاختيار الأمثل</div>
+        <p><strong>الشركات الصغيرة والمتوسطة (SMEs)</strong> — شركات عاملة بالفعل، بالتالي لديها جدية ومصادر دخل واقعية تستطيع الإنفاق على مشروعاتها.</p>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="card-title">لماذا نرفض الشركات الناشئة؟</div>
+          <ul style="margin: 8px 16px 0 0;">
+            <li>القدرة المالية المحدودة.</li>
+            <li>الشك في الجدية والاستمرارية.</li>
+            <li>اعتمادها 100% على الخدمة المقدمة، مما يخلق إزعاجًا إداريًا.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title">لماذا نرفض الشركات العملاقة (حاليًا)؟</div>
+          <p style="font-size: 13.5px; margin: 0;">نحن لا نرفض، لكننا واقعيون — لن نستطيع المنافسة في هذه المشروعات حاليًا. سنستطيع ذلك بعد <strong>عامين من الخبرة في المملكة</strong>.</p>
+        </div>
+      </div>
+
+      <h2 class="h-title">التركيز الجغرافي</h2>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>المدينة</th><th>طبيعة السوق</th><th style="width: 22%;">التغطية</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>الرياض</strong></td><td>المقر الرئيسي والسوق الأكبر، القرارات الشرائية الكبرى.</td><td>حضور دائم</td></tr>
+          <tr><td><strong>جدة</strong></td><td>سوق ثانوي قوي، تركيز على الضيافة والتجارة.</td><td>عن بُعد + زيارات</td></tr>
+          <tr><td><strong>الدمام / الخبر</strong></td><td>القطاع الصناعي والنفطي.</td><td>انتقائي</td></tr>
+          <tr><td><strong>أبها / نجران / تبوك</strong></td><td>أسواق ناشئة بمنافسة منخفضة. ميزة تنافسية: علاقات قوية من الشريك المؤسس المُحتمل م. محمد الشيباني.</td><td>مشاريع محددة</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+
+    <!-- ========== SECTION: COMPETITION ========== -->
+    <section class="section" id="competition">
+      <div class="section-header">
+        <div class="section-eyebrow">
+          <span class="section-num-pill">COMPETITIVE · 05</span>
+          <span class="section-eyebrow-text">Market Landscape</span>
+        </div>
+        <h1 class="section-title">المشهد التنافسي</h1>
+        <p class="section-lead">
+          الفجوة في السوق، عوامل التمايز، ومصفوفة التموضع التنافسي.
+        </p>
+      </div>
+
+      <h2 class="h-title">الفجوة في السوق</h2>
+      <p><strong>الفراغ التنافسي:</strong> توجد فجوة واضحة بين <strong>شركات الاستشارات الباهظة</strong> من جهة، و<strong>المستقلين الرخيصين غير الموثوقين</strong> من جهة أخرى. الشركات السعودية المتوسطة (100–1000 موظف) تبحث عن شريك يجمع الصفات التالية في آن واحد:</p>
+      <ul>
+        <li>يقدّم خدمات متعددة الاختصاصات تحت سقف واحد.</li>
+        <li>بأسعار معقولة (50–200 ألف ريال لمشروع متوسط).</li>
+        <li>مع التزام بالتسليم والجودة المؤسسية.</li>
+        <li>وفهم عميق للسياق التنظيمي السعودي.</li>
+      </ul>
+
+      <h2 class="h-title">عوامل التمايز التنافسي</h2>
+      <ul>
+        <li><strong>التكامل العمودي:</strong> أربعة ستوديوهات تحت سقف واحد ← لا حاجة لتنسيق عدة مورّدين.</li>
+        <li><strong>الخبرة الموثّقة في القطاع السعودي:</strong> سجل عملي حقيقي في الضيافة والتصنيع، خاصةً من فريق الشركاء المعتمدين لدى شركة دبي في القاهرة المحدودة.</li>
+        <li><strong>الكفاءة في نظام أودو (Odoo):</strong> منصة مفتوحة المصدر بتكلفة منخفضة — مقابل منظومتي ساب وأوراكل (SAP/Oracle) المكلفتين — مع مصداقية إضافية كوننا شركاء أودو (Odoo).</li>
+        <li><strong>التواصل العربي – العربي:</strong> توثيق وتدريب وتسليم باللغة العربية بمستوى احترافي.</li>
+        <li><strong>هيكل التسعير المرن:</strong> مشاريع ثابتة + ريتنر + فوترة بالساعة حسب الحاجة.</li>
+      </ul>
+
+      <h2 class="h-title">مصفوفة التموضع التنافسي</h2>
+      <div class="table-wrap scroll">
+      <table class="positioning-matrix">
+        <thead>
+          <tr>
+            <th>البُعد</th>
+            <th>شركات الاستشارات</th>
+            <th>شركاء تخطيط الموارد (ERP)</th>
+            <th class="col-highlight">
+              <span class="col-highlight-tag">نحن</span>
+              الكيان الجديد
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>السعر</strong></td><td>مرتفع</td><td>مرتفع</td><td class="col-highlight">متوسط</td></tr>
+          <tr><td><strong>عمق التقنية</strong></td><td>متوسط</td><td>عالٍ</td><td class="col-highlight">عالٍ</td></tr>
+          <tr><td><strong>شمولية الخدمات</strong></td><td>منخفض</td><td>منخفض</td><td class="col-highlight">عالٍ</td></tr>
+          <tr><td><strong>سرعة التسليم</strong></td><td>بطيء</td><td>متوسط</td><td class="col-highlight">سريع</td></tr>
+          <tr><td><strong>طبيعة التسليم</strong></td><td>نظري + تنفيذ جزئي</td><td>تنفيذي</td><td class="col-highlight">خطة + تنفيذ شامل</td></tr>
+          <tr><td><strong>التواصل العربي</strong></td><td>جزئي</td><td>جزئي</td><td class="col-highlight">كامل</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+
+    <!-- ========== SECTION: CUSTOMERS ========== -->
+    <section class="section" id="customers">
+      <div class="section-header">
+        <div class="section-eyebrow">
+          <span class="section-num-pill">CUSTOMERS · 06</span>
+          <span class="section-eyebrow-text">Target Segmentation</span>
+        </div>
+        <h1 class="section-title">العملاء المستهدفون والتقسيم</h1>
+        <p class="section-lead">
+          تقسيم السوق بحجم الشركة، شخصيات المشتري، مسار القرار، وقنوات الاكتساب.
+        </p>
+      </div>
+
+      <h2 class="h-title">التقسيم بحجم الشركة</h2>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>الشريحة</th><th>حجم الموظفين</th><th>قيمة العقد السنوية</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>الشريحة الأساسية</strong><br><em>الأولوية القصوى</em></td><td>50 – 500 موظف</td><td>80 – 200 ألف ريال</td></tr>
+          <tr><td><strong>الشريحة الثانوية</strong><br><em>فرص نمو</em></td><td>500 – 2,000 موظف</td><td>200 – 600 ألف ريال</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h2 class="h-title">شخصيات المشتري (Buyer Personas)</h2>
+
+      <div class="persona">
+        <div class="persona-header">
+          <div class="persona-title">المؤسس / الرئيس التنفيذي (CEO / Founder)</div>
+          <span class="persona-tag">مؤثر استراتيجي</span>
+        </div>
+        <div class="persona-trait">يفكّر في النمو والتوسّع والاستعداد للجولات الاستثمارية.</div>
+        <p style="font-size: 13.5px;"><strong>اهتماماته:</strong> القدرة على التوسّع، الحوكمة، الجاهزية للاستثمار، صورة الشركة، الكفاءة المؤسسية.</p>
+        <div class="persona-msg"><strong>رسالتنا له:</strong> «نبني لك بنية تحتية مؤسسية جاهزة للنمو والاستثمار».</div>
+      </div>
+
+      <div class="persona">
+        <div class="persona-header">
+          <div class="persona-title">مدير العمليات (COO)</div>
+          <span class="persona-tag">مؤثر تشغيلي</span>
+        </div>
+        <div class="persona-trait">يبحث عن الكفاءة التشغيلية وتقليل الاحتكاك.</div>
+        <p style="font-size: 13.5px;"><strong>اهتماماته:</strong> تكامل الأقسام، خفض الزمن، أتمتة المخزون، إدارة المشاريع، تقارير لحظية.</p>
+        <div class="persona-msg"><strong>رسالتنا له:</strong> «نربط مخزونك وفروعك ومبيعاتك في نظام واحد بلا تأخير ولا أخطاء».</div>
+      </div>
+
+      <div class="persona">
+        <div class="persona-header">
+          <div class="persona-title">المدير المالي (CFO) — دافع الشراء الأقوى</div>
+          <span class="persona-tag primary">صاحب القرار المالي</span>
+        </div>
+        <div class="persona-trait">يملك الميزانية وقرار الإنفاق.</div>
+        <p style="font-size: 13.5px;"><strong>اهتماماته:</strong> الامتثال الضريبي (ZATCA)، حماية الأجور (WPS)، أتمتة التقارير، تقليل أخطاء التسوية، رؤية موحّدة للأرقام.</p>
+        <div class="persona-msg"><strong>رسالتنا له:</strong> «نضع كل أنظمتك المالية على منصة واحدة موثّقة وممتثلة، مرتبطة بعمليات التشغيل».</div>
+      </div>
+
+      <h2 class="h-title">مسار اتخاذ القرار</h2>
+      <p>القرار في السوق السعودي للشركات المتوسطة يستغرق <strong>3 – 6 أشهر</strong>، ويمر بأربع مراحل:</p>
+      <ol>
+        <li><strong>الوعي (Awareness):</strong> اكتشاف الحاجة — عادةً بعد مواجهة مشاكل تشغيلية ومالية وفجوات بين التشغيل والماليات.</li>
+        <li><strong>الدراسة (Consideration):</strong> مقارنة 3 – 5 موردين، وطلب عروض.</li>
+        <li><strong>التقييم (Evaluation):</strong> اجتماعات مع المدير المالي والتقني، وطلب مقترح تفصيلي وخطة عمل وجدول زمني.</li>
+        <li><strong>القرار (Decision):</strong> توقيع العقد — عادةً بعد مفاوضات على السعر وشروط الدفع.</li>
+      </ol>
+
+      <h2 class="h-title">قنوات اكتساب العملاء</h2>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>القناة</th><th>الفاعلية</th><th>التكلفة</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>الإحالات (Referrals) — السوق السعودي علاقاتي، خصوصًا في المنطقة الجنوبية (نجران – جازان).</td><td><span class="num-pos">عالية جدًا</span></td><td>منخفضة</td></tr>
+          <tr><td>المرجعيات (Case Studies) — قصص نجاح موثّقة بالعربية.</td><td><span class="num-pos">عالية</span></td><td>متوسطة</td></tr>
+          <tr><td>المعارض والمؤتمرات.</td><td>متوسطة</td><td>عالية</td></tr>
+          <tr><td>منصة لينكدإن (LinkedIn) — محتوى عربي تقني + إعلانات ممولة.</td><td>متوسطة</td><td>منخفضة</td></tr>
+          <tr><td>منصة لينكدإن (LinkedIn) — استهداف مباشر عبر أداة سيلز نافيجيتور (Sales Navigator).</td><td>متوسطة</td><td>منخفضة</td></tr>
+          <tr><td>استهداف الشركات بالبحث على محرك جوجل (Google) — مبيعات هاتفية.</td><td>متوسطة</td><td>منخفضة</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="callout">
+        <div class="callout-label">توصية تكتيكية</div>
+        <p>التركيز في أول 12 شهرًا على <strong>الإحالات + محتوى الفيديو على لينكدإن (LinkedIn) + إعلانات لينكدإن (LinkedIn)</strong>. هذه الثلاثية هي أعلى عائد على الاستثمار في السوق السعودي للأعمال بين الشركات (B2B)، وتتجنّب تكاليف التشتت بين منصات التسويق الإلكتروني المتنوعة في مرحلة لا تزال فيها العلامة التجارية في طور البناء.</p>
+      </div>
+    </section>
+
+    <!-- ========== SECTION: LEGAL ========== -->
+    <section class="section" id="legal">
+      <div class="section-header">
+        <div class="section-eyebrow">
+          <span class="section-num-pill">LEGAL · 07</span>
+          <span class="section-eyebrow-text">Regulatory Framework</span>
+        </div>
+        <h1 class="section-title">الإطار القانوني والتنظيمي</h1>
+        <p class="section-lead">
+          الشكل القانوني المناسب، التراخيص المطلوبة، الالتزامات الضريبية، ومتطلبات السعودة وحماية البيانات.
+        </p>
+      </div>
+
+      <p>هذا المحور يحدد الشكل القانوني المناسب للكيان، التراخيص المطلوبة، والالتزامات الضريبية والتشغيلية. كل البيانات مأخوذة من المصادر الرسمية: وزارة الاستثمار (MISA)، هيئة الزكاة والضريبة والجمارك (ZATCA)، وزارة الموارد البشرية والتنمية الاجتماعية (MHRSD)، ومنصة قوى (Qiwa).</p>
+
+      <h2 class="h-title">الشكل القانوني المُختار: شركة ذات مسؤولية محدودة (LLC)</h2>
+      <p>نوصي بتأسيس <strong>شركة ذات مسؤولية محدودة (LLC)</strong> بترخيص خدمات من وزارة الاستثمار السعودية (MISA)، لأن هذا الشكل:</p>
+      <ul>
+        <li>يسمح بـ 100% ملكية أجنبية في معظم الأنشطة الخدمية.</li>
+        <li>لا يفرض حدًا أدنى لرأس المال للأنشطة الخدمية الشائعة (وفق التحديث السياساتي 2026).</li>
+        <li>يحمي الشركاء — المسؤولية محصورة في حصة كل شريك.</li>
+        <li>يتيح إدراج شريك سعودي + شريك أجنبي بنسبة 50/50 — وهو ما يطابق هيكل الشراكة المقترح.</li>
+      </ul>
+
+      <div class="callout dark">
+        <div class="callout-label">ميزة جوهرية للشريك المؤسس م. عبدالله الفولي</div>
+        <p>اعتبارًا من إبريل 2024 وما زال ساريًا في 2026، <strong>المستثمر الأجنبي الذي يمتلك حصة في منشأة خاصة في السعودية يُحتسب كمواطن سعودي</strong> لأغراض حساب نسب السعودة (نطاقات). هذه ميزة جوهرية تقلل عبء السعودة على الكيان منذ يومه الأول.</p>
+      </div>
+
+      <h2 class="h-title">التراخيص المطلوبة</h2>
+      <div class="table-wrap scroll">
+      <table>
+        <thead>
+          <tr><th>الترخيص / التسجيل</th><th>الجهة المختصة</th><th>المدة المتوقعة</th><th>الملاحظات</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>ترخيص استثمار من وزارة الاستثمار (MISA)</strong></td><td>وزارة الاستثمار</td><td>3 – 5 أيام عمل</td><td>متطلب أولي للمستثمر الأجنبي. رسم الترخيص (MISA) معلَّق حاليًا (سياسة إبريل 2026).</td></tr>
+          <tr><td><strong>السجل التجاري (CR)</strong></td><td>وزارة التجارة</td><td>بعد إصدار ترخيص الاستثمار (MISA) مباشرة</td><td>حوالي 1,200 ريال سنويًا حسب النشاط.</td></tr>
+          <tr><td><strong>عقد التأسيس (AoA)</strong></td><td>وزارة العدل</td><td>أسبوع</td><td>توثيق لدى كاتب العدل — 1,000 – 2,000 ريال.</td></tr>
+          <tr><td><strong>التسجيل في غرفة التجارة</strong></td><td>غرفة الرياض</td><td>أيام</td><td>1,000 – 3,000 ريال سنويًا.</td></tr>
+          <tr><td><strong>التسجيل الضريبي (ZATCA)</strong></td><td>هيئة الزكاة والضريبة</td><td>تلقائي</td><td>إصدار الرقم الضريبي بعد السجل التجاري.</td></tr>
+          <tr><td><strong>التسجيل في التأمينات (GOSI)</strong></td><td>المؤسسة العامة للتأمينات</td><td>أيام</td><td>ملف الموظفين والاشتراكات.</td></tr>
+          <tr><td><strong>التسجيل في منصة قوى</strong></td><td>وزارة الموارد البشرية</td><td>أيام</td><td>إلزامي لتوثيق العقود وتفعيل خدمات العمالة.</td></tr>
+          <tr><td><strong>العنوان الوطني والبلدية</strong></td><td>البلدية + سبل</td><td>أسبوعان</td><td>مطلوب لتوظيف الموظفين وممارسة النشاط.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <p><strong>إجمالي الوقت المتوقع للتأسيس الكامل:</strong> 4 إلى 8 أسابيع من تقديم ترخيص الاستثمار (MISA) حتى فتح الحساب البنكي وبدء التشغيل الفعلي.</p>
+
+      <h2 class="h-title">الالتزامات الضريبية</h2>
+      <div class="table-wrap scroll">
+      <table>
+        <thead>
+          <tr><th>الالتزام</th><th>النسبة</th><th>ينطبق على</th><th>الإيداع</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>ضريبة الدخل (CIT)</strong></td><td>20%</td><td>حصة الشريك الأجنبي من الأرباح الصافية المعدّلة</td><td>سنويًا — خلال 120 يومًا من نهاية السنة المالية</td></tr>
+          <tr><td><strong>الزكاة</strong></td><td>2.5%</td><td>حصة الشريك السعودي / الخليجي من وعاء الزكاة</td><td>سنويًا — مع الإقرار الضريبي</td></tr>
+          <tr><td><strong>ضريبة القيمة المضافة (VAT)</strong></td><td>15%</td><td>معظم السلع والخدمات داخل المملكة</td><td>شهري أو ربعي حسب حجم المبيعات</td></tr>
+          <tr><td><strong>ضريبة الاستقطاع (WHT)</strong></td><td>5% – 20%</td><td>المدفوعات لشركات غير مقيمة (خدمات تقنية / إدارة / فوائد)</td><td>خلال 10 أيام من نهاية كل شهر</td></tr>
+          <tr><td><strong>الفوترة الإلكترونية — المرحلة الثانية (ZATCA Phase 2)</strong></td><td>إلزامية</td><td>الموجة 24 — المنشآت التي تتجاوز إيراداتها 375,000 ريال (موعد أقصى 30 يونيو 2026)</td><td>تكامل لحظي مع منصة فاتورة</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="callout amber">
+        <div class="callout-label">تنبيه استراتيجي حول الفوترة الإلكترونية</div>
+        <p>الموجة 24 من المرحلة الثانية للفوترة الإلكترونية (ZATCA Phase 2 — إلزامية بحلول 30 يونيو 2026) تشمل المنشآت ذات الإيراد السنوي بين 375,000 و 750,000 ريال. <strong>هذا يخلق طلبًا مستعرًا قصير الأجل</strong> على خدمات التكامل التقني مع منصة فاتورة (Fatoora) — وهي إحدى أقوى مداخل البيع للكيان الجديد خلال 2026.</p>
+        <p>كذلك تم تمديد مبادرة إلغاء الغرامات والإعفاء حتى 30 يونيو 2026 — مما يسمح للعملاء بتسوية أوضاعهم دون عقوبات إذا تحركوا الآن.</p>
+      </div>
+
+      <h2 class="h-title">متطلبات السعودة (نطاقات 2026 – 2028)</h2>
+      <p>بدأت المرحلة الجديدة من برنامج نطاقات في 16 إبريل 2026 وتمتد حتى 2028. أبرز التحديثات التي تخص الكيان المقترح:</p>
+      <ul>
+        <li><strong>إلغاء فئة نطاق «الأصفر»</strong> — الشركات التي كانت ضمن الأصفر أصبحت ضمن الأحمر، مع تجميد فوري لخدمات التأشيرات.</li>
+        <li><strong>توثيق العقود إلزامي على منصة قوى</strong> اعتبارًا من 15 إبريل 2026. الموظف السعودي بدون عقد موثَّق على قوى لا يُحتسب في النسبة.</li>
+        <li><strong>الحد الأدنى للأجر المحسوب</strong> ارتفع من 3,000 إلى 4,000 ريال شهريًا. الموظف بأجر أقل يُحتسب بنصف نقطة.</li>
+        <li><strong>نسبة سعودة 60% لمهن التسويق والمبيعات</strong> اعتبارًا من 19 إبريل 2026 — على المنشآت التي توظف ثلاثة فأكثر، مع حد أدنى للأجر 5,500 ريال للسعودي ليُحتسب.</li>
+        <li><strong>المستثمر الأجنبي يُحتسب كسعودي</strong> — ميزة مهمة لتحقيق التوازن في الكيان الناشئ.</li>
+      </ul>
+
+      <div class="callout">
+        <div class="callout-label">تطبيق عملي على الكيان</div>
+        <p>في مرحلة التأسيس (الفريق 3 موظفين + الشريك الأجنبي)، اشتراطات السعودة بنسبة 60% تصبح قابلة للإدارة لأن <strong>الشريك الأجنبي م. عبدالله الفولي يُحتسب كسعودي + التعاقد مع موظف سعودي واحد (بأجر ≥ 5,500 ريال) يُلبّي النسبة المطلوبة</strong> للمنشأة في فئة (1 – 4 موظفين).</p>
+      </div>
+
+      <h2 class="h-title">حماية البيانات والخصوصية (PDPL)</h2>
+      <p>نظام حماية البيانات الشخصية السعودي (PDPL) أصبح نافذًا بالكامل. الكيان المقترح — كمقدم خدمات تقنية يتعامل مع بيانات عملاء — مطلوب منه:</p>
+      <ul>
+        <li>تعيين «مسؤول حماية البيانات» (DPO) — قد يكون أحد أعضاء الفريق ضمن مهامه.</li>
+        <li>توثيق سياسات معالجة البيانات لكل مشروع.</li>
+        <li>توقيع اتفاقيات معالجة بيانات (DPA) مع كل عميل قبل بدء أي تكامل تقني.</li>
+        <li>الإفصاح عن أي نقل بيانات خارج المملكة — وهذا له اشتراطات صارمة.</li>
+      </ul>
+    </section>
+
+    <!-- ========== SECTION: OPERATIONS ========== -->
+    <section class="section" id="operations">
+      <div class="section-header">
+        <div class="section-eyebrow">
+          <span class="section-num-pill">OPERATIONS · 08</span>
+          <span class="section-eyebrow-text">Delivery Methodology</span>
+        </div>
+        <h1 class="section-title">خطة التشغيل والتسليم</h1>
+        <p class="section-lead">
+          منهجية التسليم، توزيع الأدوار، نظام إدارة المشاريع، ضمان الجودة، وسعة الإنتاج المخططة.
+        </p>
+      </div>
+
+      <p>هذا المحور يصف كيف نحوّل الخبرة المتراكمة إلى عمليات تسليم منظمة، قابلة للتكرار، وذات جودة ثابتة عبر الستوديوهات الأربعة.</p>
+
+      <h2 class="h-title">منهجية التسليم: دورة المشروع الموحدة</h2>
+      <p>كل مشروع يمر بخمس مراحل قياسية بصرف النظر عن الستوديو الذي يقوده، مما يضمن الاتساق وقابلية القياس:</p>
+
+      <div class="table-wrap scroll">
+      <table>
+        <thead>
+          <tr><th>المرحلة</th><th>النشاط الرئيسي</th><th>المخرجات</th><th>المدة</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>١ — الاكتشاف</strong><br><em>Discovery</em></td><td>اجتماعات تقصي الحقائق، تحليل الواقع، مقابلات مع أصحاب القرار.</td><td>تقرير تشخيصي + نطاق العمل المقترح + عرض السعر المفصّل.</td><td>1 – 2 أسبوع</td></tr>
+          <tr><td><strong>٢ — التصميم</strong><br><em>Design</em></td><td>تصميم البنية التقنية / الاستراتيجية / المحتوى.</td><td>وثيقة تصميم تفصيلية معتمدة من العميل (Sign-off).</td><td>2 – 4 أسابيع</td></tr>
+          <tr><td><strong>٣ — التنفيذ</strong><br><em>Build</em></td><td>بناء الأنظمة / تطوير المحتوى / إنتاج المخرجات.</td><td>نسخة قابلة للاختبار في بيئة تجريبية (Staging).</td><td>4 – 12 أسبوع</td></tr>
+          <tr><td><strong>٤ — الإطلاق</strong><br><em>Launch</em></td><td>اختبار قبول المستخدم (UAT)، التدريب، النشر للإنتاج.</td><td>نظام عامل + توثيق + مادة تدريبية باللغة العربية.</td><td>1 – 2 أسبوع</td></tr>
+          <tr><td><strong>٥ — الدعم</strong><br><em>Support</em></td><td>دعم ما بعد الإطلاق، صيانة، تحسينات.</td><td>ريتنر شهري (اختياري) + تقارير أداء ربعية.</td><td>مستمر</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h2 class="h-title">توزيع الأدوار داخل المشروع</h2>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>الدور</th><th>المسؤولية</th><th>من يشغله</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>مدير المشروع (Account Manager)</strong></td><td>الواجهة الوحيدة للعميل، يدير الجدول والميزانية والجودة.</td><td>موظف داخلي تقني</td></tr>
+          <tr><td><strong>قائد الستوديو (Studio Lead)</strong></td><td>المسؤول الفني عن جودة المخرجات من الستوديو المعني.</td><td>متعاقد متخصص حسب الستوديو</td></tr>
+          <tr><td><strong>AI-Based Strategist</strong></td><td>تنفيذ المهام التقنية باستخدام أدوات الذكاء الاصطناعي وهندسة الموجِّهات (Prompt Engineering).</td><td>موظف داخلي</td></tr>
+          <tr><td><strong>المنفذون (Specialists)</strong></td><td>المطورون، المصممون، المحررون — حسب طبيعة المشروع.</td><td>متعاقدون بنظام مشروعي (Project-Based)</td></tr>
+          <tr><td><strong>المنسق (Coordinator)</strong></td><td>جدولة الاجتماعات، الرد على العملاء، متابعة المهام، التوثيق.</td><td>موظف داخلي</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h2 class="h-title">نظام إدارة المشاريع</h2>
+      <p>لتفادي مشكلة فقدان السيطرة عند نمو الفريق، يعتمد الكيان على <strong>نظام تشغيل موحَّد قائم على الأدوات الرقمية</strong> منذ اليوم الأول:</p>
+      <ul>
+        <li><strong>إدارة المشاريع:</strong> منصة كليك أب (ClickUp) أو نوتشن (Notion) — لتوثيق كل مهمة وكل قرار.</li>
+        <li><strong>إدارة العمليات الداخلية:</strong> نظام أودو (Odoo) — وهو منتجنا — للفوترة، وإدارة علاقات العملاء (CRM)، وإدارة الموارد، وتتبع المشاريع.</li>
+        <li><strong>التواصل:</strong> منصة سلاك (Slack) داخليًا، وتطبيق واتساب للأعمال (WhatsApp Business) الموثّق مع العملاء، والبريد الرسمي للوثائق.</li>
+        <li><strong>التوثيق التقني:</strong> منصتا جيتهب (GitHub) ونوتشن (Notion) — كل مشروع له مستودع وثائقي مستقل.</li>
+        <li><strong>أدوات الذكاء الاصطناعي:</strong> نموذج كلود (Claude) إلى جانب أدوات تخصصية حسب الحاجة — لتسريع التنفيذ وتحسين الجودة.</li>
+      </ul>
+
+      <h2 class="h-title">ضمان الجودة</h2>
+      <p>كل مخرج يمر بثلاثة مستويات مراجعة قبل التسليم للعميل:</p>
+      <ol>
+        <li>مراجعة قائد الستوديو (Studio Lead) — وهي المراجعة التقنية.</li>
+        <li>مراجعة مدير الحسابات (Account Manager) — وهي مراجعة المواءمة مع متطلبات العميل.</li>
+        <li>مراجعة الشريك المؤسس التقني للاعتماد النهائي.</li>
+      </ol>
+
+      <div class="callout">
+        <div class="callout-label">مبدأ تأسيسي</div>
+        <p>لا يخرج أي مخرج بدون توقيع داخلي إلكتروني مزدوج. هذا يضمن أن جودة المنتج النهائي مستقلة عن المنفذ المباشر، ويرفع مستوى الاحترافية المؤسسية تدريجيًا.</p>
+      </div>
+
+      <h2 class="h-title">سعة الإنتاج المخططة</h2>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>الفترة</th><th>عدد المشروعات المتزامنة</th><th>متوسط قيمة المشروع</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>الأشهر 1 – 6 (تمهيدية)</td><td>1 – 2</td><td>50 – 60 ألف ريال</td></tr>
+          <tr><td>الأشهر 7 – 12</td><td>3 – 4</td><td>60 – 80 ألف ريال</td></tr>
+          <tr><td>السنة الثانية</td><td>5 – 7</td><td>80 – 100 ألف ريال</td></tr>
+          <tr><td>السنة الثالثة</td><td>8 – 12 + ريتنرات</td><td>100 – 250 ألف ريال</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+
+    <!-- ========== SECTION: HR ========== -->
+    <section class="section" id="hr">
+      <div class="section-header">
+        <div class="section-eyebrow">
+          <span class="section-num-pill">HUMAN RESOURCES · 09</span>
+          <span class="section-eyebrow-text">Team & Saudization</span>
+        </div>
+        <h1 class="section-title">الموارد البشرية والسعودة</h1>
+        <p class="section-lead">
+          هيكل التوظيف المرحلي، سلم الرواتب الواقعي لسوق الرياض 2026، وخارطة الامتثال للسعودة.
+        </p>
+      </div>
+
+      <p>الفريق هو الأصل التشغيلي الأهم. هذا المحور يحدد هيكل التوظيف، سلم الرواتب الواقعي بأرقام السوق السعودي 2026، وخارطة الامتثال للسعودة.</p>
+
+      <h2 class="h-title">هيكل الفريق المرحلي</h2>
+
+      <h3 class="h-sub">المرحلة الأولى: التأسيس (أول 6 أشهر)</h3>
+      <div class="table-wrap scroll">
+      <table>
+        <thead>
+          <tr><th>الدور</th><th>النطاق</th><th>الجنسية المفضلة</th><th>الراتب الشهري (ريال)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>الشريك المؤسس التقني (المدير العام)</strong></td><td>إدارة عامة، استراتيجية، علاقات عملاء كبار</td><td>أجنبي (يُحتسب كسعودي)</td><td>20,000 (مع إعادة استثمار 15,000)</td></tr>
+          <tr><td><strong>مدير حسابات أول (Sr. Account Manager)</strong></td><td>تقني — مبيعات استشارية + إدارة حسابات</td><td>سعودي (لتحقيق السعودة)</td><td>5,000 – 6,000</td></tr>
+          <tr><td><strong>منسق العمليات (Coordinator)</strong></td><td>تنسيق، متابعة، رد على العملاء، توثيق</td><td>سعودي (يُفضّل)</td><td>4,000</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3 class="h-sub">المرحلة الثانية: التشغيل (الأشهر 7 – 18)</h3>
+      <p>يضاف إلى الفريق الأساسي:</p>
+      <ul>
+        <li><strong>استراتيجي ومنفذ قائم على الذكاء الاصطناعي (AI-Based Strategist & Implementor)</strong> — راتب 10,000 ريال. تخصص نادر، أولوية للسعودي لتعزيز نسبة السعودة.</li>
+        <li><strong>قادة الستوديوهات (Studio Leads — 4 قادة، أحدهم لكل ستوديو)</strong> — متعاقدون بنظام مشروعي (Project-Based) بأتعاب 5,000 – 15,000 ريال للمشروع حسب حجمه.</li>
+        <li><strong>متخصصون منفذون (Specialists)</strong> — متعاقدون حسب الحاجة، أغلبهم من فريق شركة دبي في القاهرة المحدودة المصري للعمل عن بُعد بتكلفة تنافسية.</li>
+      </ul>
+
+      <h2 class="h-title">سلم الرواتب الواقعي — سوق الرياض 2026</h2>
+      <p>الأرقام التالية مأخوذة من مسوحات السوق (Glassdoor - PayScale - SalaryExpert) وتعكس الواقع الحالي في الرياض لمهن التقنية والتسويق. تشمل البدلات الأساسية (سكن، نقل). <em>هذا الجدول للاستدلال وبناء الرؤية فقط.</em></p>
+
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>الدور</th><th>نطاق الراتب الشهري (ريال)</th><th>ملاحظات</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>مدير تسويق رقمي (5 – 8 سنوات)</td><td>18,000 – 35,000</td><td>ثنائي اللغة يرفع الراتب 15–25%. مهارات الذكاء الاصطناعي ترفع 25–40%.</td></tr>
+          <tr><td>مدير مشاريع تقنية</td><td>15,000 – 25,000</td><td>خبرة تخطيط الموارد (ERP) أو أودو (Odoo) ترفع الراتب بنسبة 20–30%.</td></tr>
+          <tr><td>مطوّر أول لنظام أودو/تخطيط الموارد (Odoo / ERP)</td><td>14,000 – 22,000</td><td>ندرة في السوق، خصوصًا للناطقين بالعربية.</td></tr>
+          <tr><td>مدير حسابات أول (B2B)</td><td>12,000 – 18,000</td><td>خبرة التسويق المؤسسي مطلوبة.</td></tr>
+          <tr><td>AI Strategist</td><td>10,000 – 16,000</td><td>تخصص ناشئ، ومهارات هندسة الموجِّهات (Prompt Engineering) مطلوبة.</td></tr>
+          <tr><td>منسق عمليات (سنتان خبرة)</td><td>5,500 – 8,000</td><td>حد أدنى 5,500 لاحتسابه في السعودة.</td></tr>
+          <tr><td>مصمم بصري أول</td><td>9,000 – 14,000</td><td>خبرة بصرية في القطاعات السعودية مفضّلة.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h2 class="h-title">خطة السعودة على 24 شهرًا</h2>
+      <p>هدفنا الاحتفاظ بفئة النطاق الأخضر المتوسط (Mid-Green) على الأقل طوال السنة الأولى، مع الانتقال إلى الأخضر العالي (High-Green) في السنة الثانية.</p>
+
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>الفترة</th><th>إجمالي الموظفين</th><th>السعوديون (محتسبًا الشريك الأجنبي)</th><th>نسبة السعودة</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>الأشهر 1 – 3</td><td>3</td><td>2 (الشريك + موظف سعودي)</td><td><span class="num-pos">66%</span></td></tr>
+          <tr><td>الأشهر 4 – 9</td><td>4 – 5</td><td>3 (الشريك + 2 سعودي)</td><td><span class="num-pos">60 – 75%</span></td></tr>
+          <tr><td>الأشهر 10 – 18</td><td>6 – 8</td><td>4 – 5</td><td><span class="num-pos">65 – 75%</span></td></tr>
+          <tr><td>السنة الثانية</td><td>10 – 12</td><td>6 – 8</td><td><span class="num-pos">60 – 70%</span></td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3 class="h-sub">إجراءات الحماية الإجرائية</h3>
+      <ol>
+        <li>توثيق كل عقد سعودي على منصة قوى قبل بدء العمل (مطلب إلزامي منذ 15 إبريل 2026).</li>
+        <li>الالتزام بحد أدنى للأجر السعودي 5,500 ريال (لمهن التسويق) أو 4,000 ريال (للمهن الأخرى) ليُحتسب في النسبة.</li>
+        <li>التوسع في التوظيف السعودي مرتبطًا بنمو الإيرادات — يتم تجنب التوظيف قبل الحاجة الفعلية.</li>
+        <li>الاستفادة من برنامج «هدف» السعودي لدعم رواتب الكوادر السعودية المؤهلة.</li>
+      </ol>
+
+      <h2 class="h-title">التعاقد مع المتخصصين عن بُعد (Project-Based)</h2>
+      <div class="callout dark">
+        <div class="callout-label">الميزة الاستراتيجية</div>
+        <p><strong>إمكانية الاستفادة من شبكة شركاء شركة دبي في القاهرة المحدودة المصرية</strong> لتنفيذ مهام الستوديوهات التقنية والإبداعية، عن بُعد، بتكلفة تنافسية، مع الحفاظ على جودة عالية.</p>
+      </div>
+      <ul>
+        <li>ليست موظفة في الكيان السعودي — لا تدخل في حسابات السعودة.</li>
+        <li>تُدفع لها أتعاب بالعقود تخص كل مشروع على حدة.</li>
+        <li>تخضع لضريبة الاستقطاع 5% – 15% (خدمات تقنية)، وهي تكلفة محتسبة ضمن العرض المقدَّم للعميل.</li>
+      </ul>
+    </section>
+
+    <!-- ========== SECTION: SALES ========== -->
+    <section class="section" id="sales">
+      <div class="section-header">
+        <div class="section-eyebrow">
+          <span class="section-num-pill">SALES · 10</span>
+          <span class="section-eyebrow-text">Go-To-Market</span>
+        </div>
+        <h1 class="section-title">استراتيجية المبيعات والتسويق</h1>
+        <p class="section-lead">
+          القنوات، الرسائل، الميزانية، وخطة الاكتساب للسنة الأولى في السوق المؤسسي السعودي.
+        </p>
+      </div>
+
+      <p>في السوق السعودي للأعمال بين الشركات (B2B)، البيع علاقاتي بالدرجة الأولى. هذا المحور يحدد القنوات، الرسائل، الميزانية، وخطة الاكتساب للسنة الأولى.</p>
+
+      <h2 class="h-title">المبدأ الحاكم: نحن لا نُسوّق، نحن نُثقّف</h2>
+      <div class="pull-quote">
+        العميل المؤسسي السعودي لا يشتري إعلانات — يشتري ثقة. <strong>والثقة تُبنى بـ المحتوى التقني العميق + الشهادات الواقعية + الحضور الشخصي</strong>. لذلك استراتيجيتنا قائمة على التسويق الجاذب (Inbound Marketing) التقني العربي، وليس على إعلانات الأداء التقليدية.
+      </div>
+
+      <h2 class="h-title">ترتيب القنوات حسب الأولوية</h2>
+      <div class="table-wrap scroll">
+      <table>
+        <thead>
+          <tr><th>#</th><th>القناة</th><th>الأولوية</th><th>العائد المتوقع</th><th>الميزانية الشهرية (ريال)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>١</td><td>الإحالات الشخصية + شبكة الشريك المُحتمل (نجران/جازان)</td><td><span class="num-pos">قصوى</span></td><td>عالٍ جدًا</td><td>لا يوجد</td></tr>
+          <tr><td>٢</td><td>محتوى عربي على منصة لينكدإن (LinkedIn) — 3 منشورات + فيديو توعية تقنية أسبوعيًا</td><td><span class="num-pos">قصوى</span></td><td>عالٍ تراكميًا</td><td>3,000 (إنتاج)</td></tr>
+          <tr><td>٣</td><td>إعلانات لينكدإن (LinkedIn) المستهدفة للرؤساء التنفيذيين والماليين والتشغيليين (CEO/CFO/COO)</td><td>عالية</td><td>متوسط — يحتاج تحسينًا مستمرًا</td><td>3,800</td></tr>
+          <tr><td>٤</td><td>استهداف مباشر عبر أداة سيلز نافيجيتور (Sales Navigator)</td><td>عالية</td><td>عالٍ مع المتابعة</td><td>1,200 (اشتراك)</td></tr>
+          <tr><td>٥</td><td>حضور المؤتمرات الكبرى (مثل مؤتمر ليب — LEAP، ومؤتمر ليب فورورد — Leap Forward)</td><td>موسمية</td><td>عالٍ لكل حدث</td><td>ميزانية حدثية</td></tr>
+          <tr><td>٦</td><td>التواصل البارد (Cold Outreach) عبر واتساب الأعمال والاتصالات (قوائم العملاء المحتملين — Leads)</td><td>ثانوية</td><td>منخفض — لكنه رخيص</td><td>لا يوجد</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <p><strong>إجمالي الميزانية التسويقية الشهرية:</strong> 8,500 ريال (متماشٍ مع 7,777 ريال المخصصة في الخطة المالية، مع مرونة للزيادة في أشهر المؤتمرات).</p>
+
+      <h2 class="h-title">استراتيجية المحتوى على منصة لينكدإن (LinkedIn)</h2>
+      <p>منصة لينكدإن (LinkedIn) هي الميدان الأول لاكتساب العملاء المحتملين (Leads) من المؤسسات في السعودية. خطتنا قائمة على إنتاج محتوى تقني عميق باللغة العربية، بنبرة استشارية لا إعلانية:</p>
+
+      <div class="table-wrap scroll">
+      <table>
+        <thead>
+          <tr><th>نوع المحتوى</th><th>التكرار</th><th>الهدف</th><th>أمثلة</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>مقالات تحليلية مطوّلة</td><td>مرتان شهريًا</td><td>بناء السلطة المعرفية</td><td>«كيف يحوّل نظام أودو (Odoo) شركتك من جداول إكسل (Excel) إلى نظام تخطيط موارد (ERP) في 90 يومًا»</td></tr>
+          <tr><td>دراسات حالة مختصرة (Case Studies)</td><td>مرة شهريًا</td><td>إثبات النتائج</td><td>«قبل وبعد: تكامل منصة إيزي (eZee) مع نظام أودو (Odoo) في فندق سعودي»</td></tr>
+          <tr><td>منشورات قصيرة (Insights)</td><td>3 أسبوعيًا</td><td>البقاء في الذاكرة</td><td>نصيحة تقنية أو رقم صادم من تقرير حكومي</td></tr>
+          <tr><td>فيديوهات قصيرة (Reels/Shorts)</td><td>1 – 2 أسبوعيًا</td><td>الوصول الواسع</td><td>شرح مفهوم في 60 ثانية بالعربية</td></tr>
+          <tr><td>جلسات مباشرة (Live Sessions) أو ندوات إلكترونية (Webinars)</td><td>مرة شهريًا</td><td>التفاعل المباشر</td><td>ندوة عن المرحلة الثانية للفوترة الإلكترونية (ZATCA Phase 2) لقطاع مستهدف</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h2 class="h-title">استهداف الفعاليات الاستراتيجية</h2>
+      <div class="table-wrap scroll">
+      <table>
+        <thead>
+          <tr><th>الفعالية</th><th>الموعد</th><th>الموقع</th><th>الهدف</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>مؤتمر ليب (LEAP)</strong></td><td>إبريل 2026 + أغسطس 2026</td><td>الرياض — مركز المعارض (ملهم)</td><td>أكثر من 200,000 زائر. حضور بدون جناح في السنة الأولى، ثم جناح في السنة الثانية.</td></tr>
+          <tr><td><strong>مؤتمر بلاك هات الشرق الأوسط (Black Hat MEA)</strong></td><td>نوفمبر 2026</td><td>الرياض</td><td>للقاء فريق الأمن السيبراني — مدخل لخدمات قانون حماية البيانات (PDPL).</td></tr>
+          <tr><td><strong>معرض الضيافة السعودي (Saudi Hospitality Show)</strong></td><td>مايو سنويًا</td><td>الرياض</td><td>للقاء أصحاب الفنادق — السوق المستهدف الثانوي.</td></tr>
+          <tr><td><strong>معرض بيج 5 للإنشاءات السعودي (Big 5 Construct Saudi)</strong></td><td>فبراير سنويًا</td><td>الرياض</td><td>للقاء المقاولين والصناعيين — السوق المستهدف الأولوي.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h2 class="h-title">دورة البيع (Sales Funnel)</h2>
+      <p>متوسط الدورة في السوق المؤسسي السعودي 3 – 6 أشهر من الاتصال الأول حتى توقيع العقد. تنقسم إلى:</p>
+      <ol>
+        <li><strong>توليد العملاء المحتملين (Lead Generation):</strong> من القنوات المذكورة أعلاه. الهدف: 30 – 50 عميل محتمل شهريًا.</li>
+        <li><strong>التأهيل (Qualification):</strong> المنسق يتواصل ويحدد جدية العميل وملاءمة المشروع. الهدف: 10 – 15 عميلًا مؤهلًا شهريًا.</li>
+        <li><strong>اجتماع الاكتشاف (Discovery Meeting):</strong> اجتماع مع مدير الحسابات (Account Manager) وقائد الستوديو (Studio Lead). الهدف: 4 – 6 اجتماعات شهريًا.</li>
+        <li><strong>العرض المقترح (Proposal):</strong> عرض تفصيلي مكتوب بالعربية + جدول زمني + هيكل تسعير. الهدف: 3 – 5 عروض شهريًا.</li>
+        <li><strong>التفاوض والإغلاق (Negotiation & Close):</strong> تفاوض على السعر والشروط، توقيع العقد. الهدف: 1 – 2 صفقة شهريًا (معدل تحويل 25 – 40% من العروض).</li>
+      </ol>
+
+      <h2 class="h-title">استراتيجية التسعير الذكية</h2>
+      <p>في السوق السعودي للشركات المتوسطة، <strong>السعر منخفض جدًا يعني عدم الجدية، والسعر مرتفع جدًا يخسر العميل</strong>. الموقع الذهبي هو <strong>السعر المتوسط – العالي مع تبرير قيمي واضح</strong>.</p>
+      <ul>
+        <li>التسعير دائمًا مرتبط بالقيمة المحققة (Value-Based)، لا بساعات العمل.</li>
+        <li>شروط الدفع القياسية: 40% مقدمًا + 30% عند منتصف المشروع + 30% عند التسليم النهائي.</li>
+        <li>الريتنر يوفر 10 – 15% على سعر المشاريع الفردية، مما يدفع العميل للالتزام الطويل.</li>
+        <li>لا نخصم لمجرد طلب الخصم — كل خصم مقابل تنازل من العميل (مدة أطول، نطاق أوسع، دفعة مقدمة أكبر).</li>
+      </ul>
+    </section>
+
+    <!-- ========== SECTION: FINANCIALS ========== -->
+    <section class="section" id="financials">
+      <div class="section-header">
+        <div class="section-eyebrow">
+          <span class="section-num-pill">FINANCIALS · 11</span>
+          <span class="section-eyebrow-text">3-Year Projections</span>
+        </div>
+        <h1 class="section-title">التوقعات المالية التفصيلية</h1>
+        <p class="section-lead">
+          نموذج مالي واقعي لثلاث سنوات، مبني على افتراضات محافظة قابلة للتحقق. الأرقام بالريال السعودي.
+        </p>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi">
+          <div class="kpi-label">إيرادات السنة 1</div>
+          <div class="kpi-value">600K</div>
+          <div class="kpi-unit">ريال</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">إيرادات السنة 2</div>
+          <div class="kpi-value">2.34M</div>
+          <div class="kpi-unit">ريال</div>
+          <div class="kpi-trend">↗ +290%</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">إيرادات السنة 3</div>
+          <div class="kpi-value">4.8M</div>
+          <div class="kpi-unit">ريال</div>
+          <div class="kpi-trend">↗ +105%</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">صافي الربح — السنة 3</div>
+          <div class="kpi-value">1.16M</div>
+          <div class="kpi-unit">ريال — هامش 24%</div>
+        </div>
+      </div>
+
+      <h2 class="h-title">الافتراضات الأساسية</h2>
+      <div class="table-wrap scroll">
+      <table>
+        <thead>
+          <tr><th>الافتراض</th><th>القيمة</th><th>المصدر / المنطق</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>رأس المال المبدئي</td><td>250,000 ريال</td><td>إسهام الشريك الممول محمد الشيباني — يكفي 9 أشهر من التشغيل.</td></tr>
+          <tr><td>فترة التأسيس (لا إيراد)</td><td>6 أشهر</td><td>أول 6 أشهر تركيز على البناء التشغيلي والتسويقي.</td></tr>
+          <tr><td>معدل ضريبة الدخل (الشريك الأجنبي)</td><td>20%</td><td>هيئة الزكاة والضريبة والجمارك (ZATCA) — على حصة الأرباح المعدلة.</td></tr>
+          <tr><td>معدل الزكاة (الشريك السعودي)</td><td>2.5%</td><td>هيئة الزكاة والضريبة والجمارك (ZATCA) — على وعاء الزكاة.</td></tr>
+          <tr><td>ضريبة القيمة المضافة</td><td>15%</td><td>مضافة على الفواتير الصادرة، مستردة من المشتريات.</td></tr>
+          <tr><td>متوسط قيمة المشروع</td><td>50,000 ريال</td><td>محافظ — بناءً على الشريحة المستهدفة (50–500 موظف).</td></tr>
+          <tr><td>معدل التحويل من عميل محتمل (Lead) إلى عميل فعلي</td><td>5%</td><td>محافظ — السوق المؤسسي عادةً 3 – 8%.</td></tr>
+          <tr><td>نمو سنوي للإيرادات</td><td>70 – 80%</td><td>نموذج شركة ناشئة (Startup) — نمو متسارع للسنتين الأوليين.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h2 class="h-title">توزيع رأس المال على 9 أشهر</h2>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>البند</th><th>المبلغ الشهري (ريال)</th><th>إجمالي 9 أشهر</th><th>النسبة</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>إيجار المكتب (KAFD)</td><td>5,000</td><td>45,000</td><td>18%</td></tr>
+          <tr><td>الرواتب الأساسية</td><td>15,000</td><td>135,000</td><td>54%</td></tr>
+          <tr><td>التسويق والإعلانات</td><td>7,777</td><td>70,000</td><td>28%</td></tr>
+          <tr class="totals"><td><strong>إجمالي</strong></td><td><strong>27,777</strong></td><td><strong>250,000</strong></td><td><strong>100%</strong></td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="highlight">
+        <p><strong>ملاحظة جوهرية:</strong> هذا التوزيع لا يشمل تكاليف التأسيس القانونية الأولية (15,000 – 25,000 ريال لمرة واحدة) والتي ستُدفع من رأس المال المبدئي خارج البند الشهري. التكاليف الفعلية المتغيرة (سفر، استضافة، أدوات) ستخصم من هامش المشاريع منذ الشهر السابع.</p>
+      </div>
+
+      <h2 class="h-title">توقعات الإيرادات — السنوات الثلاث الأولى</h2>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>البند</th><th>السنة 1</th><th>السنة 2</th><th>السنة 3</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>إيرادات المشاريع (One-Time)</td><td>500,000</td><td>1,800,000</td><td>3,500,000</td></tr>
+          <tr><td>إيرادات الاستشارات (Advisory)</td><td>40,000</td><td>180,000</td><td>400,000</td></tr>
+          <tr class="totals"><td><strong>إجمالي الإيرادات</strong></td><td><strong>600,000</strong></td><td><strong>2,340,000</strong></td><td><strong>4,800,000</strong></td></tr>
+          <tr><td>النمو السنوي</td><td>—</td><td><span class="num-pos">+290%</span></td><td><span class="num-pos">+105%</span></td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h2 class="h-title">توقعات التكاليف</h2>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>البند</th><th>السنة 1</th><th>السنة 2</th><th>السنة 3</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>الرواتب والمكافآت</td><td>240,000</td><td>720,000</td><td>1,440,000</td></tr>
+          <tr><td>الإيجار والمرافق</td><td>60,000</td><td>120,000</td><td>180,000</td></tr>
+          <tr><td>التسويق والإعلانات</td><td>90,000</td><td>180,000</td><td>300,000</td></tr>
+          <tr><td>المتعاقدون (Project-Based)</td><td>120,000</td><td>480,000</td><td>950,000</td></tr>
+          <tr><td>الأدوات والاشتراكات</td><td>30,000</td><td>60,000</td><td>100,000</td></tr>
+          <tr><td>السفر والضيافة</td><td>25,000</td><td>60,000</td><td>120,000</td></tr>
+          <tr><td>مصاريف قانونية ومحاسبية</td><td>30,000</td><td>50,000</td><td>80,000</td></tr>
+          <tr><td>مصاريف متنوعة (10%)</td><td>60,000</td><td>170,000</td><td>320,000</td></tr>
+          <tr class="totals"><td><strong>إجمالي التكاليف</strong></td><td><strong>655,000</strong></td><td><strong>1,840,000</strong></td><td><strong>3,490,000</strong></td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h2 class="h-title">الربحية والتدفق النقدي</h2>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>المؤشر</th><th>السنة 1</th><th>السنة 2</th><th>السنة 3</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>إجمالي الإيرادات</td><td>600,000</td><td>2,340,000</td><td>4,800,000</td></tr>
+          <tr><td>إجمالي التكاليف</td><td>655,000</td><td>1,840,000</td><td>3,490,000</td></tr>
+          <tr><td>الربح / الخسارة قبل الضريبة (EBT)</td><td><span class="num-neg">(55,000)</span></td><td><span class="num-pos">500,000</span></td><td><span class="num-pos">1,310,000</span></td></tr>
+          <tr><td>ضريبة الدخل (20% على حصة الأجنبي)</td><td>—</td><td>50,000</td><td>131,000</td></tr>
+          <tr><td>الزكاة (2.5% على حصة السعودي)</td><td>—</td><td>6,250</td><td>16,375</td></tr>
+          <tr class="totals"><td><strong>صافي الربح بعد الضرائب</strong></td><td><span class="num-neg">(55,000)</span></td><td><span class="num-pos">443,750</span></td><td><span class="num-pos">1,162,625</span></td></tr>
+          <tr><td>هامش الربح الصافي</td><td>(9%)</td><td><span class="num-pos">19%</span></td><td><span class="num-pos">24%</span></td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="callout">
+        <div class="callout-label">نقطة التعادل (Break-Even Point)</div>
+        <p>متوقعة في <strong>الشهر 11 – 13 من بدء التشغيل الفعلي</strong> (الشهر 17 – 19 من التأسيس). من هذه النقطة فصاعدًا، الشركة تموّل ذاتها بالكامل دون الحاجة لضخ نقدي إضافي.</p>
+        <p>السنة الأولى تنتهي بخسارة محاسبية محدودة (55 ألف ريال)، تُعتبر استثمارًا تأسيسيًا. السنة الثانية تحقق ربحًا صافيًا 443 ألف ريال — عائدًا أوليًا قويًا على رأس المال.</p>
+      </div>
+
+      <h2 class="h-title">توزيع الأرباح</h2>
+      <p>بحسب الاتفاق المبدئي بين الشريكين، توزيع الأرباح يتم على أساس مشروع–مشروع خلال السنة الأولى من العقد العرفي، ثم سنويًا بعد التأسيس القانوني الرسمي:</p>
+      <ul>
+        <li>بعد كل مشروع كامل التسليم واستلام الدفعة الأخيرة: تُغطّى التكاليف المباشرة، ثم تُوزّع الأرباح 50% للشريك السعودي محمد الشيباني، 50% للشريك الأجنبي عبدالله الفولي.</li>
+        <li>احتفاظ تلقائي بـ 15 – 20% من كل توزيع كاحتياطي نقدي للشركة (Working Capital Reserve).</li>
+        <li>بعد تأسيس الكيان القانوني (الشهر 13)، تُوزّع الأرباح ربعيًا حسب الميزانية المعتمدة.</li>
+      </ul>
+
+      <h2 class="h-title">سيناريوهات الحساسية</h2>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>السيناريو</th><th>صافي ربح السنة 1</th><th>صافي ربح السنة 2</th><th>نقطة التعادل</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>متحفظ (إيرادات أقل 25%)</td><td><span class="num-neg">(205,000)</span></td><td>180,000</td><td>الشهر 16</td></tr>
+          <tr class="totals"><td><strong>متوسط (الخطة الأساسية)</strong></td><td><span class="num-neg">(55,000)</span></td><td><span class="num-pos">444,000</span></td><td><strong>الشهر 12</strong></td></tr>
+          <tr><td>متفائل (إيرادات أكثر 30%)</td><td><span class="num-pos">120,000</span></td><td><span class="num-pos">780,000</span></td><td>الشهر 9</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+
+    <!-- ========== SECTION: RISKS ========== -->
+    <section class="section" id="risks">
+      <div class="section-header">
+        <div class="section-eyebrow">
+          <span class="section-num-pill">RISKS · 12</span>
+          <span class="section-eyebrow-text">Risk Matrix & Milestones</span>
+        </div>
+        <h1 class="section-title">تحليل المخاطر</h1>
+        <p class="section-lead">
+          مصفوفة المخاطر الرئيسية، خطط التخفيف، وجدول علامات القياس (Milestones).
+        </p>
+      </div>
+
+      <p>كل مشروع تجاري يواجه مخاطر — والمشاريع الجادة هي التي تواجهها بشفافية وتضع لها خطط استجابة.</p>
+
+      <h2 class="h-title">مصفوفة المخاطر</h2>
+      <div class="table-wrap scroll">
+      <table>
+        <thead>
+          <tr><th>المخاطرة</th><th>الاحتمالية</th><th>الأثر</th><th>خطة التخفيف</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>تأخير العملاء في الدفع</strong><br><em>Cash Flow Risk</em></td><td><span class="num-neg">عالية</span></td><td><span class="num-neg">عالٍ</span></td><td>اشتراط 40% مقدمًا. الاحتفاظ باحتياطي نقدي = 3 أشهر من المصاريف. متابعة قانونية مبكرة لأي تأخير يتجاوز 30 يومًا.</td></tr>
+          <tr><td><strong>صعوبة استقطاب كفاءات سعودية</strong><br><em>Talent Risk</em></td><td>متوسطة</td><td><span class="num-neg">عالٍ</span></td><td>بناء برنامج تدريب داخلي لخريجين سعوديين. شراكات مع جامعات الرياض وجامعة الملك عبدالله للعلوم والتقنية (KAUST). تقديم حصص أرباح صغيرة للكوادر الرئيسية بعد سنتين.</td></tr>
+          <tr><td><strong>تغير اللوائح (سعودة، ضرائب)</strong><br><em>Regulatory Risk</em></td><td>متوسطة</td><td>متوسط</td><td>متابعة دائمة لتحديثات وزارة الموارد البشرية (MHRSD) وهيئة الزكاة والضريبة والجمارك (ZATCA). التعاقد مع مكتب محاماة سعودي. بناء العقود لتشمل بنود التعديل التلقائي.</td></tr>
+          <tr><td><strong>اعتماد مفرط على عميل أو قطاع</strong><br><em>Concentration Risk</em></td><td>متوسطة</td><td><span class="num-neg">عالٍ</span></td><td>ألا يتجاوز عميل واحد 25% من إيرادات أي سنة. تنويع القطاعات. بناء قاعدة عقود ريتنر تخفّف الاعتماد على المشاريع لمرة واحدة (One-Time).</td></tr>
+          <tr><td><strong>خلاف بين الشريكين</strong><br><em>Partnership Risk</em></td><td>منخفضة</td><td><span class="num-neg">عالٍ جدًا</span></td><td>عقد عرفي مفصّل من اليوم الأول. اجتماع حوكمة شهري موثَّق. بند خروج عادل (Exit Clause) في كل اتفاقية.</td></tr>
+          <tr><td><strong>منافسة من شركات استشارية كبرى</strong><br><em>Competitive Risk</em></td><td>متوسطة</td><td>متوسط</td><td>التموضع في «الفجوة» لا في «السوق العام». بناء سجل دراسات حالة قوي. التعاقد طويل المدى مع عملاء استراتيجيين.</td></tr>
+          <tr><td><strong>تباطؤ السوق السعودي</strong><br><em>Market Risk</em></td><td>منخفضة</td><td><span class="num-neg">عالٍ</span></td><td>تنويع الجغرافيا: الرياض + جدة + الشرقية + الجنوب. الاحتفاظ بالنشاط المصري كاحتياطي. تطوير منتج رقمي (SaaS) قابل للتصدير.</td></tr>
+          <tr><td><strong>صعوبة تحويل الأرباح للخارج</strong><br><em>Currency Risk</em></td><td>منخفضة</td><td>متوسط</td><td>الاستفادة من ضمانة وزارة الاستثمار (MISA): حرية تحويل الأرباح بنسبة 100%. استخدام حساب البنك التجاري الدولي المصري بالدولار (CIB Egypt USD) للاحتياطي. توزيع التحويلات على دفعات.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h2 class="h-title">جدول علامات القياس (Milestones)</h2>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th style="width: 12%;">الشهر</th><th style="width: 30%;">علامة القياس</th><th>المؤشر القابل للقياس</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>شهر 2</strong></td><td>تأسيس قانوني مكتمل</td><td>ترخيص الاستثمار (MISA) + السجل التجاري (CR) + حساب بنكي + مكتب</td></tr>
+          <tr><td><strong>شهر 6</strong></td><td>جاهزية تشغيلية</td><td>فريق + موقع + 5 دراسات حالة (Case Studies) + 500 عميل محتمل (Leads)</td></tr>
+          <tr><td><strong>شهر 7</strong></td><td>أول مشروع موقّع</td><td>عقد + دفعة أولى مستلمة</td></tr>
+          <tr><td><strong>شهر 9</strong></td><td>3 – 4 مشروعات متزامنة</td><td>إيراد شهري من الدفعات ≥ 80,000 ريال</td></tr>
+          <tr><td><strong>شهر 12</strong></td><td>نقطة التعادل</td><td>الإيرادات ≥ المصاريف الشهرية</td></tr>
+          <tr><td><strong>شهر 13</strong></td><td>كيان قانوني جديد</td><td>شراكة موثقة 50/50</td></tr>
+          <tr><td><strong>شهر 18</strong></td><td>إيراد ربعي 600,000 ريال</td><td>إجمالي شهري متوسط 200,000</td></tr>
+          <tr><td><strong>شهر 24</strong></td><td>ربح صافٍ 444,000 ريال</td><td>إقرار ضريبي موثَّق + هوية مؤسسية</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+
+    <!-- ========== SECTION: CONCLUSION ========== -->
+    <section class="section" id="conclusion">
+      <div class="section-header">
+        <div class="section-eyebrow">
+          <span class="section-num-pill">CONCLUSION · 13</span>
+          <span class="section-eyebrow-text">Closing Statement</span>
+        </div>
+        <h1 class="section-title">لماذا هذا المشروع الآن؟</h1>
+        <p class="section-lead">
+          نافذة الفرصة وأسباب التحرك الفوري في السوق السعودي.
+        </p>
+      </div>
+
+      <div class="pull-quote" style="font-size: 18px;">
+        السوق السعودي اليوم هو ما كان عليه السوق الأمريكي عام 1995 — <strong>نافذة فرصة لن تتكرر</strong>.
+      </div>
+
+      <p>الشركات التي ستُؤسَّس في 2026 وتنمو خلال السنوات الخمس القادمة هي التي ستكتب تاريخ الاقتصاد الرقمي السعودي.</p>
+
+      <p>نملك ما يكفي لنكون جزءًا من هذه القصة: <strong>خبرة تقنية نادرة + رأس مال معقول + شبكة شراكات قائمة + رؤية واضحة</strong>. الناقص هو القرار. وهذه الدراسة قُدّمت لتُسهّل اتخاذه.</p>
+
+      <div class="callout dark" style="margin-top: 32px;">
+        <div class="callout-label">الخلاصة</div>
+        <p style="font-size: 16px; line-height: 1.85;">
+          الهدف ليس بناء شركة خدمات — بل بناء <strong>شركة ناشئة مليارية</strong>. وبيت الخبرة هو الخطوة الأولى الموثّقة في هذا الطريق.
+        </p>
+      </div>
+
+      <div style="margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--ink-100); text-align: center; color: var(--ink-400); font-size: 12px;">
+        — نهاية الدراسة —
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ========== ADMIN PANEL ========== -->
+<div class="admin-overlay" id="adminPanel">
+  <div class="admin-panel">
+    <!-- Sidebar -->
+    <aside class="admin-aside">
+      <div class="admin-header">
+        <div class="admin-title">
+          <div>
+            <div class="admin-title-text">لوحة التحرير</div>
+            <div class="admin-title-sub">CONTENT EDITOR</div>
+          </div>
+        </div>
+        <button class="admin-close" id="adminClose">×</button>
+      </div>
+
+      <input type="search" class="admin-search" id="adminSearch" placeholder="ابحث عن قسم...">
+
+      <div class="admin-section-group">
+        <div class="admin-group-label">الإعدادات العامة</div>
+        <div class="admin-nav-item active" data-edit="settings">
+          <span class="admin-nav-num">⚙</span>
+          العلامة التجارية والشريط
+        </div>
+      </div>
+
+      <div class="admin-section-group">
+        <div class="admin-group-label">محاور الدراسة</div>
+        <div class="admin-nav-item" data-edit="overview"><span class="admin-nav-num">00</span>نظرة عامة</div>
+        <div class="admin-nav-item" data-edit="preface"><span class="admin-nav-num">01</span>مذكرة الشريك المؤسس</div>
+        <div class="admin-nav-item" data-edit="summary"><span class="admin-nav-num">02</span>الملخص التنفيذي</div>
+        <div class="admin-nav-item" data-edit="concept"><span class="admin-nav-num">03</span>المفهوم التجاري</div>
+        <div class="admin-nav-item" data-edit="market"><span class="admin-nav-num">04</span>تحليل السوق</div>
+        <div class="admin-nav-item" data-edit="competition"><span class="admin-nav-num">05</span>المشهد التنافسي</div>
+        <div class="admin-nav-item" data-edit="customers"><span class="admin-nav-num">06</span>العملاء المستهدفون</div>
+        <div class="admin-nav-item" data-edit="legal"><span class="admin-nav-num">07</span>الإطار القانوني</div>
+        <div class="admin-nav-item" data-edit="operations"><span class="admin-nav-num">08</span>خطة التشغيل</div>
+        <div class="admin-nav-item" data-edit="hr"><span class="admin-nav-num">09</span>الموارد البشرية</div>
+        <div class="admin-nav-item" data-edit="sales"><span class="admin-nav-num">10</span>المبيعات والتسويق</div>
+        <div class="admin-nav-item" data-edit="financials"><span class="admin-nav-num">11</span>التوقعات المالية</div>
+        <div class="admin-nav-item" data-edit="risks"><span class="admin-nav-num">12</span>تحليل المخاطر</div>
+        <div class="admin-nav-item" data-edit="conclusion"><span class="admin-nav-num">13</span>الخاتمة</div>
+      </div>
+
+      <div class="admin-section-group">
+        <div class="admin-group-label">إدارة البيانات</div>
+        <div class="admin-nav-item" data-edit="export">
+          <span class="admin-nav-num">↓</span>
+          تصدير / حفظ
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Editor -->
+    <main class="admin-main" id="adminMain">
+      <!-- Content injected by JS -->
+    </main>
+  </div>
+</div>
+
+<div class="admin-status" id="adminStatus">تم الحفظ بنجاح</div>
+
+<script>
+  // ============ NAVIGATION ============
+  const navItems = document.querySelectorAll('.nav-item');
+  const sections = document.querySelectorAll('.section');
+  const currentLabel = document.getElementById('current-section');
+
+  navItems.forEach(item => {
+    item.addEventListener('click', () => {
+      const targetId = item.dataset.section;
+      navItems.forEach(n => n.classList.remove('active'));
+      item.classList.add('active');
+      sections.forEach(s => s.classList.remove('active'));
+      const target = document.getElementById(targetId);
+      if (target) {
+        target.classList.add('active');
+        currentLabel.textContent = item.textContent.replace(/^\d+/, '').trim();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+  });
+
+  // ============ THEME TOGGLE ============
+  const themeToggle = document.getElementById('themeToggle');
+  const iconSun = document.getElementById('iconSun');
+  const iconMoon = document.getElementById('iconMoon');
+
+  function applyTheme(isDark) {
+    document.body.classList.toggle('dark', isDark);
+    iconSun.style.display = isDark ? 'block' : 'none';
+    iconMoon.style.display = isDark ? 'none' : 'block';
+  }
+
+  // Load saved theme
+  const savedTheme = localStorage.getItem('feasibility-theme');
+  if (savedTheme === 'dark') applyTheme(true);
+
+  themeToggle.addEventListener('click', () => {
+    const isDark = !document.body.classList.contains('dark');
+    applyTheme(isDark);
+    localStorage.setItem('feasibility-theme', isDark ? 'dark' : 'light');
+  });
+
+  // ============ ADMIN PANEL ============
+  const adminPanel = document.getElementById('adminPanel');
+  const adminToggle = document.getElementById('adminToggle');
+  const adminClose = document.getElementById('adminClose');
+  const adminMain = document.getElementById('adminMain');
+  const adminNavItems = document.querySelectorAll('.admin-nav-item');
+  const adminSearch = document.getElementById('adminSearch');
+  const adminStatus = document.getElementById('adminStatus');
+
+  adminToggle.addEventListener('click', () => {
+    adminPanel.classList.add('open');
+    showEditor('settings');
+  });
+
+  adminClose.addEventListener('click', () => {
+    adminPanel.classList.remove('open');
+  });
+
+  adminPanel.addEventListener('click', (e) => {
+    if (e.target === adminPanel) adminPanel.classList.remove('open');
+  });
+
+  adminNavItems.forEach(item => {
+    item.addEventListener('click', () => {
+      adminNavItems.forEach(n => n.classList.remove('active'));
+      item.classList.add('active');
+      showEditor(item.dataset.edit);
+    });
+  });
+
+  // Search filter
+  adminSearch.addEventListener('input', (e) => {
+    const q = e.target.value.toLowerCase().trim();
+    adminNavItems.forEach(item => {
+      const text = item.textContent.toLowerCase();
+      item.style.display = !q || text.includes(q) ? 'flex' : 'none';
+    });
+  });
+
+  // Status message
+  function showStatus(msg, type = 'success') {
+    adminStatus.textContent = msg;
+    adminStatus.className = 'admin-status show ' + type;
+    const duration = type === 'error' ? 3500 : 2000;
+    setTimeout(() => adminStatus.classList.remove('show'), duration);
+  }
+
+  // ============ EDITOR RENDERERS ============
+  function showEditor(key) {
+    const renderers = {
+      settings: renderSettings,
+      overview: () => renderSectionEditor('overview', 'نظرة عامة', '00', 'EXECUTIVE BRIEF'),
+      preface: () => renderSectionEditor('preface', 'مذكرة الشريك المؤسس', '01', 'FOUNDING MEMO'),
+      summary: () => renderSectionEditor('summary', 'الملخص التنفيذي', '02', 'EXECUTIVE SUMMARY'),
+      concept: () => renderSectionEditor('concept', 'المفهوم التجاري', '03', 'BUSINESS CONCEPT'),
+      market: () => renderSectionEditor('market', 'تحليل السوق', '04', 'MARKET ANALYSIS'),
+      competition: () => renderSectionEditor('competition', 'المشهد التنافسي', '05', 'COMPETITIVE'),
+      customers: () => renderSectionEditor('customers', 'العملاء المستهدفون', '06', 'CUSTOMERS'),
+      legal: () => renderSectionEditor('legal', 'الإطار القانوني', '07', 'LEGAL'),
+      operations: () => renderSectionEditor('operations', 'خطة التشغيل', '08', 'OPERATIONS'),
+      hr: () => renderSectionEditor('hr', 'الموارد البشرية', '09', 'HUMAN RESOURCES'),
+      sales: () => renderSectionEditor('sales', 'المبيعات والتسويق', '10', 'SALES'),
+      financials: () => renderSectionEditor('financials', 'التوقعات المالية', '11', 'FINANCIALS'),
+      risks: () => renderSectionEditor('risks', 'تحليل المخاطر', '12', 'RISKS'),
+      conclusion: () => renderSectionEditor('conclusion', 'الخاتمة', '13', 'CONCLUSION'),
+      export: renderExport,
+    };
+    (renderers[key] || (() => {}))();
+  }
+
+  function renderSettings() {
+    const brandTitle = document.querySelector('.brand-title').textContent;
+    const brandSubtitle = document.querySelector('.brand-subtitle').textContent;
+    const dateBadge = document.querySelector('.badge.brand').textContent;
+    const confBadge = document.querySelector('.badge.confidential').textContent;
+
+    adminMain.innerHTML = `
+      <div class="admin-breadcrumb">
+        <span>الإعدادات</span>
+        <span>›</span>
+        <span class="current">العلامة التجارية والشريط</span>
+      </div>
+      <h1 class="admin-h1">العلامة التجارية والشريط العلوي</h1>
+      <p class="admin-lead">عدّل العنوان الرئيسي للوثيقة والشارات الظاهرة في الشريط العلوي.</p>
+
+      <div class="admin-field-group">
+        <div class="admin-field-group-title">معلومات العلامة (تظهر في الشريط الجانبي)</div>
+        <div class="admin-field">
+          <label class="admin-label">عنوان الدراسة</label>
+          <input class="admin-input" id="f-brandTitle" value="${brandTitle.replace(/"/g, '&quot;').trim()}">
+        </div>
+        <div class="admin-field">
+          <label class="admin-label">العنوان الفرعي</label>
+          <input class="admin-input" id="f-brandSubtitle" value="${brandSubtitle.replace(/"/g, '&quot;').trim()}">
+        </div>
+      </div>
+
+      <div class="admin-field-group">
+        <div class="admin-field-group-title">شارات الشريط العلوي</div>
+        <div class="admin-row">
+          <div class="admin-field">
+            <label class="admin-label">شارة التاريخ</label>
+            <input class="admin-input" id="f-dateBadge" value="${dateBadge.trim()}">
+          </div>
+          <div class="admin-field">
+            <label class="admin-label">شارة السرية</label>
+            <input class="admin-input" id="f-confBadge" value="${confBadge.trim()}">
+          </div>
+        </div>
+      </div>
+
+      <div class="admin-actions">
+        <button class="admin-btn" id="saveSettings">حفظ التغييرات</button>
+      </div>
+    `;
+
+    document.getElementById('saveSettings').addEventListener('click', () => {
+      document.querySelector('.brand-title').textContent = document.getElementById('f-brandTitle').value;
+      document.querySelector('.brand-subtitle').textContent = document.getElementById('f-brandSubtitle').value;
+      document.querySelector('.badge.brand').textContent = document.getElementById('f-dateBadge').value;
+      document.querySelector('.badge.confidential').textContent = document.getElementById('f-confBadge').value;
+      showStatus('✓ تم حفظ التغييرات');
+    });
+  }
+
+  // ===== Admin editor helpers (plain-text view + structure-preserving save) =====
+  function htmlToPlain(html) {
+    if (html == null) return '';
+    return String(html)
+      .replace(/<br\s*\/?>/gi, '\n')
+      .replace(/<\/?(?:strong|em|b|i|span|u)[^>]*>/gi, '')
+      .replace(/<[^>]+>/g, '')
+      .replace(/&nbsp;/g, ' ')
+      .replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"')
+      .trim();
+  }
+
+  function plainToCellHTML(originalHTML, newText) {
+    // Preserve original structure if plain text unchanged
+    const origPlain = htmlToPlain(originalHTML);
+    if (origPlain === newText.trim()) return originalHTML;
+
+    const origTrim = (originalHTML || '').trim();
+    const newClean = newText.trim();
+
+    // Detect patterns
+    const strongBrEm = /^<strong>([\s\S]*?)<\/strong>\s*<br\s*\/?>\s*<em>([\s\S]*?)<\/em>$/i;
+    const strongOnly = /^<strong>([\s\S]*?)<\/strong>$/i;
+
+    // Two-line content with original <strong>X<br><em>Y</em> pattern
+    if (strongBrEm.test(origTrim) && newClean.includes('\n')) {
+      const lines = newClean.split(/\n+/);
+      const first = lines[0].trim();
+      const rest = lines.slice(1).join(' ').trim();
+      return '<strong>' + first + '</strong><br><em>' + rest + '</em>';
+    }
+
+    // Single-line content with original <strong>X</strong> pattern
+    if (strongOnly.test(origTrim)) {
+      return '<strong>' + newClean.replace(/\n+/g, ' ') + '</strong>';
+    }
+
+    // No special structure → plain text (convert remaining newlines to <br>)
+    return newClean.replace(/\n+/g, '<br>');
+  }
+
+  function plainToBlockHTML(originalHTML, newText) {
+    // For paragraph/quote/highlight blocks - preserve <strong> at end if original had inline emphasis
+    const origPlain = htmlToPlain(originalHTML);
+    if (origPlain === newText.trim()) return originalHTML;
+    return newText.trim().replace(/\n+/g, '<br>');
+  }
+
+  function renderSectionEditor(sectionId, sectionName, num, eyebrow) {
+    const section = document.getElementById(sectionId);
+    if (!section) return;
+
+    const titleEl = section.querySelector('.section-title');
+    const leadEl = section.querySelector('.section-lead');
+    const eyebrowPill = section.querySelector('.section-num-pill');
+    const eyebrowText = section.querySelector('.section-eyebrow-text');
+
+    // Collect all editable blocks: h2.h-title, h3.h-sub, p, .callout, .pull-quote, .highlight
+    const editableBlocks = [];
+    section.querySelectorAll('.section-header ~ *').forEach((el, i) => {
+      const tag = el.tagName.toLowerCase();
+      const cls = el.className;
+
+      if (tag === 'h2' || tag === 'h3') {
+        editableBlocks.push({ el, type: 'heading', label: tag === 'h2' ? 'عنوان رئيسي' : 'عنوان فرعي' });
+      } else if (tag === 'p') {
+        editableBlocks.push({ el, type: 'paragraph', label: 'فقرة' });
+      } else if (cls && cls.includes('callout')) {
+        editableBlocks.push({ el, type: 'callout', label: 'صندوق مميز' });
+      } else if (cls && cls.includes('pull-quote')) {
+        editableBlocks.push({ el, type: 'quote', label: 'اقتباس' });
+      } else if (cls && cls.includes('highlight')) {
+        editableBlocks.push({ el, type: 'highlight', label: 'صندوق تنبيه' });
+      } else if (tag === 'ul' || tag === 'ol') {
+        editableBlocks.push({ el, type: 'list', label: 'قائمة' });
+      } else if (cls && cls.includes('table-wrap')) {
+        editableBlocks.push({ el, type: 'table', label: 'جدول' });
+      }
+    });
+
+    const blocksHTML = editableBlocks.map((block, i) => {
+      const id = `block-${sectionId}-${i}`;
+
+      if (block.type === 'heading') {
+        return `
+          <div class="admin-field-group">
+            <div class="admin-field-group-title">${block.label}</div>
+            <div class="admin-field">
+              <input class="admin-input" id="${id}" value="${block.el.textContent.trim().replace(/"/g, '&quot;')}" data-block="${i}">
+            </div>
+          </div>
+        `;
+      }
+
+      if (block.type === 'paragraph' || block.type === 'quote' || block.type === 'highlight') {
+        return `
+          <div class="admin-field-group">
+            <div class="admin-field-group-title">${block.label}</div>
+            <div class="admin-field">
+              <textarea class="admin-textarea" id="${id}" data-block="${i}">${htmlToPlain(block.el.innerHTML)}</textarea>
+              <div class="admin-hint">اكتب النص بشكل عادي — أي تنسيق إضافي (تظليل، روابط) يمكن إضافته لاحقًا.</div>
+            </div>
+          </div>
+        `;
+      }
+
+      if (block.type === 'callout') {
+        const label = block.el.querySelector('.callout-label')?.textContent || '';
+        const paragraphs = Array.from(block.el.querySelectorAll('p')).map(p => htmlToPlain(p.innerHTML)).join('\n\n');
+        return `
+          <div class="admin-field-group">
+            <div class="admin-field-group-title">${block.label}</div>
+            <div class="admin-field">
+              <label class="admin-label">عنوان الصندوق</label>
+              <input class="admin-input" id="${id}-label" data-block="${i}" data-callout-label="1" value="${label.replace(/"/g, '&quot;')}">
+            </div>
+            <div class="admin-field">
+              <label class="admin-label">المحتوى (افصل بين الفقرات بسطر فارغ)</label>
+              <textarea class="admin-textarea large" id="${id}" data-block="${i}" data-callout="1">${paragraphs}</textarea>
+              <div class="admin-hint">اكتب النص بشكل عادي. كل سطر فارغ يبدأ فقرة جديدة.</div>
+            </div>
+          </div>
+        `;
+      }
+
+      if (block.type === 'list') {
+        const items = Array.from(block.el.querySelectorAll('li')).map(li => htmlToPlain(li.innerHTML).replace(/\n+/g, ' ')).join('\n');
+        return `
+          <div class="admin-field-group">
+            <div class="admin-field-group-title">${block.label} (${block.el.tagName.toLowerCase() === 'ol' ? 'مرقّمة' : 'نقطية'})</div>
+            <div class="admin-field">
+              <textarea class="admin-textarea large" id="${id}" data-block="${i}" data-list="${block.el.tagName.toLowerCase()}">${items}</textarea>
+              <div class="admin-hint">كل سطر = نقطة في القائمة.</div>
+            </div>
+          </div>
+        `;
+      }
+
+      if (block.type === 'table') {
+        const headers = Array.from(block.el.querySelectorAll('thead th')).map(th => th.textContent.trim());
+        // Store original HTML on each tr so save can preserve structure where unchanged
+        const tbodyRows = Array.from(block.el.querySelectorAll('tbody tr'));
+        tbodyRows.forEach(tr => {
+          Array.from(tr.querySelectorAll('td')).forEach(td => {
+            if (!td.hasAttribute('data-orig-html')) {
+              td.setAttribute('data-orig-html', td.innerHTML.trim());
+            }
+          });
+        });
+        const rows = tbodyRows.map(tr =>
+          Array.from(tr.querySelectorAll('td')).map(td => {
+            const plain = htmlToPlain(td.innerHTML);
+            // Replace any newline inside a cell with " / " for single-line display in editor
+            return plain.replace(/\n+/g, ' / ');
+          }).join(' | ')
+        );
+        return `
+          <div class="admin-field-group">
+            <div class="admin-field-group-title">${block.label}</div>
+            <div class="admin-field">
+              <label class="admin-label">رؤوس الأعمدة (افصل بين الأعمدة بعلامة |)</label>
+              <input class="admin-input" id="${id}-headers" data-block="${i}" data-table-headers="1" value="${headers.join(' | ').replace(/"/g, '&quot;')}">
+            </div>
+            <div class="admin-field">
+              <label class="admin-label">الصفوف (كل سطر = صف، افصل بين الأعمدة بعلامة |)</label>
+              <textarea class="admin-textarea large" id="${id}" data-block="${i}" data-table="1" data-headers-id="${id}-headers">${rows.join('\n')}</textarea>
+              <div class="admin-hint">كل سطر يمثّل صفًا، والأعمدة مفصولة بعلامة | — استخدم / إذا أردت سطرًا داخل الخلية.</div>
+              <div class="table-validator" id="${id}-validator"></div>
+              <div class="safety-tip">💡 <strong>نصيحة:</strong> لا تستخدم علامة | داخل النص لأنها فاصل الأعمدة، ولا تستخدم / إلا للسطر الجديد داخل الخلية. إذا احتجت رمزًا مشابهًا، استخدم — أو -.</div>
+            </div>
+          </div>
+        `;
+      }
+
+      return '';
+    }).join('');
+
+    adminMain.innerHTML = `
+      <div class="admin-breadcrumb">
+        <span>محاور الدراسة</span>
+        <span>›</span>
+        <span class="current">${sectionName}</span>
+      </div>
+      <h1 class="admin-h1">${sectionName}</h1>
+      <p class="admin-lead">عدّل عنوان المحور، الوصف، والمحتوى. الحفظ يطبّق التغييرات فورًا على الصفحة الرئيسية.</p>
+
+      <div class="admin-field-group">
+        <div class="admin-field-group-title">رأس المحور</div>
+        <div class="admin-row">
+          <div class="admin-field">
+            <label class="admin-label">شارة المحور (مثلاً: OVERVIEW · 00)</label>
+            <input class="admin-input" id="f-eyebrow-pill" value="${eyebrowPill?.textContent.trim().replace(/"/g, '&quot;') || ''}">
+          </div>
+          <div class="admin-field">
+            <label class="admin-label">النص الفرعي بالإنجليزية</label>
+            <input class="admin-input" id="f-eyebrow-text" value="${eyebrowText?.textContent.trim().replace(/"/g, '&quot;') || ''}">
+          </div>
+        </div>
+        <div class="admin-field">
+          <label class="admin-label">عنوان المحور</label>
+          <input class="admin-input" id="f-title" value="${titleEl?.textContent.trim().replace(/"/g, '&quot;') || ''}">
+        </div>
+        <div class="admin-field">
+          <label class="admin-label">الوصف التمهيدي</label>
+          <textarea class="admin-textarea" id="f-lead">${leadEl?.textContent.trim() || ''}</textarea>
+        </div>
+      </div>
+
+      ${blocksHTML || '<div class="admin-empty"><div class="admin-empty-icon">📝</div><div class="admin-empty-title">لا توجد عناصر قابلة للتحرير</div></div>'}
+
+      <div class="admin-actions">
+        <button class="admin-btn" id="saveSection">حفظ التغييرات</button>
+        <button class="admin-btn undo" id="undoSection" style="display: none;">↶ تراجع عن آخر حفظ</button>
+        <button class="admin-btn secondary" id="goToSection">معاينة في الصفحة</button>
+      </div>
+    `;
+
+    // ===== Live table validator wiring =====
+    function validateTable(textareaEl) {
+      const headersId = textareaEl.getAttribute('data-headers-id');
+      const validatorEl = document.getElementById(textareaEl.id + '-validator');
+      if (!headersId || !validatorEl) return true;
+      const headersInput = document.getElementById(headersId);
+      const expectedCols = headersInput.value.split('|').length;
+      const lines = textareaEl.value.split('\n').filter(l => l.trim());
+      const issues = [];
+      lines.forEach((line, idx) => {
+        const actualCols = line.split('|').length;
+        if (actualCols !== expectedCols) {
+          issues.push({ row: idx + 1, actual: actualCols, expected: expectedCols });
+        }
+      });
+      if (issues.length === 0) {
+        validatorEl.className = 'table-validator ok';
+        validatorEl.innerHTML = '<div class="table-validator-title">✓ جميع الصفوف صحيحة (' + lines.length + ' صفًا، ' + expectedCols + ' عمود لكل صف)</div>';
+        textareaEl.classList.remove('has-error');
+        return true;
+      } else {
+        validatorEl.className = 'table-validator err';
+        const lines_html = issues.map(iss =>
+          '<div class="table-validator-row"><span class="row-num">' + iss.row + '</span><span>عدد الأعمدة في هذا الصف: <strong>' + iss.actual + '</strong> — المتوقع: <strong>' + iss.expected + '</strong></span></div>'
+        ).join('');
+        validatorEl.innerHTML = '<div class="table-validator-title">⚠ يوجد ' + issues.length + ' صف غير مطابق لعدد الأعمدة</div>' + lines_html;
+        textareaEl.classList.add('has-error');
+        return false;
+      }
+    }
+
+    // Attach validator listeners to all table textareas in this section
+    let hasTableErrors = false;
+    function refreshSaveButton() {
+      const saveBtn = document.getElementById('saveSection');
+      saveBtn.disabled = hasTableErrors;
+      saveBtn.title = hasTableErrors ? 'صحّح أخطاء الأعمدة في الجداول قبل الحفظ' : '';
+    }
+    document.querySelectorAll('textarea[data-table="1"]').forEach(ta => {
+      const headersId = ta.getAttribute('data-headers-id');
+      const headersInput = document.getElementById(headersId);
+      const check = () => {
+        // Re-validate ALL tables to compute global flag
+        let anyError = false;
+        document.querySelectorAll('textarea[data-table="1"]').forEach(t => {
+          if (!validateTable(t)) anyError = true;
+        });
+        hasTableErrors = anyError;
+        refreshSaveButton();
+      };
+      ta.addEventListener('input', check);
+      if (headersInput) headersInput.addEventListener('input', check);
+      // Initial run
+      check();
+    });
+
+    // ===== Undo snapshot system =====
+    window._undoSnapshots = window._undoSnapshots || {};
+    const sectionEl = document.getElementById(sectionId);
+    const undoBtn = document.getElementById('undoSection');
+    if (window._undoSnapshots[sectionId]) {
+      undoBtn.style.display = 'inline-flex';
+    }
+    undoBtn.addEventListener('click', () => {
+      const snap = window._undoSnapshots[sectionId];
+      if (!snap) return;
+      sectionEl.innerHTML = snap;
+      delete window._undoSnapshots[sectionId];
+      undoBtn.style.display = 'none';
+      showStatus('↶ تم التراجع عن آخر تعديل');
+      // Re-render the editor to reflect reverted state
+      setTimeout(() => showEditor(sectionId), 200);
+    });
+
+    document.getElementById('saveSection').addEventListener('click', () => {
+      if (hasTableErrors) {
+        showStatus('⚠ صحّح أخطاء الجداول قبل الحفظ', 'error');
+        return;
+      }
+      // Capture snapshot BEFORE applying changes
+      window._undoSnapshots[sectionId] = sectionEl.innerHTML;
+      undoBtn.style.display = 'inline-flex';
+
+      // Save header
+      const newPill = document.getElementById('f-eyebrow-pill').value;
+      const newEyebrow = document.getElementById('f-eyebrow-text').value;
+      const newTitle = document.getElementById('f-title').value;
+      const newLead = document.getElementById('f-lead').value;
+
+      if (eyebrowPill) eyebrowPill.textContent = newPill;
+      if (eyebrowText) eyebrowText.textContent = newEyebrow;
+      if (titleEl) titleEl.textContent = newTitle;
+      if (leadEl) leadEl.textContent = newLead;
+
+      // Save blocks
+      editableBlocks.forEach((block, i) => {
+        const id = `block-${sectionId}-${i}`;
+        const input = document.getElementById(id);
+        if (!input) return;
+
+        if (block.type === 'heading') {
+          block.el.textContent = input.value;
+        } else if (block.type === 'paragraph' || block.type === 'quote' || block.type === 'highlight') {
+          block.el.innerHTML = plainToBlockHTML(block.el.innerHTML, input.value);
+        } else if (block.type === 'callout') {
+          const labelInput = document.getElementById(`${id}-label`);
+          const labelEl = block.el.querySelector('.callout-label');
+          if (labelEl && labelInput) labelEl.textContent = labelInput.value;
+
+          // Remove existing paragraphs and add new ones
+          block.el.querySelectorAll('p').forEach(p => p.remove());
+          const paras = input.value.split(/\n\s*\n/).filter(p => p.trim());
+          paras.forEach(text => {
+            const p = document.createElement('p');
+            p.innerHTML = text.trim().replace(/\n+/g, '<br>');
+            block.el.appendChild(p);
+          });
+        } else if (block.type === 'list') {
+          // Preserve original list-item HTML where text unchanged
+          const origItems = Array.from(block.el.querySelectorAll('li')).map(li => ({
+            html: li.innerHTML.trim(),
+            plain: htmlToPlain(li.innerHTML).replace(/\n+/g, ' ').trim()
+          }));
+          const newLines = input.value.split('\n').map(l => l.trim()).filter(l => l);
+          const newHTML = newLines.map(line => {
+            const match = origItems.find(o => o.plain === line);
+            return '<li>' + (match ? match.html : line) + '</li>';
+          }).join('');
+          block.el.innerHTML = newHTML;
+        } else if (block.type === 'table') {
+          const headersInput = document.getElementById(`${id}-headers`);
+          const headers = headersInput.value.split('|').map(h => h.trim());
+          const rows = input.value.split('\n').filter(r => r.trim()).map(r =>
+            r.split('|').map(c => c.trim().replace(/\s*\/\s*/g, '\n'))
+          );
+
+          const tbl = block.el.querySelector('table');
+          if (tbl) {
+            const thead = tbl.querySelector('thead tr');
+            if (thead) thead.innerHTML = headers.map(h => `<th>${h}</th>`).join('');
+
+            const tbody = tbl.querySelector('tbody');
+            if (tbody) {
+              // Capture original cells so we can preserve <strong>/<em> structure per cell
+              const origCells = Array.from(tbody.querySelectorAll('tr')).map(tr =>
+                Array.from(tr.querySelectorAll('td')).map(td =>
+                  td.getAttribute('data-orig-html') || td.innerHTML.trim()
+                )
+              );
+
+              tbody.innerHTML = rows.map((cells, rowIdx) =>
+                '<tr>' + cells.map((cellText, colIdx) => {
+                  const origHTML = (origCells[rowIdx] && origCells[rowIdx][colIdx]) || '';
+                  // Preserve original td classes (e.g. col-highlight)
+                  const origTd = (tbody.querySelectorAll('tr')[rowIdx] || {}).querySelectorAll
+                    ? tbody.querySelectorAll('tr')[rowIdx].querySelectorAll('td')[colIdx]
+                    : null;
+                  const cls = origTd && origTd.className ? ` class="${origTd.className}"` : '';
+                  return '<td' + cls + '>' + plainToCellHTML(origHTML, cellText) + '</td>';
+                }).join('') + '</tr>'
+              ).join('');
+            }
+          }
+        }
+      });
+
+      showStatus('✓ تم حفظ التغييرات على ' + sectionName);
+    });
+
+    document.getElementById('goToSection').addEventListener('click', () => {
+      adminPanel.classList.remove('open');
+      const navBtn = document.querySelector(`.nav-item[data-section="${sectionId}"]`);
+      if (navBtn) navBtn.click();
+    });
+  }
+
+  function renderExport() {
+    adminMain.innerHTML = `
+      <div class="admin-breadcrumb">
+        <span>إدارة البيانات</span>
+        <span>›</span>
+        <span class="current">تصدير / حفظ</span>
+      </div>
+      <h1 class="admin-h1">تصدير الدراسة</h1>
+      <p class="admin-lead">احفظ نسخة من الدراسة بعد تعديلاتك بصيغ متعددة.</p>
+
+      <div class="admin-field-group">
+        <div class="admin-field-group-title">خيارات التصدير</div>
+        <p style="font-size: 13px; color: var(--ink-600); margin-bottom: 16px;">
+          استخدم الأزرار التالية لحفظ نسخة من الدراسة المُعدّلة:
+        </p>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <button class="admin-btn" id="exportHTML">
+            ⬇ حفظ كملف HTML كامل
+          </button>
+          <button class="admin-btn secondary" id="exportPrint">
+            🖨 طباعة / حفظ PDF
+          </button>
+        </div>
+      </div>
+
+      <div class="admin-field-group">
+        <div class="admin-field-group-title">معلومات</div>
+        <p style="font-size: 12.5px; color: var(--ink-500); line-height: 1.8; margin: 0;">
+          • <strong>HTML:</strong> يحفظ ملفًا كاملاً يمكن فتحه في أي متصفح ومشاركته مع العميل.<br>
+          • <strong>PDF:</strong> يفتح نافذة الطباعة — اختر "حفظ كـ PDF" من قائمة الطابعة.<br>
+          • التعديلات لا تُحفظ تلقائيًا — احفظ الملف قبل إغلاق الصفحة.
+        </p>
+      </div>
+    `;
+
+    document.getElementById('exportHTML').addEventListener('click', () => {
+      adminPanel.classList.remove('open');
+      setTimeout(() => {
+        const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+        const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'feasibility-study-edited.html';
+        a.click();
+        URL.revokeObjectURL(url);
+        showStatus('✓ تم تحميل الملف');
+      }, 100);
+    });
+
+    document.getElementById('exportPrint').addEventListener('click', () => {
+      adminPanel.classList.remove('open');
+      setTimeout(() => window.print(), 200);
+    });
+  }
+
+  // Keyboard shortcut: Esc to close admin panel
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && adminPanel.classList.contains('open')) {
+      adminPanel.classList.remove('open');
+    }
+  });
+</script>
+
+</body>
+</html>
