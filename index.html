@@ -1541,6 +1541,117 @@
     .app { display: block; }
     .section { display: block !important; padding: 24px; page-break-after: always; }
   }
+
+  /* ========== ADMIN — VISUAL TABLE & KPI EDITORS ========== */
+  .admin-table-editor,
+  .admin-kpi-editor { margin-top: 2px; }
+
+  .admin-grid-scroll {
+    overflow-x: auto;
+    border: 1px solid var(--ink-100);
+    border-radius: var(--r-md);
+    background: var(--surface);
+  }
+  .admin-grid-scroll::-webkit-scrollbar { height: 8px; }
+  .admin-grid-scroll::-webkit-scrollbar-thumb { background: var(--ink-200); border-radius: 4px; }
+
+  table.admin-grid {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  table.admin-grid th,
+  table.admin-grid td {
+    border: 1px solid var(--ink-100);
+    padding: 0;
+    vertical-align: top;
+  }
+  table.admin-grid thead th { background: var(--surface-soft); }
+
+  .admin-grid .admin-cell {
+    border: none;
+    background: transparent;
+    margin: 0;
+    padding: 8px 10px;
+    font-family: inherit;
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: var(--ink-900);
+    resize: none;
+    overflow: hidden;
+    display: block;
+  }
+  .admin-grid td .admin-cell { width: 100%; min-width: 120px; }
+  .admin-grid .admin-cell:focus {
+    outline: 2px solid var(--brand-400);
+    outline-offset: -2px;
+    background: var(--brand-soft);
+  }
+  .admin-grid .admin-cell.gh { font-weight: 700; color: var(--ink-800); }
+
+  .admin-grid .gcell { display: flex; align-items: stretch; }
+  .admin-grid .gcell .admin-cell { flex: 1 1 auto; min-width: 90px; }
+
+  .admin-grid .grid-ctrl {
+    width: 38px;
+    min-width: 38px;
+    background: var(--surface-soft);
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .grid-btn {
+    width: 23px;
+    height: 23px;
+    padding: 0;
+    border: 1px solid var(--ink-200);
+    background: var(--surface);
+    border-radius: var(--r-sm);
+    color: var(--ink-500);
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+    flex-shrink: 0;
+  }
+  .grid-btn:hover {
+    border-color: var(--rose-500);
+    color: var(--rose-500);
+    background: var(--rose-50);
+  }
+  .admin-grid .gcell .del-col { align-self: center; margin: 3px; }
+
+  .admin-grid-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+  .admin-grid-actions .admin-btn,
+  .admin-kpi-editor > .admin-btn { padding: 8px 16px; font-size: 12.5px; }
+
+  .admin-kpi-list { display: flex; flex-direction: column; gap: 10px; }
+  .admin-kpi-card {
+    border: 1px solid var(--ink-100);
+    border-radius: var(--r-md);
+    padding: 14px 16px;
+    background: var(--surface-soft);
+  }
+  .admin-kpi-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .admin-kpi-card-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--ink-600);
+  }
+  .admin-kpi-card .admin-field { margin-bottom: 10px; }
+  .admin-kpi-card .admin-row { margin-bottom: 0; }
 </style>
 </head>
 <body>
@@ -1551,7 +1662,7 @@
   <aside class="sidebar">
     <div class="brand">
       <div class="brand-mark">
-        <div class="brand-square">DC</div>
+        <div class="brand-square">DIC</div>
         <div>
           <div class="brand-name">Feasibility</div>
         </div>
@@ -3108,6 +3219,211 @@
     return newText.trim().replace(/\n+/g, '<br>');
   }
 
+  // ===== Visual table editor (a real grid of editable cells) =====
+  function autoGrowCell(ta) {
+    ta.style.height = 'auto';
+    ta.style.height = (ta.scrollHeight + 2) + 'px';
+  }
+
+  function buildTableEditor(container, tableWrapEl) {
+    const srcTable = tableWrapEl.querySelector('table');
+    if (!srcTable) { container.textContent = 'لا يوجد جدول.'; return; }
+
+    const headers = Array.from(srcTable.querySelectorAll('thead th'))
+      .map(th => th.textContent.trim());
+    const rows = Array.from(srcTable.querySelectorAll('tbody tr')).map(tr => ({
+      cls: tr.getAttribute('class') || '',
+      cells: Array.from(tr.querySelectorAll('td')).map(td => ({
+        orig: td.innerHTML.trim(),
+        cls: td.getAttribute('class') || '',
+        text: htmlToPlain(td.innerHTML)
+      }))
+    }));
+
+    function makeCell(cell) {
+      const td = document.createElement('td');
+      const ta = document.createElement('textarea');
+      ta.className = 'admin-cell';
+      ta.rows = 1;
+      ta.value = cell.text || '';
+      ta.setAttribute('data-orig', cell.orig || '');
+      ta.setAttribute('data-cls', cell.cls || '');
+      ta.addEventListener('input', () => autoGrowCell(ta));
+      td.appendChild(ta);
+      return td;
+    }
+    function makeHeaderCell(text) {
+      const th = document.createElement('th');
+      const wrap = document.createElement('div');
+      wrap.className = 'gcell';
+      const ta = document.createElement('textarea');
+      ta.className = 'admin-cell gh';
+      ta.rows = 1;
+      ta.value = text || '';
+      ta.addEventListener('input', () => autoGrowCell(ta));
+      const del = document.createElement('button');
+      del.type = 'button';
+      del.className = 'grid-btn del-col';
+      del.title = 'حذف هذا العمود';
+      del.textContent = '×';
+      wrap.appendChild(ta);
+      wrap.appendChild(del);
+      th.appendChild(wrap);
+      return th;
+    }
+    function makeRow(rowData, colCount) {
+      const tr = document.createElement('tr');
+      if (rowData.cls) tr.setAttribute('data-rowcls', rowData.cls);
+      const ctrl = document.createElement('td');
+      ctrl.className = 'grid-ctrl';
+      const del = document.createElement('button');
+      del.type = 'button';
+      del.className = 'grid-btn del-row';
+      del.title = 'حذف هذا الصف';
+      del.textContent = '×';
+      ctrl.appendChild(del);
+      tr.appendChild(ctrl);
+      for (let k = 0; k < colCount; k++) {
+        tr.appendChild(makeCell(rowData.cells[k] || { orig: '', cls: '', text: '' }));
+      }
+      return tr;
+    }
+
+    container.innerHTML = '';
+    const scroll = document.createElement('div');
+    scroll.className = 'admin-grid-scroll';
+    const table = document.createElement('table');
+    table.className = 'admin-grid';
+    const thead = document.createElement('thead');
+    const tbody = document.createElement('tbody');
+    table.appendChild(thead);
+    table.appendChild(tbody);
+    scroll.appendChild(table);
+    container.appendChild(scroll);
+
+    const htr = document.createElement('tr');
+    const corner = document.createElement('th');
+    corner.className = 'grid-ctrl';
+    htr.appendChild(corner);
+    headers.forEach(h => htr.appendChild(makeHeaderCell(h)));
+    thead.appendChild(htr);
+
+    rows.forEach(r => tbody.appendChild(makeRow(r, headers.length)));
+
+    const actions = document.createElement('div');
+    actions.className = 'admin-grid-actions';
+    const addRowBtn = document.createElement('button');
+    addRowBtn.type = 'button';
+    addRowBtn.className = 'admin-btn secondary';
+    addRowBtn.textContent = '＋ صف جديد';
+    const addColBtn = document.createElement('button');
+    addColBtn.type = 'button';
+    addColBtn.className = 'admin-btn secondary';
+    addColBtn.textContent = '＋ عمود جديد';
+    actions.appendChild(addRowBtn);
+    actions.appendChild(addColBtn);
+    container.appendChild(actions);
+
+    const colCount = () => htr.children.length - 1;
+
+    addRowBtn.addEventListener('click', () => {
+      const tr = makeRow({ cls: '', cells: [] }, colCount());
+      tbody.appendChild(tr);
+      const first = tr.querySelector('.admin-cell');
+      if (first) { autoGrowCell(first); first.focus(); }
+    });
+    addColBtn.addEventListener('click', () => {
+      htr.appendChild(makeHeaderCell(''));
+      Array.from(tbody.children).forEach(tr =>
+        tr.appendChild(makeCell({ orig: '', cls: '', text: '' })));
+      Array.from(table.querySelectorAll('.admin-cell')).forEach(autoGrowCell);
+    });
+    table.addEventListener('click', (e) => {
+      const delRow = e.target.closest('.del-row');
+      if (delRow) {
+        if (tbody.children.length <= 1) {
+          showStatus('⚠ يجب الإبقاء على صف واحد على الأقل', 'error'); return;
+        }
+        delRow.closest('tr').remove();
+        return;
+      }
+      const delCol = e.target.closest('.del-col');
+      if (delCol) {
+        if (colCount() <= 1) {
+          showStatus('⚠ يجب الإبقاء على عمود واحد على الأقل', 'error'); return;
+        }
+        const th = delCol.closest('th');
+        const idx = Array.from(htr.children).indexOf(th);
+        if (idx < 1) return;
+        htr.children[idx].remove();
+        Array.from(tbody.children).forEach(tr => {
+          if (tr.children[idx]) tr.children[idx].remove();
+        });
+      }
+    });
+
+    Array.from(table.querySelectorAll('.admin-cell')).forEach(autoGrowCell);
+  }
+
+  // ===== Visual KPI / insight cards editor =====
+  function buildKpiEditor(container, kpiGridEl) {
+    const cards = Array.from(kpiGridEl.querySelectorAll('.kpi')).map(k => ({
+      label: (k.querySelector('.kpi-label')?.textContent || '').trim(),
+      value: (k.querySelector('.kpi-value')?.textContent || '').trim(),
+      unit: (k.querySelector('.kpi-unit')?.textContent || '').trim(),
+      trend: (k.querySelector('.kpi-trend')?.textContent || '').trim()
+    }));
+
+    container.innerHTML = '';
+    const list = document.createElement('div');
+    list.className = 'admin-kpi-list';
+    container.appendChild(list);
+
+    function addCard(data) {
+      const card = document.createElement('div');
+      card.className = 'admin-kpi-card';
+      card.innerHTML =
+        '<div class="admin-kpi-card-head">' +
+          '<span class="admin-kpi-card-title">بطاقة مؤشر</span>' +
+          '<button type="button" class="grid-btn del-kpi" title="حذف هذه البطاقة">×</button>' +
+        '</div>' +
+        '<div class="admin-row">' +
+          '<div class="admin-field"><label class="admin-label">العنوان</label>' +
+            '<input class="admin-input k-label"></div>' +
+          '<div class="admin-field"><label class="admin-label">القيمة</label>' +
+            '<input class="admin-input k-value"></div>' +
+        '</div>' +
+        '<div class="admin-row">' +
+          '<div class="admin-field"><label class="admin-label">الوحدة / الوصف</label>' +
+            '<input class="admin-input k-unit"></div>' +
+          '<div class="admin-field"><label class="admin-label">مؤشر النمو (اختياري)</label>' +
+            '<input class="admin-input k-trend" placeholder="مثال: ↗ +290%"></div>' +
+        '</div>';
+      card.querySelector('.k-label').value = data.label || '';
+      card.querySelector('.k-value').value = data.value || '';
+      card.querySelector('.k-unit').value = data.unit || '';
+      card.querySelector('.k-trend').value = data.trend || '';
+      card.querySelector('.del-kpi').addEventListener('click', () => {
+        if (list.children.length <= 1) {
+          showStatus('⚠ يجب الإبقاء على بطاقة واحدة على الأقل', 'error'); return;
+        }
+        card.remove();
+      });
+      list.appendChild(card);
+    }
+
+    cards.forEach(addCard);
+
+    const addBtn = document.createElement('button');
+    addBtn.type = 'button';
+    addBtn.className = 'admin-btn secondary';
+    addBtn.style.marginTop = '10px';
+    addBtn.textContent = '＋ بطاقة مؤشر جديدة';
+    addBtn.addEventListener('click', () =>
+      addCard({ label: 'مؤشر جديد', value: '0', unit: '', trend: '' }));
+    container.appendChild(addBtn);
+  }
+
   function renderSectionEditor(sectionId, sectionName, num, eyebrow) {
     const section = document.getElementById(sectionId);
     if (!section) return;
@@ -3127,6 +3443,8 @@
         editableBlocks.push({ el, type: 'heading', label: tag === 'h2' ? 'عنوان رئيسي' : 'عنوان فرعي' });
       } else if (tag === 'p') {
         editableBlocks.push({ el, type: 'paragraph', label: 'فقرة' });
+      } else if (cls && cls.includes('kpi-grid')) {
+        editableBlocks.push({ el, type: 'kpi', label: 'بطاقات المؤشرات' });
       } else if (cls && cls.includes('callout')) {
         editableBlocks.push({ el, type: 'callout', label: 'صندوق مميز' });
       } else if (cls && cls.includes('pull-quote')) {
@@ -3198,37 +3516,25 @@
         `;
       }
 
-      if (block.type === 'table') {
-        const headers = Array.from(block.el.querySelectorAll('thead th')).map(th => th.textContent.trim());
-        // Store original HTML on each tr so save can preserve structure where unchanged
-        const tbodyRows = Array.from(block.el.querySelectorAll('tbody tr'));
-        tbodyRows.forEach(tr => {
-          Array.from(tr.querySelectorAll('td')).forEach(td => {
-            if (!td.hasAttribute('data-orig-html')) {
-              td.setAttribute('data-orig-html', td.innerHTML.trim());
-            }
-          });
-        });
-        const rows = tbodyRows.map(tr =>
-          Array.from(tr.querySelectorAll('td')).map(td => {
-            const plain = htmlToPlain(td.innerHTML);
-            // Replace any newline inside a cell with " / " for single-line display in editor
-            return plain.replace(/\n+/g, ' / ');
-          }).join(' | ')
-        );
+      if (block.type === 'kpi') {
         return `
           <div class="admin-field-group">
             <div class="admin-field-group-title">${block.label}</div>
             <div class="admin-field">
-              <label class="admin-label">رؤوس الأعمدة (افصل بين الأعمدة بعلامة |)</label>
-              <input class="admin-input" id="${id}-headers" data-block="${i}" data-table-headers="1" value="${headers.join(' | ').replace(/"/g, '&quot;')}">
+              <div class="admin-kpi-editor" id="${id}"></div>
+              <div class="admin-hint">عدّل بيانات كل بطاقة في حقولها المخصّصة. حقل «مؤشر النمو» اختياري — اتركه فارغًا لإخفائه.</div>
             </div>
+          </div>
+        `;
+      }
+
+      if (block.type === 'table') {
+        return `
+          <div class="admin-field-group">
+            <div class="admin-field-group-title">${block.label}</div>
             <div class="admin-field">
-              <label class="admin-label">الصفوف (كل سطر = صف، افصل بين الأعمدة بعلامة |)</label>
-              <textarea class="admin-textarea large" id="${id}" data-block="${i}" data-table="1" data-headers-id="${id}-headers">${rows.join('\n')}</textarea>
-              <div class="admin-hint">كل سطر يمثّل صفًا، والأعمدة مفصولة بعلامة | — استخدم / إذا أردت سطرًا داخل الخلية.</div>
-              <div class="table-validator" id="${id}-validator"></div>
-              <div class="safety-tip">💡 <strong>نصيحة:</strong> لا تستخدم علامة | داخل النص لأنها فاصل الأعمدة، ولا تستخدم / إلا للسطر الجديد داخل الخلية. إذا احتجت رمزًا مشابهًا، استخدم — أو -.</div>
+              <div class="admin-table-editor" id="${id}"></div>
+              <div class="admin-hint">انقر داخل أي خلية لتعديل نصها مباشرة. استخدم زرّي «صف جديد» و«عمود جديد»، وعلامة × لحذف صف أو عمود.</div>
             </div>
           </div>
         `;
@@ -3277,60 +3583,13 @@
       </div>
     `;
 
-    // ===== Live table validator wiring =====
-    function validateTable(textareaEl) {
-      const headersId = textareaEl.getAttribute('data-headers-id');
-      const validatorEl = document.getElementById(textareaEl.id + '-validator');
-      if (!headersId || !validatorEl) return true;
-      const headersInput = document.getElementById(headersId);
-      const expectedCols = headersInput.value.split('|').length;
-      const lines = textareaEl.value.split('\n').filter(l => l.trim());
-      const issues = [];
-      lines.forEach((line, idx) => {
-        const actualCols = line.split('|').length;
-        if (actualCols !== expectedCols) {
-          issues.push({ row: idx + 1, actual: actualCols, expected: expectedCols });
-        }
-      });
-      if (issues.length === 0) {
-        validatorEl.className = 'table-validator ok';
-        validatorEl.innerHTML = '<div class="table-validator-title">✓ جميع الصفوف صحيحة (' + lines.length + ' صفًا، ' + expectedCols + ' عمود لكل صف)</div>';
-        textareaEl.classList.remove('has-error');
-        return true;
-      } else {
-        validatorEl.className = 'table-validator err';
-        const lines_html = issues.map(iss =>
-          '<div class="table-validator-row"><span class="row-num">' + iss.row + '</span><span>عدد الأعمدة في هذا الصف: <strong>' + iss.actual + '</strong> — المتوقع: <strong>' + iss.expected + '</strong></span></div>'
-        ).join('');
-        validatorEl.innerHTML = '<div class="table-validator-title">⚠ يوجد ' + issues.length + ' صف غير مطابق لعدد الأعمدة</div>' + lines_html;
-        textareaEl.classList.add('has-error');
-        return false;
-      }
-    }
-
-    // Attach validator listeners to all table textareas in this section
-    let hasTableErrors = false;
-    function refreshSaveButton() {
-      const saveBtn = document.getElementById('saveSection');
-      saveBtn.disabled = hasTableErrors;
-      saveBtn.title = hasTableErrors ? 'صحّح أخطاء الأعمدة في الجداول قبل الحفظ' : '';
-    }
-    document.querySelectorAll('textarea[data-table="1"]').forEach(ta => {
-      const headersId = ta.getAttribute('data-headers-id');
-      const headersInput = document.getElementById(headersId);
-      const check = () => {
-        // Re-validate ALL tables to compute global flag
-        let anyError = false;
-        document.querySelectorAll('textarea[data-table="1"]').forEach(t => {
-          if (!validateTable(t)) anyError = true;
-        });
-        hasTableErrors = anyError;
-        refreshSaveButton();
-      };
-      ta.addEventListener('input', check);
-      if (headersInput) headersInput.addEventListener('input', check);
-      // Initial run
-      check();
+    // ===== Build visual editors for table & KPI blocks =====
+    editableBlocks.forEach((block, bi) => {
+      const blockId = `block-${sectionId}-${bi}`;
+      const cont = document.getElementById(blockId);
+      if (!cont) return;
+      if (block.type === 'table') buildTableEditor(cont, block.el);
+      else if (block.type === 'kpi') buildKpiEditor(cont, block.el);
     });
 
     // ===== Undo snapshot system =====
@@ -3352,10 +3611,6 @@
     });
 
     document.getElementById('saveSection').addEventListener('click', () => {
-      if (hasTableErrors) {
-        showStatus('⚠ صحّح أخطاء الجداول قبل الحفظ', 'error');
-        return;
-      }
       // Capture snapshot BEFORE applying changes
       window._undoSnapshots[sectionId] = sectionEl.innerHTML;
       undoBtn.style.display = 'inline-flex';
@@ -3407,39 +3662,53 @@
           }).join('');
           block.el.innerHTML = newHTML;
         } else if (block.type === 'table') {
-          const headersInput = document.getElementById(`${id}-headers`);
-          const headers = headersInput.value.split('|').map(h => h.trim());
-          const rows = input.value.split('\n').filter(r => r.trim()).map(r =>
-            r.split('|').map(c => c.trim().replace(/\s*\/\s*/g, '\n'))
-          );
-
+          const grid = input.querySelector('table.admin-grid');
+          if (!grid) return;
+          const headers = Array.from(grid.querySelectorAll('thead th .admin-cell'))
+            .map(c => c.value.trim());
+          const bodyTrs = Array.from(grid.querySelectorAll('tbody tr'));
           const tbl = block.el.querySelector('table');
           if (tbl) {
-            const thead = tbl.querySelector('thead tr');
-            if (thead) thead.innerHTML = headers.map(h => `<th>${h}</th>`).join('');
+            const theadTr = tbl.querySelector('thead tr');
+            if (theadTr) theadTr.innerHTML = headers.map(h => `<th>${h}</th>`).join('');
 
             const tbody = tbl.querySelector('tbody');
             if (tbody) {
-              // Capture original cells so we can preserve <strong>/<em> structure per cell
-              const origCells = Array.from(tbody.querySelectorAll('tr')).map(tr =>
-                Array.from(tr.querySelectorAll('td')).map(td =>
-                  td.getAttribute('data-orig-html') || td.innerHTML.trim()
-                )
-              );
-
-              tbody.innerHTML = rows.map((cells, rowIdx) =>
-                '<tr>' + cells.map((cellText, colIdx) => {
-                  const origHTML = (origCells[rowIdx] && origCells[rowIdx][colIdx]) || '';
-                  // Preserve original td classes (e.g. col-highlight)
-                  const origTd = (tbody.querySelectorAll('tr')[rowIdx] || {}).querySelectorAll
-                    ? tbody.querySelectorAll('tr')[rowIdx].querySelectorAll('td')[colIdx]
-                    : null;
-                  const cls = origTd && origTd.className ? ` class="${origTd.className}"` : '';
-                  return '<td' + cls + '>' + plainToCellHTML(origHTML, cellText) + '</td>';
-                }).join('') + '</tr>'
-              ).join('');
+              tbody.innerHTML = bodyTrs.map(tr => {
+                const rowCls = tr.getAttribute('data-rowcls') || '';
+                const cells = Array.from(tr.querySelectorAll('td .admin-cell'));
+                return '<tr' + (rowCls ? ` class="${rowCls}"` : '') + '>' +
+                  cells.map(cell => {
+                    const origHTML = cell.getAttribute('data-orig') || '';
+                    const cellCls = cell.getAttribute('data-cls') || '';
+                    return '<td' + (cellCls ? ` class="${cellCls}"` : '') + '>' +
+                      plainToCellHTML(origHTML, cell.value) + '</td>';
+                  }).join('') + '</tr>';
+              }).join('');
             }
           }
+        } else if (block.type === 'kpi') {
+          const cards = Array.from(input.querySelectorAll('.admin-kpi-card'));
+          const grid = block.el;
+          grid.innerHTML = '';
+          cards.forEach(card => {
+            const val = sel => (card.querySelector(sel)?.value || '').trim();
+            const kpi = document.createElement('div');
+            kpi.className = 'kpi';
+            const add = (cls, text) => {
+              const d = document.createElement('div');
+              d.className = cls;
+              d.textContent = text;
+              kpi.appendChild(d);
+            };
+            add('kpi-label', val('.k-label'));
+            add('kpi-value', val('.k-value'));
+            const unit = val('.k-unit');
+            if (unit) add('kpi-unit', unit);
+            const trend = val('.k-trend');
+            if (trend) add('kpi-trend', trend);
+            grid.appendChild(kpi);
+          });
         }
       });
 
