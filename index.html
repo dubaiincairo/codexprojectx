@@ -1652,6 +1652,133 @@
   }
   .admin-kpi-card .admin-field { margin-bottom: 10px; }
   .admin-kpi-card .admin-row { margin-bottom: 0; }
+
+  /* ========== ADMIN LOGIN GATE ========== */
+  .login-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 14, 39, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 250;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .login-overlay.open {
+    display: flex;
+    animation: fadeOverlay 0.3s ease;
+  }
+  .login-card {
+    background: var(--surface);
+    width: 100%;
+    max-width: 380px;
+    border: 1px solid var(--ink-100);
+    border-radius: var(--r-xl);
+    box-shadow: var(--shadow-lg);
+    padding: 32px 28px;
+    text-align: center;
+  }
+  .login-icon {
+    width: 52px;
+    height: 52px;
+    margin: 0 auto 16px;
+    border-radius: var(--r-lg);
+    background: linear-gradient(135deg, var(--brand-500), var(--brand-600));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    box-shadow: var(--shadow-brand);
+  }
+  .login-icon svg { width: 24px; height: 24px; }
+  .login-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink-900);
+    margin-bottom: 4px;
+  }
+  .login-sub {
+    font-size: 12.5px;
+    color: var(--ink-500);
+    margin-bottom: 22px;
+  }
+  .login-field {
+    text-align: right;
+    margin-bottom: 14px;
+  }
+  .login-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink-600);
+    margin-bottom: 6px;
+  }
+  .login-input {
+    width: 100%;
+    background: var(--surface-soft);
+    border: 1px solid var(--ink-100);
+    border-radius: var(--r-md);
+    padding: 10px 13px;
+    font-size: 13.5px;
+    font-family: inherit;
+    color: var(--ink-900);
+  }
+  .login-input:focus {
+    outline: 2px solid var(--brand-200);
+    border-color: var(--brand-500);
+  }
+  .login-error {
+    display: none;
+    background: var(--rose-50);
+    color: var(--rose-500);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    border-radius: var(--r-md);
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 14px;
+  }
+  .login-error.show { display: block; }
+  body.dark .login-error {
+    background: rgba(239, 68, 68, 0.15);
+    color: #FCA5A5;
+    border-color: rgba(239, 68, 68, 0.3);
+  }
+  .login-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 18px;
+  }
+  .login-btn {
+    flex: 1;
+    padding: 11px;
+    border: none;
+    border-radius: var(--r-md);
+    font-size: 13.5px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .login-btn.primary {
+    background: var(--brand-500);
+    color: #fff;
+  }
+  .login-btn.primary:hover {
+    background: var(--brand-600);
+    box-shadow: var(--shadow-brand);
+  }
+  .login-btn.cancel {
+    background: var(--surface);
+    color: var(--ink-700);
+    border: 1px solid var(--ink-200);
+  }
+  .login-btn.cancel:hover {
+    background: var(--surface-hover);
+    color: var(--ink-900);
+  }
 </style>
 </head>
 <body>
@@ -2999,6 +3126,35 @@
   </div>
 </div>
 
+<!-- ADMIN LOGIN GATE -->
+<div class="login-overlay" id="loginOverlay">
+  <div class="login-card">
+    <div class="login-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="11" width="18" height="11" rx="2"></rect>
+        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+      </svg>
+    </div>
+    <div class="login-title">تسجيل الدخول للوحة التحرير</div>
+    <div class="login-sub">هذه المنطقة مخصّصة للمحرّر المعتمد فقط.</div>
+    <form id="loginForm">
+      <div class="login-field">
+        <label class="login-label" for="loginUser">اسم المستخدم</label>
+        <input type="text" class="login-input" id="loginUser" autocomplete="username">
+      </div>
+      <div class="login-field">
+        <label class="login-label" for="loginPass">كلمة المرور</label>
+        <input type="password" class="login-input" id="loginPass" autocomplete="current-password">
+      </div>
+      <div class="login-error" id="loginError">اسم المستخدم أو كلمة المرور غير صحيحة.</div>
+      <div class="login-actions">
+        <button type="submit" class="login-btn primary">دخول</button>
+        <button type="button" class="login-btn cancel" id="loginCancel">إلغاء</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <div class="admin-status" id="adminStatus">تم الحفظ بنجاح</div>
 
 <script>
@@ -3052,9 +3208,79 @@
   const adminSearch = document.getElementById('adminSearch');
   const adminStatus = document.getElementById('adminStatus');
 
-  adminToggle.addEventListener('click', () => {
+  // ============ ADMIN LOGIN GATE ============
+  // Client-side access gate: keeps the editor private from ordinary
+  // visitors. The password is stored only as a salted SHA-256 hash.
+  const ADMIN_USER = 'admin';
+  const ADMIN_SALT = 'dic-fs::';
+  const ADMIN_PASS_HASH = '2089aea38e7a74125f953d91739a8f2c9c12bec88a545e955b6d5ecacdbf709a';
+  const ADMIN_AUTH_KEY = 'feasibility-admin-auth';
+
+  const loginOverlay = document.getElementById('loginOverlay');
+  const loginForm = document.getElementById('loginForm');
+  const loginUser = document.getElementById('loginUser');
+  const loginPass = document.getElementById('loginPass');
+  const loginError = document.getElementById('loginError');
+  const loginCancel = document.getElementById('loginCancel');
+
+  async function sha256Hex(text) {
+    const data = new TextEncoder().encode(text);
+    const digest = await crypto.subtle.digest('SHA-256', data);
+    return Array.from(new Uint8Array(digest))
+      .map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  function isAdminAuthed() {
+    try { return sessionStorage.getItem(ADMIN_AUTH_KEY) === '1'; }
+    catch (e) { return false; }
+  }
+
+  function openAdminPanel() {
     adminPanel.classList.add('open');
     showEditor('settings');
+  }
+
+  function openLogin() {
+    loginForm.reset();
+    loginError.classList.remove('show');
+    loginOverlay.classList.add('open');
+    setTimeout(() => loginUser.focus(), 60);
+  }
+
+  function closeLogin() {
+    loginOverlay.classList.remove('open');
+  }
+
+  adminToggle.addEventListener('click', () => {
+    if (isAdminAuthed()) openAdminPanel();
+    else openLogin();
+  });
+
+  loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    let passHash = '';
+    try {
+      passHash = await sha256Hex(ADMIN_SALT + loginPass.value);
+    } catch (err) {
+      loginError.textContent = 'تعذّر التحقق في هذا المتصفح.';
+      loginError.classList.add('show');
+      return;
+    }
+    if (loginUser.value.trim() === ADMIN_USER && passHash === ADMIN_PASS_HASH) {
+      try { sessionStorage.setItem(ADMIN_AUTH_KEY, '1'); } catch (e) {}
+      closeLogin();
+      openAdminPanel();
+    } else {
+      loginError.textContent = 'اسم المستخدم أو كلمة المرور غير صحيحة.';
+      loginError.classList.add('show');
+      loginPass.value = '';
+      loginPass.focus();
+    }
+  });
+
+  loginCancel.addEventListener('click', closeLogin);
+  loginOverlay.addEventListener('click', (e) => {
+    if (e.target === loginOverlay) closeLogin();
   });
 
   adminClose.addEventListener('click', () => {
@@ -3778,9 +4004,12 @@
     });
   }
 
-  // Keyboard shortcut: Esc to close admin panel
+  // Keyboard shortcut: Esc closes the login dialog or the admin panel
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && adminPanel.classList.contains('open')) {
+    if (e.key !== 'Escape') return;
+    if (loginOverlay.classList.contains('open')) {
+      closeLogin();
+    } else if (adminPanel.classList.contains('open')) {
       adminPanel.classList.remove('open');
     }
   });
