@@ -686,7 +686,7 @@
   /* ========== APP LAYOUT ========== */
   .app {
     display: grid;
-    grid-template-columns: 280px 1fr;
+    grid-template-columns: 280px minmax(0, 1fr);
     min-height: 100vh;
   }
 
@@ -1241,7 +1241,7 @@
     background: var(--surface);
     border: 1px solid var(--ink-100);
     border-radius: var(--r-lg);
-    overflow: hidden;
+    overflow-x: auto;
     margin: 18px 0;
   }
 
@@ -1519,20 +1519,62 @@
   }
 
   /* ========== PROGRESS BANNER ========== */
+  /* ===== Mobile navigation drawer ===== */
+  .nav-toggle { display: none; }
+  .nav-overlay { display: none; }
+
   @media (max-width: 1024px) {
-    .app { grid-template-columns: 1fr; }
-    .sidebar { position: relative; height: auto; }
+    .app { grid-template-columns: minmax(0, 1fr); }
+    .nav-toggle { display: flex; }
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: 0;
+      height: 100vh;
+      width: 280px;
+      max-width: 86vw;
+      z-index: 90;
+      transform: translateX(100%);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: var(--shadow-lg);
+    }
+    body.nav-open .sidebar { transform: translateX(0); }
+    body.nav-open { overflow: hidden; }
+    .nav-overlay {
+      display: block;
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 14, 39, 0.5);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      z-index: 85;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    body.nav-open .nav-overlay { opacity: 1; pointer-events: auto; }
     .section { padding: 32px 24px; }
-    .studios, .two-col { grid-template-columns: 1fr; }
-    .topbar { padding: 12px 24px; }
+    .studios, .two-col { grid-template-columns: minmax(0, 1fr); }
+    .topbar { padding: 12px 20px; }
   }
 
   @media (max-width: 640px) {
     .section-title { font-size: 26px; }
     .kpi-value { font-size: 24px; }
-    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     table { font-size: 12.5px; }
     th, td { padding: 10px 12px; }
+    .section { padding: 26px 16px; }
+    .topbar { padding: 11px 14px; gap: 10px; }
+    .topbar-meta, .topbar-divider { display: none; }
+    .breadcrumb {
+      display: block;
+      min-width: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .breadcrumb span:not(.current) { display: none; }
   }
 
   /* ========== PRINT ========== */
@@ -1824,11 +1866,20 @@
     </div>
   </aside>
 
+  <div class="nav-overlay" id="navOverlay"></div>
+
   <!-- ========== MAIN ========== -->
   <main class="main">
 
     <!-- TOP BAR -->
     <div class="topbar">
+      <button class="ctrl-btn nav-toggle" id="navToggle" aria-label="فتح قائمة التنقّل">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
       <div class="breadcrumb">
         <span>دراسة جدوى</span>
         <span class="sep">/</span>
@@ -3135,7 +3186,7 @@
         <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
       </svg>
     </div>
-    <div class="login-title">تسجيل الدخول للوحة التحرير</div>
+    <div class="login-title">تسجيل الدخول</div>
     <div class="login-sub">هذه المنطقة مخصّصة للمحرّر المعتمد فقط.</div>
     <form id="loginForm">
       <div class="login-field">
@@ -3198,6 +3249,18 @@
     applyTheme(isDark);
     localStorage.setItem('feasibility-theme', isDark ? 'dark' : 'light');
   });
+
+  // ============ MOBILE NAV DRAWER ============
+  const navToggle = document.getElementById('navToggle');
+  const navOverlay = document.getElementById('navOverlay');
+
+  function closeNav() { document.body.classList.remove('nav-open'); }
+
+  navToggle.addEventListener('click', () => {
+    document.body.classList.toggle('nav-open');
+  });
+  navOverlay.addEventListener('click', closeNav);
+  navItems.forEach(item => item.addEventListener('click', closeNav));
 
   // ============ ADMIN PANEL ============
   const adminPanel = document.getElementById('adminPanel');
