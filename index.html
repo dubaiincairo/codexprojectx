@@ -2060,6 +2060,9 @@
     .fj-axis { font-size: 20px; }
     .fj-refnum { font-size: 18px; }
   }
+
+  /* risk-matrix mitigation separators */
+  .risk-sep { color: var(--brand-400); margin: 0 6px; user-select: none; }
 </style>
 </head>
 <body class="dark">
@@ -3449,14 +3452,14 @@
           <tr><th>المخاطرة</th><th>الاحتمالية</th><th>الأثر</th><th>خطة التخفيف</th></tr>
         </thead>
         <tbody>
-          <tr><td><strong>تأخير العملاء في الدفع</strong><br><em>Cash Flow Risk</em></td><td><span class="num-neg">عالية</span></td><td><span class="num-neg">عالٍ</span></td><td>اشتراط 40% مقدمًا. الاحتفاظ باحتياطي نقدي = 3 أشهر من المصاريف. متابعة قانونية مبكرة لأي تأخير يتجاوز 30 يومًا.</td></tr>
-          <tr><td><strong>صعوبة استقطاب كفاءات سعودية</strong><br><em>Talent Risk</em></td><td>متوسطة</td><td><span class="num-neg">عالٍ</span></td><td>بناء برنامج تدريب داخلي لخريجين سعوديين. شراكات مع جامعات الرياض وجامعة الملك عبدالله للعلوم والتقنية (KAUST). تقديم حصص أرباح صغيرة للكوادر الرئيسية بعد سنتين.</td></tr>
-          <tr><td><strong>تغير اللوائح (سعودة، ضرائب)</strong><br><em>Regulatory Risk</em></td><td>متوسطة</td><td>متوسط</td><td>متابعة دائمة لتحديثات وزارة الموارد البشرية (MHRSD) وهيئة الزكاة والضريبة والجمارك (ZATCA). التعاقد مع مكتب محاماة سعودي. بناء العقود لتشمل بنود التعديل التلقائي.</td></tr>
-          <tr><td><strong>اعتماد مفرط على عميل أو قطاع</strong><br><em>Concentration Risk</em></td><td>متوسطة</td><td><span class="num-neg">عالٍ</span></td><td>ألا يتجاوز عميل واحد 25% من إيرادات أي سنة. تنويع القطاعات. بناء قاعدة عقود ريتنر تخفّف الاعتماد على المشاريع لمرة واحدة (One-Time).</td></tr>
-          <tr><td><strong>خلاف بين الشريكين</strong><br><em>Partnership Risk</em></td><td>منخفضة</td><td><span class="num-neg">عالٍ جدًا</span></td><td>عقد عرفي مفصّل من اليوم الأول. اجتماع حوكمة شهري موثَّق. بند خروج عادل (Exit Clause) في كل اتفاقية.</td></tr>
-          <tr><td><strong>منافسة من شركات استشارية كبرى</strong><br><em>Competitive Risk</em></td><td>متوسطة</td><td>متوسط</td><td>التموضع في «الفجوة» لا في «السوق العام». بناء سجل دراسات حالة قوي. التعاقد طويل المدى مع عملاء استراتيجيين.</td></tr>
-          <tr><td><strong>تباطؤ السوق السعودي</strong><br><em>Market Risk</em></td><td>منخفضة</td><td><span class="num-neg">عالٍ</span></td><td>تنويع الجغرافيا: الرياض + جدة + الشرقية + الجنوب. الاحتفاظ بالنشاط المصري كاحتياطي. تطوير منتج رقمي (SaaS) قابل للتصدير.</td></tr>
-          <tr><td><strong>صعوبة تحويل الأرباح للخارج</strong><br><em>Currency Risk</em></td><td>منخفضة</td><td>متوسط</td><td>الاستفادة من ضمانة وزارة الاستثمار (MISA): حرية تحويل الأرباح بنسبة 100%. استخدام حساب البنك التجاري الدولي المصري بالدولار (CIB Egypt USD) للاحتياطي. توزيع التحويلات على دفعات.</td></tr>
+          <tr><td><strong>تأخير العملاء في الدفع</strong><br><em>Cash Flow Risk</em></td><td><span class="num-neg">عالية</span></td><td><span class="num-neg">عالٍ</span></td><td>اشتراط 40% مقدمًا <span class="risk-sep">•</span> الاحتفاظ باحتياطي نقدي يعادل 3 أشهر من المصاريف <span class="risk-sep">•</span> متابعة قانونية مبكرة لأي تأخير يتجاوز 30 يومًا</td></tr>
+          <tr><td><strong>صعوبة استقطاب كفاءات سعودية</strong><br><em>Talent Risk</em></td><td>متوسطة</td><td><span class="num-neg">عالٍ</span></td><td>بناء برنامج تدريب داخلي لخريجين سعوديين <span class="risk-sep">•</span> شراكات مع جامعات الرياض وجامعة الملك عبدالله للعلوم والتقنية (KAUST) <span class="risk-sep">•</span> تقديم حصص أرباح صغيرة للكوادر الرئيسية بعد سنتين</td></tr>
+          <tr><td><strong>تغير اللوائح (سعودة، ضرائب)</strong><br><em>Regulatory Risk</em></td><td>متوسطة</td><td>متوسط</td><td>متابعة دائمة لتحديثات وزارة الموارد البشرية (MHRSD) وهيئة الزكاة والضريبة والجمارك (ZATCA) <span class="risk-sep">•</span> التعاقد مع مكتب محاماة سعودي <span class="risk-sep">•</span> بناء العقود لتشمل بنود التعديل التلقائي</td></tr>
+          <tr><td><strong>اعتماد مفرط على عميل أو قطاع</strong><br><em>Concentration Risk</em></td><td>متوسطة</td><td><span class="num-neg">عالٍ</span></td><td>ألا يتجاوز عميل واحد 25% من إيرادات أي سنة <span class="risk-sep">•</span> تنويع القطاعات <span class="risk-sep">•</span> بناء قاعدة عقود ريتنر تخفّف الاعتماد على المشاريع لمرة واحدة (One-Time)</td></tr>
+          <tr><td><strong>خلاف بين الشريكين</strong><br><em>Partnership Risk</em></td><td>منخفضة</td><td><span class="num-neg">عالٍ جدًا</span></td><td>عقد عرفي مفصّل من اليوم الأول <span class="risk-sep">•</span> اجتماع حوكمة شهري موثَّق <span class="risk-sep">•</span> بند خروج عادل (Exit Clause) في كل اتفاقية</td></tr>
+          <tr><td><strong>منافسة من شركات استشارية كبرى</strong><br><em>Competitive Risk</em></td><td>متوسطة</td><td>متوسط</td><td>التموضع في «الفجوة» لا في «السوق العام» <span class="risk-sep">•</span> بناء سجل دراسات حالة قوي <span class="risk-sep">•</span> التعاقد طويل المدى مع عملاء استراتيجيين</td></tr>
+          <tr><td><strong>تباطؤ السوق السعودي</strong><br><em>Market Risk</em></td><td>منخفضة</td><td><span class="num-neg">عالٍ</span></td><td>تنويع الجغرافيا: الرياض + جدة + الشرقية + الجنوب <span class="risk-sep">•</span> الاحتفاظ بالنشاط المصري كاحتياطي <span class="risk-sep">•</span> تطوير منتج رقمي (SaaS) قابل للتصدير</td></tr>
+          <tr><td><strong>صعوبة تحويل الأرباح للخارج</strong><br><em>Currency Risk</em></td><td>منخفضة</td><td>متوسط</td><td>الاستفادة من ضمانة وزارة الاستثمار (MISA): حرية تحويل الأرباح بنسبة 100% <span class="risk-sep">•</span> استخدام حساب البنك التجاري الدولي المصري بالدولار (CIB Egypt USD) للاحتياطي <span class="risk-sep">•</span> توزيع التحويلات على دفعات</td></tr>
         </tbody>
       </table>
       </div>
