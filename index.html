@@ -433,6 +433,41 @@
 
   .admin-search:focus { outline: 2px solid var(--brand-200); border-color: var(--brand-500); }
 
+  .search-group { margin-bottom: 16px; }
+  .search-group-head {
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 9px 12px;
+    background: var(--surface-soft);
+    border-radius: var(--r-sm);
+    color: var(--ink-900);
+  }
+  .search-group-head:hover { color: var(--brand-600); }
+  .search-group-head span { color: var(--ink-500); font-weight: 500; }
+  .search-hit {
+    cursor: pointer;
+    font-size: 13px;
+    line-height: 1.75;
+    color: var(--ink-600);
+    padding: 8px 12px;
+    margin: 6px 14px 0;
+    border-right: 2px solid var(--ink-100);
+    border-radius: var(--r-sm);
+  }
+  .search-hit:hover { background: var(--surface-soft); border-color: var(--brand-500); }
+  .search-hit mark, .search-group mark {
+    background: var(--amber-500);
+    color: #1A1F36;
+    padding: 0 3px;
+    border-radius: 3px;
+    font-weight: 600;
+  }
+  textarea.search-hl, input.search-hl {
+    border-color: var(--amber-500) !important;
+    box-shadow: 0 0 0 2px var(--amber-500);
+  }
+
   .admin-section-group {
     margin-bottom: 14px;
   }
@@ -3205,7 +3240,7 @@
         <button class="admin-close" id="adminClose">×</button>
       </div>
 
-      <input type="search" class="admin-search" id="adminSearch" placeholder="ابحث عن قسم...">
+      <input type="search" class="admin-search" id="adminSearch" placeholder="ابحث في كل المحتوى...">
 
       <div class="admin-section-group">
         <div class="admin-group-label">الإعدادات العامة</div>
@@ -3475,13 +3510,75 @@
     });
   });
 
-  // Search filter
-  adminSearch.addEventListener('input', (e) => {
-    const q = e.target.value.toLowerCase().trim();
-    adminNavItems.forEach(item => {
-      const text = item.textContent.toLowerCase();
-      item.style.display = !q || text.includes(q) ? 'flex' : 'none';
+  // ============ ADMIN CONTENT SEARCH ============
+  const SEARCH_FIELD_SEL = 'h1,h2,h3,h4,p,li,td,th,blockquote,.kpi-label,.kpi-value,.kpi-unit,.kpi-trend,.callout-label';
+
+  function sectionName(sid) {
+    const nav = document.querySelector('.admin-nav-item[data-edit="' + sid + '"]');
+    if (!nav) return sid;
+    const num = nav.querySelector('.admin-nav-num');
+    return nav.textContent.replace(num ? num.textContent : '', '').trim();
+  }
+
+  function searchSnippet(txt, q) {
+    const qi = txt.toLowerCase().indexOf(q);
+    if (qi < 0) return escapeHTML(txt.slice(0, 120));
+    const a = Math.max(0, qi - 45);
+    const b = Math.min(txt.length, qi + q.length + 60);
+    return (a > 0 ? '… ' : '') + escapeHTML(txt.slice(a, qi))
+      + '<mark>' + escapeHTML(txt.slice(qi, qi + q.length)) + '</mark>'
+      + escapeHTML(txt.slice(qi + q.length, b)) + (b < txt.length ? ' …' : '');
+  }
+
+  function renderSearchResults(query) {
+    const q = query.toLowerCase();
+    let groups = '', total = 0, secCount = 0;
+    SECTION_IDS.forEach(sid => {
+      const sec = document.getElementById(sid);
+      if (!sec) return;
+      const hits = [];
+      sec.querySelectorAll(SEARCH_FIELD_SEL).forEach(el => {
+        const txt = (el.textContent || '').replace(/\s+/g, ' ').trim();
+        if (txt && txt.toLowerCase().includes(q)) hits.push(txt);
+      });
+      if (!hits.length) return;
+      secCount++; total += hits.length;
+      groups += '<div class="search-group"><div class="search-group-head" data-go="' + sid + '">'
+        + escapeHTML(sectionName(sid)) + ' <span>(' + hits.length + ')</span></div>';
+      hits.forEach(txt => {
+        groups += '<div class="search-hit" data-go="' + sid + '">' + searchSnippet(txt, q) + '</div>';
+      });
+      groups += '</div>';
     });
+    adminMain.innerHTML = '<h1 class="admin-h1">نتائج البحث</h1><p class="admin-lead">'
+      + (total
+          ? total + ' نتيجة في ' + secCount + ' قسم — اضغط أي نتيجة للانتقال إليها وتحديد مكانها'
+          : 'لا توجد نتائج لـ «' + escapeHTML(query) + '».')
+      + '</p>' + groups;
+    adminMain.querySelectorAll('[data-go]').forEach(el => {
+      el.addEventListener('click', () => goToSearchResult(el.dataset.go, query));
+    });
+  }
+
+  function goToSearchResult(sid, query) {
+    const q = query.toLowerCase();
+    adminNavItems.forEach(n => n.classList.toggle('active', n.dataset.edit === sid));
+    showEditor(sid);
+    setTimeout(() => {
+      let first = null;
+      adminMain.querySelectorAll('textarea, input').forEach(f => {
+        if ((f.value || '').toLowerCase().includes(q)) {
+          f.classList.add('search-hl');
+          if (!first) first = f;
+        }
+      });
+      if (first) first.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    }, 80);
+  }
+
+  adminSearch.addEventListener('input', (e) => {
+    const q = e.target.value.trim();
+    if (q.length >= 2) renderSearchResults(q);
   });
 
   // Status message
