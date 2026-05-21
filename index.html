@@ -3582,7 +3582,9 @@
     if (html == null) return '';
     return String(html)
       .replace(/<br\s*\/?>/gi, '\n')
-      .replace(/<\/?(?:strong|em|b|i|span|u)[^>]*>/gi, '')
+      .replace(/<\/?(?:strong|b)\b[^>]*>/gi, '**')
+      .replace(/<\/?(?:em|i)\b[^>]*>/gi, '*')
+      .replace(/<\/?(?:span|u)[^>]*>/gi, '')
       .replace(/<[^>]+>/g, '')
       .replace(/&nbsp;/g, ' ')
       .replace(/&amp;/g, '&')
@@ -3592,40 +3594,28 @@
       .trim();
   }
 
+  function escapeHTML(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  // Convert the plain-text editor value back to HTML.
+  // **bold** -> <strong>, *italic* -> <em>, newlines -> <br>
+  function plainToInlineHTML(text) {
+    return escapeHTML(String(text).trim())
+      .replace(/\*\*([^*\n]+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*([^*\n]+?)\*/g, '<em>$1</em>')
+      .replace(/\n+/g, '<br>');
+  }
+
   function plainToCellHTML(originalHTML, newText) {
-    // Preserve original structure if plain text unchanged
-    const origPlain = htmlToPlain(originalHTML);
-    if (origPlain === newText.trim()) return originalHTML;
-
-    const origTrim = (originalHTML || '').trim();
-    const newClean = newText.trim();
-
-    // Detect patterns
-    const strongBrEm = /^<strong>([\s\S]*?)<\/strong>\s*<br\s*\/?>\s*<em>([\s\S]*?)<\/em>$/i;
-    const strongOnly = /^<strong>([\s\S]*?)<\/strong>$/i;
-
-    // Two-line content with original <strong>X<br><em>Y</em> pattern
-    if (strongBrEm.test(origTrim) && newClean.includes('\n')) {
-      const lines = newClean.split(/\n+/);
-      const first = lines[0].trim();
-      const rest = lines.slice(1).join(' ').trim();
-      return '<strong>' + first + '</strong><br><em>' + rest + '</em>';
-    }
-
-    // Single-line content with original <strong>X</strong> pattern
-    if (strongOnly.test(origTrim)) {
-      return '<strong>' + newClean.replace(/\n+/g, ' ') + '</strong>';
-    }
-
-    // No special structure → plain text (convert remaining newlines to <br>)
-    return newClean.replace(/\n+/g, '<br>');
+    // Unchanged text -> keep the original HTML (preserves all formatting)
+    if (htmlToPlain(originalHTML) === String(newText).trim()) return originalHTML;
+    return plainToInlineHTML(newText);
   }
 
   function plainToBlockHTML(originalHTML, newText) {
-    // For paragraph/quote/highlight blocks - preserve <strong> at end if original had inline emphasis
-    const origPlain = htmlToPlain(originalHTML);
-    if (origPlain === newText.trim()) return originalHTML;
-    return newText.trim().replace(/\n+/g, '<br>');
+    if (htmlToPlain(originalHTML) === String(newText).trim()) return originalHTML;
+    return plainToInlineHTML(newText);
   }
 
   // ===== Visual table editor (a real grid of editable cells) =====
@@ -4055,7 +4045,7 @@
           const paras = input.value.split(/\n\s*\n/).filter(p => p.trim());
           paras.forEach(text => {
             const p = document.createElement('p');
-            p.innerHTML = text.trim().replace(/\n+/g, '<br>');
+            p.innerHTML = plainToInlineHTML(text);
             block.el.appendChild(p);
           });
         } else if (block.type === 'list') {
@@ -4067,7 +4057,7 @@
           const newLines = input.value.split('\n').map(l => l.trim()).filter(l => l);
           const newHTML = newLines.map(line => {
             const match = origItems.find(o => o.plain === line);
-            return '<li>' + (match ? match.html : line) + '</li>';
+            return '<li>' + (match ? match.html : plainToInlineHTML(line)) + '</li>';
           }).join('');
           block.el.innerHTML = newHTML;
         } else if (block.type === 'table') {
