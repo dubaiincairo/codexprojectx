@@ -3262,8 +3262,8 @@
     <div class="login-sub">هذه المنطقة مخصّصة للمحرّر المعتمد فقط.</div>
     <form id="loginForm">
       <div class="login-field">
-        <label class="login-label" for="loginUser">اسم المستخدم</label>
-        <input type="text" class="login-input" id="loginUser" autocomplete="username">
+        <label class="login-label" for="loginUser">البريد الإلكتروني</label>
+        <input type="email" class="login-input" id="loginUser" autocomplete="username">
       </div>
       <div class="login-field">
         <label class="login-label" for="loginPass">كلمة المرور</label>
@@ -3280,7 +3280,52 @@
 
 <div class="admin-status" id="adminStatus">تم الحفظ بنجاح</div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script>
+  // ============ SUPABASE — live content ============
+  const SB_URL = 'https://tblfnxaedhmwydjqngnb.supabase.co';
+  const SB_KEY = 'sb_publishable_84F0DGqG8-A01ecxVMQ0jA_hydWAwtw';
+  const SECTION_IDS = ['overview','preface','summary','concept','market','competition','customers','legal','operations','hr','sales','financials','risks','conclusion'];
+  let sbClient = null;
+  let currentAdminSession = null;
+  try {
+    sbClient = window.supabase.createClient(SB_URL, SB_KEY);
+    sbClient.auth.getSession().then(({ data }) => { currentAdminSession = data.session; });
+    sbClient.auth.onAuthStateChange((_evt, session) => { currentAdminSession = session; });
+  } catch (e) { console.error('Supabase init failed', e); }
+
+  async function hydrateContent() {
+    if (!sbClient) return;
+    try {
+      const { data, error } = await sbClient.from('feasibility_content').select('id, value');
+      if (error || !data) return;
+      data.forEach(row => {
+        if (row.id === 'settings') {
+          try {
+            const s = JSON.parse(row.value);
+            if (s.brandTitle != null) document.querySelector('.brand-title').textContent = s.brandTitle;
+            if (s.brandSubtitle != null) document.querySelector('.brand-subtitle').textContent = s.brandSubtitle;
+            if (s.dateBadge != null) document.querySelector('.badge.brand').textContent = s.dateBadge;
+            if (s.confBadge != null) document.querySelector('.badge.confidential').textContent = s.confBadge;
+          } catch (e) {}
+        } else if (SECTION_IDS.includes(row.id)) {
+          const el = document.getElementById(row.id);
+          if (el) el.innerHTML = row.value;
+        }
+      });
+    } catch (e) { console.error('Content hydrate failed', e); }
+  }
+  hydrateContent();
+
+  async function persistContent(id, value) {
+    if (!sbClient) return { ok: false, error: 'الخادم غير متاح' };
+    try {
+      const { error } = await sbClient.from('feasibility_content')
+        .upsert({ id: id, value: value, updated_at: new Date().toISOString() });
+      return error ? { ok: false, error: error.message } : { ok: true };
+    } catch (e) { return { ok: false, error: String(e) }; }
+  }
+
   // ============ NAVIGATION ============
   const navItems = document.querySelectorAll('.nav-item');
   const sections = document.querySelectorAll('.section');
@@ -3343,14 +3388,7 @@
   const adminSearch = document.getElementById('adminSearch');
   const adminStatus = document.getElementById('adminStatus');
 
-  // ============ ADMIN LOGIN GATE ============
-  // Client-side access gate: keeps the editor private from ordinary
-  // visitors. The password is stored only as a salted SHA-256 hash.
-  const ADMIN_USER = 'admin';
-  const ADMIN_SALT = 'dic-fs::';
-  const ADMIN_PASS_HASH = '2089aea38e7a74125f953d91739a8f2c9c12bec88a545e955b6d5ecacdbf709a';
-  const ADMIN_AUTH_KEY = 'feasibility-admin-auth';
-
+  // ============ ADMIN LOGIN GATE (Supabase auth) ============
   const loginOverlay = document.getElementById('loginOverlay');
   const loginForm = document.getElementById('loginForm');
   const loginUser = document.getElementById('loginUser');
@@ -3358,16 +3396,8 @@
   const loginError = document.getElementById('loginError');
   const loginCancel = document.getElementById('loginCancel');
 
-  async function sha256Hex(text) {
-    const data = new TextEncoder().encode(text);
-    const digest = await crypto.subtle.digest('SHA-256', data);
-    return Array.from(new Uint8Array(digest))
-      .map(b => b.toString(16).padStart(2, '0')).join('');
-  }
-
   function isAdminAuthed() {
-    try { return sessionStorage.getItem(ADMIN_AUTH_KEY) === '1'; }
-    catch (e) { return false; }
+    return !!currentAdminSession;
   }
 
   function openAdminPanel() {
@@ -3393,23 +3423,34 @@
 
   loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    let passHash = '';
-    try {
-      passHash = await sha256Hex(ADMIN_SALT + loginPass.value);
-    } catch (err) {
-      loginError.textContent = 'تعذّر التحقق في هذا المتصفح.';
+    if (!sbClient) {
+      loginError.textContent = 'تعذّر الاتصال بالخادم.';
       loginError.classList.add('show');
       return;
     }
-    if (loginUser.value.trim() === ADMIN_USER && passHash === ADMIN_PASS_HASH) {
-      try { sessionStorage.setItem(ADMIN_AUTH_KEY, '1'); } catch (e) {}
-      closeLogin();
-      openAdminPanel();
-    } else {
-      loginError.textContent = 'اسم المستخدم أو كلمة المرور غير صحيحة.';
+    const submitBtn = loginForm.querySelector('.login-btn.primary');
+    if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = '...'; }
+    loginError.classList.remove('show');
+    try {
+      const { data, error } = await sbClient.auth.signInWithPassword({
+        email: loginUser.value.trim(),
+        password: loginPass.value,
+      });
+      if (error || !data || !data.session) {
+        loginError.textContent = 'البريد الإلكتروني أو كلمة المرور غير صحيحة.';
+        loginError.classList.add('show');
+        loginPass.value = '';
+        loginPass.focus();
+      } else {
+        currentAdminSession = data.session;
+        closeLogin();
+        openAdminPanel();
+      }
+    } catch (err) {
+      loginError.textContent = 'تعذّر الاتصال بالخادم.';
       loginError.classList.add('show');
-      loginPass.value = '';
-      loginPass.focus();
+    } finally {
+      if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'دخول'; }
     }
   });
 
@@ -3520,12 +3561,19 @@
       </div>
     `;
 
-    document.getElementById('saveSettings').addEventListener('click', () => {
+    document.getElementById('saveSettings').addEventListener('click', async () => {
       document.querySelector('.brand-title').textContent = document.getElementById('f-brandTitle').value;
       document.querySelector('.brand-subtitle').textContent = document.getElementById('f-brandSubtitle').value;
       document.querySelector('.badge.brand').textContent = document.getElementById('f-dateBadge').value;
       document.querySelector('.badge.confidential').textContent = document.getElementById('f-confBadge').value;
-      showStatus('✓ تم حفظ التغييرات');
+      showStatus('⏳ جارٍ الحفظ والنشر…');
+      const _res = await persistContent('settings', JSON.stringify({
+        brandTitle: document.getElementById('f-brandTitle').value,
+        brandSubtitle: document.getElementById('f-brandSubtitle').value,
+        dateBadge: document.getElementById('f-dateBadge').value,
+        confBadge: document.getElementById('f-confBadge').value,
+      }));
+      showStatus(_res.ok ? '✓ تم حفظ التغييرات ونشرها' : '✗ تعذّر النشر: ' + _res.error, _res.ok ? 'success' : 'error');
     });
   }
 
@@ -3971,7 +4019,7 @@
       setTimeout(() => showEditor(sectionId), 200);
     });
 
-    document.getElementById('saveSection').addEventListener('click', () => {
+    document.getElementById('saveSection').addEventListener('click', async () => {
       // Capture snapshot BEFORE applying changes
       window._undoSnapshots[sectionId] = sectionEl.innerHTML;
       undoBtn.style.display = 'inline-flex';
@@ -4073,7 +4121,13 @@
         }
       });
 
-      showStatus('✓ تم حفظ التغييرات على ' + sectionName);
+      showStatus('⏳ جارٍ الحفظ والنشر…');
+      const _res = await persistContent(sectionId, sectionEl.innerHTML);
+      if (_res.ok) {
+        showStatus('✓ تم حفظ ونشر ' + sectionName);
+      } else {
+        showStatus('✗ تعذّر النشر: ' + _res.error, 'error');
+      }
     });
 
     document.getElementById('goToSection').addEventListener('click', () => {
