@@ -3625,6 +3625,29 @@
     sbClient.auth.onAuthStateChange((_evt, session) => { currentAdminSession = session; });
   } catch (e) { console.error('Supabase init failed', e); }
 
+  // Apply social-card / SEO meta tags to the live document <head>
+  function applyMetaTags(title, desc, image) {
+    const setMeta = (selector, val) => {
+      const el = document.querySelector(selector);
+      if (el) el.setAttribute('content', val);
+    };
+    if (title != null && String(title).trim() !== '') {
+      document.title = title;
+      setMeta('meta[property="og:title"]', title);
+      setMeta('meta[name="twitter:title"]', title);
+    }
+    if (desc != null && String(desc).trim() !== '') {
+      setMeta('meta[name="description"]', desc);
+      setMeta('meta[property="og:description"]', desc);
+      setMeta('meta[name="twitter:description"]', desc);
+    }
+    if (image != null && String(image).trim() !== '') {
+      setMeta('meta[property="og:image"]', image);
+      setMeta('meta[property="og:image:secure_url"]', image);
+      setMeta('meta[name="twitter:image"]', image);
+    }
+  }
+
   async function hydrateContent() {
     if (!sbClient) return;
     try {
@@ -3638,6 +3661,7 @@
             if (s.brandSubtitle != null) document.querySelector('.brand-subtitle').textContent = s.brandSubtitle;
             if (s.dateBadge != null) document.querySelector('.badge.brand').textContent = s.dateBadge;
             if (s.confBadge != null) document.querySelector('.badge.confidential').textContent = s.confBadge;
+            applyMetaTags(s.metaTitle, s.metaDesc, s.metaImage);
           } catch (e) {}
         } else if (SECTION_IDS.includes(row.id)) {
           const el = document.getElementById(row.id);
@@ -3914,6 +3938,11 @@
     const brandSubtitle = document.querySelector('.brand-subtitle').textContent;
     const dateBadge = document.querySelector('.badge.brand').textContent;
     const confBadge = document.querySelector('.badge.confidential').textContent;
+    const metaTitle = document.title;
+    const _descEl = document.querySelector('meta[name="description"]');
+    const metaDesc = _descEl ? _descEl.getAttribute('content') : '';
+    const _ogImgEl = document.querySelector('meta[property="og:image"]');
+    const metaImage = _ogImgEl ? _ogImgEl.getAttribute('content') : '';
 
     adminMain.innerHTML = `
       <div class="admin-breadcrumb">
@@ -3950,6 +3979,28 @@
         </div>
       </div>
 
+      <div class="admin-field-group">
+        <div class="admin-field-group-title">بطاقة المشاركة الاجتماعية (Social Card)</div>
+        <div style="background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.5); border-radius: var(--r-sm); padding: 11px 13px; font-size: 12.5px; line-height: 1.8; color: var(--ink-700); margin-bottom: 16px;">
+          <strong>⚠ خطوة النشر إلزامية:</strong> تعمل هذه الحقول من خلال المتصفح، بينما تقرأ منصات التواصل (واتساب، فيسبوك، تويتر) كود الصفحة الثابت مباشرةً دون تشغيل البرمجة. لذلك حفظ القيم هنا يخزّنها ويُحدّث عنوان تبويب المتصفح فقط — أما معاينة الرابط فلا تتغيّر إلا بعد <strong>إعادة نشر الموقع (Deploy)</strong>. بعد الحفظ، نفّذ إعادة النشر لاعتماد التغييرات.
+        </div>
+        <div class="admin-field">
+          <label class="admin-label">العنوان الرئيسي للموقع</label>
+          <input class="admin-input" id="f-metaTitle" value="${metaTitle.replace(/"/g, '&quot;').trim()}">
+          <div class="admin-hint">عنوان بطاقة المشاركة وعنوان تبويب المتصفح.</div>
+        </div>
+        <div class="admin-field">
+          <label class="admin-label">سطر الوصف</label>
+          <textarea class="admin-textarea" id="f-metaDesc">${metaDesc.trim().replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</textarea>
+          <div class="admin-hint">النص الذي يظهر أسفل العنوان في بطاقة المشاركة.</div>
+        </div>
+        <div class="admin-field">
+          <label class="admin-label">صورة المشاركة (رابط مباشر)</label>
+          <input class="admin-input" id="f-metaImage" value="${metaImage.replace(/"/g, '&quot;').trim()}">
+          <div class="admin-hint">رابط مباشر لصورة بصيغة JPG أو PNG — المقاس الموصى به 1200×630 بكسل. لاستخدام صورة جديدة: ارفعها على استضافة صور وألصق رابطها هنا، أو أرسل الصورة لتُضمَّن في الموقع عند النشر.</div>
+        </div>
+      </div>
+
       <div class="admin-actions">
         <button class="admin-btn" id="saveSettings">حفظ التغييرات</button>
       </div>
@@ -3960,12 +4011,19 @@
       document.querySelector('.brand-subtitle').textContent = document.getElementById('f-brandSubtitle').value;
       document.querySelector('.badge.brand').textContent = document.getElementById('f-dateBadge').value;
       document.querySelector('.badge.confidential').textContent = document.getElementById('f-confBadge').value;
+      const _metaTitle = document.getElementById('f-metaTitle').value;
+      const _metaDesc = document.getElementById('f-metaDesc').value;
+      const _metaImage = document.getElementById('f-metaImage').value;
+      applyMetaTags(_metaTitle, _metaDesc, _metaImage);
       showStatus('⏳ جارٍ الحفظ والنشر…');
       const _res = await persistContent('settings', JSON.stringify({
         brandTitle: document.getElementById('f-brandTitle').value,
         brandSubtitle: document.getElementById('f-brandSubtitle').value,
         dateBadge: document.getElementById('f-dateBadge').value,
         confBadge: document.getElementById('f-confBadge').value,
+        metaTitle: _metaTitle,
+        metaDesc: _metaDesc,
+        metaImage: _metaImage,
       }));
       showStatus(_res.ok ? '✓ تم حفظ التغييرات ونشرها' : '✗ تعذّر النشر: ' + _res.error, _res.ok ? 'success' : 'error');
     });
