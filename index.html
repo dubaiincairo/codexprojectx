@@ -212,6 +212,7 @@
   body.dark .persona { background: var(--surface); border-color: var(--ink-100); }
   body.dark .persona-header { border-color: var(--ink-100); }
   body.dark .persona-tag { background: var(--surface-soft); color: var(--ink-700); }
+  body.dark .persona-tag.primary { background: rgba(99, 91, 255, 0.15); color: var(--brand-200); border-color: rgba(99, 91, 255, 0.3); }
   body.dark .persona-trait { color: var(--ink-500); }
   body.dark .persona-msg {
     background: rgba(99, 91, 255, 0.12);
@@ -1240,6 +1241,62 @@
     padding: 22px 24px;
     margin: 16px 0;
   }
+
+  .persona-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid var(--ink-100);
+  }
+
+  .persona-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink-900);
+  }
+
+  .persona-tag {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    height: 24px;
+    line-height: 1;
+    background: var(--surface-soft);
+    color: var(--ink-700);
+    padding: 0 12px;
+    border-radius: var(--r-full);
+    font-size: 11.5px;
+    font-weight: 600;
+    border: 1px solid var(--ink-100);
+    white-space: nowrap;
+  }
+
+  .persona-tag.primary {
+    background: var(--brand-50);
+    color: var(--brand-600);
+    border-color: var(--brand-100);
+  }
+
+  .persona-trait {
+    font-size: 13.5px;
+    color: var(--ink-600);
+    margin-bottom: 8px;
+  }
+
+  .persona-msg {
+    background: var(--brand-soft);
+    color: var(--ink-700);
+    border-radius: var(--r-md);
+    padding: 12px 14px;
+    margin-top: 12px;
+    font-size: 13.5px;
+  }
+
+  .persona-msg strong { color: var(--brand-600); }
 
   .card:hover { border-color: var(--ink-200); }
 
