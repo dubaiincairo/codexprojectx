@@ -3995,9 +3995,12 @@
           <div class="admin-hint">النص الذي يظهر أسفل العنوان في بطاقة المشاركة.</div>
         </div>
         <div class="admin-field">
-          <label class="admin-label">صورة المشاركة (رابط مباشر)</label>
-          <input class="admin-input" id="f-metaImage" value="${metaImage.replace(/"/g, '&quot;').trim()}">
-          <div class="admin-hint">رابط مباشر لصورة بصيغة JPG أو PNG — المقاس الموصى به 1200×630 بكسل. لاستخدام صورة جديدة: ارفعها على استضافة صور وألصق رابطها هنا، أو أرسل الصورة لتُضمَّن في الموقع عند النشر.</div>
+          <label class="admin-label">صورة المشاركة الاجتماعية</label>
+          <input class="admin-input" id="f-metaImage" value="${metaImage.replace(/"/g, '&quot;').trim()}" placeholder="https://...">
+          <button type="button" class="admin-btn secondary" id="uploadImageBtn" style="margin-top: 8px;">⬆ رفع صورة من الجهاز</button>
+          <div id="uploadImageStatus" style="font-size: 12px; color: var(--ink-500); margin-top: 6px; min-height: 15px;"></div>
+          <input type="file" id="f-metaImageFile" accept="image/png,image/jpeg,image/webp,image/gif" style="display: none;">
+          <div class="admin-hint">ألصق رابط صورة مباشرًا، أو ارفع صورة من جهازك (JPG / PNG / WebP، بحد أقصى 5 ميجابايت). المقاس الموصى به 1200×630 بكسل. تُرفع الصورة إلى مساحة تخزين Supabase وتحصل على رابط دائم.</div>
         </div>
       </div>
 
@@ -4027,6 +4030,41 @@
       }));
       showStatus(_res.ok ? '✓ تم حفظ التغييرات ونشرها' : '✗ تعذّر النشر: ' + _res.error, _res.ok ? 'success' : 'error');
     });
+
+    // ---- social image upload to Supabase Storage ----
+    const _upBtn = document.getElementById('uploadImageBtn');
+    const _upFile = document.getElementById('f-metaImageFile');
+    const _upStatus = document.getElementById('uploadImageStatus');
+    if (_upBtn && _upFile && _upStatus) {
+      _upBtn.addEventListener('click', () => _upFile.click());
+      _upFile.addEventListener('change', async () => {
+        const file = _upFile.files && _upFile.files[0];
+        if (!file) return;
+        if (!sbClient) { _upStatus.textContent = '✗ تعذّر الاتصال بالخادم'; _upFile.value = ''; return; }
+        if (!file.type.startsWith('image/')) { _upStatus.textContent = '✗ الملف المختار ليس صورة'; _upFile.value = ''; return; }
+        if (file.size > 5 * 1024 * 1024) { _upStatus.textContent = '✗ حجم الصورة يتجاوز 5 ميجابايت'; _upFile.value = ''; return; }
+        _upBtn.disabled = true;
+        _upStatus.textContent = '⏳ جارٍ رفع الصورة…';
+        try {
+          const typeExt = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp', 'image/gif': 'gif' };
+          const path = 'og-' + Date.now() + '.' + (typeExt[file.type] || 'jpg');
+          const { error } = await sbClient.storage.from('social-images')
+            .upload(path, file, { contentType: file.type, cacheControl: '3600', upsert: false });
+          if (error) {
+            _upStatus.textContent = '✗ تعذّر رفع الصورة: ' + error.message;
+          } else {
+            const { data } = sbClient.storage.from('social-images').getPublicUrl(path);
+            document.getElementById('f-metaImage').value = data.publicUrl;
+            _upStatus.textContent = '✓ تم رفع الصورة — اضغط «حفظ التغييرات» ثم أعد النشر';
+          }
+        } catch (e) {
+          _upStatus.textContent = '✗ خطأ أثناء الرفع: ' + (e && e.message ? e.message : String(e));
+        } finally {
+          _upBtn.disabled = false;
+          _upFile.value = '';
+        }
+      });
+    }
   }
 
   // ===== Admin editor helpers (plain-text view + structure-preserving save) =====
